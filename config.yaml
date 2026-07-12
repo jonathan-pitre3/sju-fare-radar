@@ -1,0 +1,62 @@
+# SJU Fare Radar — route configuration
+# Thresholds seeded from sju-cheap-flight-search-strategy.md benchmarks (2026-07-11).
+# alert_below: send WhatsApp/email when a live round-trip fare <= this USD amount.
+# The radar also tracks each route's observed floor and alerts on new floors.
+
+settings:
+  origin: SJU
+  currency: USD
+  adults: 1
+  trip_length_days: 7        # default RT length sampled
+  scan_horizon_days: 120     # how far ahead to look
+  samples_per_run: 2         # 10 routes x 2 x 1 run/day = ~600 searches/mo (+1 booking-link call per alert).
+                             # NOTE: Ignav's "first 1,000 requests free" reads as a one-time credit, not
+                             # monthly (FAQ doesn't say; confirm at gus@ignav.com). After it: $2 per 1,000,
+                             # so this config costs roughly $1.30/month. Only HTTP 200s are billed.
+  alert_cooldown_hours: 24   # don't repeat identical alerts within this window
+  provider: ignav            # ignav (default, free tier) | amadeus (LEGACY - self-service keys die 2026-07-17)
+  amadeus_env: production    # only used if provider: amadeus
+
+routes:
+  - code: MAD
+    label: "Madrid, Spain"
+    alert_below: 620          # Run 006: AA $619 Dec 2026
+    cheap_months: [2, 9, 10, 11]
+  - code: FCO
+    label: "Rome, Italy"
+    alert_below: 650          # Run 005b: live floor $721; alert on real dip
+    cheap_months: [10, 11, 1]
+  - code: LIS
+    label: "Lisbon, Portugal"
+    alert_below: 510          # Run 000: United $502
+    cheap_months: [9, 10]
+  - code: NRT
+    label: "Tokyo, Japan (single ticket)"
+    alert_below: 950          # split build ~$899 is the benchmark to beat
+    cheap_months: [1, 8]
+  - code: BOG
+    label: "Bogotá, Colombia"
+    alert_below: 200          # Run 002: $181 RT signals
+    cheap_months: [1, 4, 5, 9]
+  - code: MDE
+    label: "Medellín, Colombia"
+    alert_below: 250          # Run 002: Avianca $244 RT
+    cheap_months: [9]
+  - code: CUN
+    label: "Cancún, Mexico"
+    alert_below: 280          # Run 002: JetBlue $274 RT
+    cheap_months: [4]
+  - code: LIM
+    label: "Lima, Peru"
+    alert_below: 400          # Run 002: $160 OW floor → ~$350-400 RT target
+    cheap_months: [9]
+  - code: BWI
+    label: "Baltimore, USA"
+    alert_below: 160          # Run 000: Frontier $150 RT
+    cheap_months: [1, 2]
+
+# Positioning legs monitored for the Tokyo split build (Step 5a):
+split_legs:
+  - code: LAX
+    label: "Los Angeles (Zipair positioning)"
+    alert_below: 250

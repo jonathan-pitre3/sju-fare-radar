@@ -1,0 +1,1270 @@
+{
+ "routes": {
+  "MAD": {
+   "label": "Madrid, Spain",
+   "floor": 594.32,
+   "points": [
+    {
+     "at": "2026-07-01T22:30:15+00:00",
+     "price": 636.47,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-02T10:30:15+00:00",
+     "price": 611.0,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-02T22:30:15+00:00",
+     "price": 684.62,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-03T10:30:15+00:00",
+     "price": 599.46,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-03T22:30:15+00:00",
+     "price": 667.68,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-04T10:30:15+00:00",
+     "price": 642.63,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-04T22:30:15+00:00",
+     "price": 597.34,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-05T10:30:15+00:00",
+     "price": 663.49,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-05T22:30:15+00:00",
+     "price": 594.32,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-06T10:30:15+00:00",
+     "price": 652.63,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-06T22:30:15+00:00",
+     "price": 599.08,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-07T10:30:15+00:00",
+     "price": 602.15,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-07T22:30:15+00:00",
+     "price": 651.29,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-08T10:30:15+00:00",
+     "price": 710.51,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-08T22:30:15+00:00",
+     "price": 607.02,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-09T10:30:15+00:00",
+     "price": 621.66,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-09T22:30:15+00:00",
+     "price": 681.16,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-10T10:30:15+00:00",
+     "price": 728.3,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-10T22:30:15+00:00",
+     "price": 673.75,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-11T10:30:15+00:00",
+     "price": 647.19,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-08-10%20through%202026-08-17"
+    }
+   ],
+   "last_alert": null
+  },
+  "FCO": {
+   "label": "Rome, Italy",
+   "floor": 679.42,
+   "points": [
+    {
+     "at": "2026-07-01T22:30:15+00:00",
+     "price": 835.51,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-02T10:30:15+00:00",
+     "price": 679.42,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-02T22:30:15+00:00",
+     "price": 815.74,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-03T10:30:15+00:00",
+     "price": 720.23,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-03T22:30:15+00:00",
+     "price": 695.82,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-04T10:30:15+00:00",
+     "price": 691.38,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-04T22:30:15+00:00",
+     "price": 723.39,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-05T10:30:15+00:00",
+     "price": 808.63,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-05T22:30:15+00:00",
+     "price": 701.94,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-06T10:30:15+00:00",
+     "price": 769.25,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-06T22:30:15+00:00",
+     "price": 778.87,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-07T10:30:15+00:00",
+     "price": 734.13,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-07T22:30:15+00:00",
+     "price": 763.57,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-08T10:30:15+00:00",
+     "price": 682.14,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-08T22:30:15+00:00",
+     "price": 681.61,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-09T10:30:15+00:00",
+     "price": 706.18,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-09T22:30:15+00:00",
+     "price": 785.84,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-10T10:30:15+00:00",
+     "price": 743.39,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-10T22:30:15+00:00",
+     "price": 724.35,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-11T10:30:15+00:00",
+     "price": 769.92,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-08-10%20through%202026-08-17"
+    }
+   ],
+   "last_alert": null
+  },
+  "NRT": {
+   "label": "Tokyo, Japan (single ticket)",
+   "floor": 1003.34,
+   "points": [
+    {
+     "at": "2026-07-01T22:30:15+00:00",
+     "price": 1106.17,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-02T10:30:15+00:00",
+     "price": 1068.06,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-02T22:30:15+00:00",
+     "price": 1190.92,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-03T10:30:15+00:00",
+     "price": 1167.23,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-03T22:30:15+00:00",
+     "price": 1054.23,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-04T10:30:15+00:00",
+     "price": 1136.29,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-04T22:30:15+00:00",
+     "price": 1124.06,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-05T10:30:15+00:00",
+     "price": 1210.98,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-05T22:30:15+00:00",
+     "price": 1174.79,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-06T10:30:15+00:00",
+     "price": 1065.12,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-06T22:30:15+00:00",
+     "price": 1237.08,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-07T10:30:15+00:00",
+     "price": 1022.93,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-07T22:30:15+00:00",
+     "price": 1097.46,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-08T10:30:15+00:00",
+     "price": 1181.67,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-08T22:30:15+00:00",
+     "price": 1031.35,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-09T10:30:15+00:00",
+     "price": 1115.06,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-09T22:30:15+00:00",
+     "price": 1003.34,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-10T10:30:15+00:00",
+     "price": 1159.58,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-10T22:30:15+00:00",
+     "price": 1183.52,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-11T10:30:15+00:00",
+     "price": 1135.94,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-08-10%20through%202026-08-17"
+    }
+   ],
+   "last_alert": null
+  },
+  "BOG": {
+   "label": "Bogot\u00e1, Colombia",
+   "floor": 175.79,
+   "points": [
+    {
+     "at": "2026-07-01T22:30:15+00:00",
+     "price": 213.06,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-02T10:30:15+00:00",
+     "price": 188.51,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-02T22:30:15+00:00",
+     "price": 205.18,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-03T10:30:15+00:00",
+     "price": 200.77,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-03T22:30:15+00:00",
+     "price": 200.14,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-04T10:30:15+00:00",
+     "price": 194.74,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-04T22:30:15+00:00",
+     "price": 211.51,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-05T10:30:15+00:00",
+     "price": 216.08,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-05T22:30:15+00:00",
+     "price": 195.52,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-06T10:30:15+00:00",
+     "price": 203.82,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-06T22:30:15+00:00",
+     "price": 177.45,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-07T10:30:15+00:00",
+     "price": 205.46,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-07T22:30:15+00:00",
+     "price": 203.08,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-08T10:30:15+00:00",
+     "price": 218.2,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-08T22:30:15+00:00",
+     "price": 210.72,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-09T10:30:15+00:00",
+     "price": 187.24,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-09T22:30:15+00:00",
+     "price": 191.66,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-10T10:30:15+00:00",
+     "price": 204.02,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-10T22:30:15+00:00",
+     "price": 175.79,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-11T10:30:15+00:00",
+     "price": 194.98,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-08-10%20through%202026-08-17"
+    }
+   ],
+   "last_alert": null
+  },
+  "BWI": {
+   "label": "Baltimore, USA",
+   "floor": 154.04,
+   "points": [
+    {
+     "at": "2026-07-01T22:30:15+00:00",
+     "price": 158.18,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-02T10:30:15+00:00",
+     "price": 156.24,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-02T22:30:15+00:00",
+     "price": 154.04,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-03T10:30:15+00:00",
+     "price": 180.95,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-03T22:30:15+00:00",
+     "price": 156.71,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-04T10:30:15+00:00",
+     "price": 161.2,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-04T22:30:15+00:00",
+     "price": 166.64,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-05T10:30:15+00:00",
+     "price": 184.87,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-05T22:30:15+00:00",
+     "price": 154.86,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-06T10:30:15+00:00",
+     "price": 168.85,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-06T22:30:15+00:00",
+     "price": 172.65,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-07T10:30:15+00:00",
+     "price": 185.32,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-07T22:30:15+00:00",
+     "price": 182.89,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-08T10:30:15+00:00",
+     "price": 184.59,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-08T22:30:15+00:00",
+     "price": 162.37,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-09T10:30:15+00:00",
+     "price": 167.56,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-09T22:30:15+00:00",
+     "price": 165.42,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-10T10:30:15+00:00",
+     "price": 185.36,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-10T22:30:15+00:00",
+     "price": 188.15,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-11T10:30:15+00:00",
+     "price": 157.53,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-08-10%20through%202026-08-17"
+    }
+   ],
+   "last_alert": null
+  },
+  "CUN": {
+   "label": "Canc\u00fan, Mexico",
+   "floor": 253.26,
+   "points": [
+    {
+     "at": "2026-07-01T22:30:15+00:00",
+     "price": 264.15,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-02T10:30:15+00:00",
+     "price": 267.67,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-02T22:30:15+00:00",
+     "price": 267.76,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-03T10:30:15+00:00",
+     "price": 283.67,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-03T22:30:15+00:00",
+     "price": 290.26,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-04T10:30:15+00:00",
+     "price": 269.62,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-04T22:30:15+00:00",
+     "price": 253.26,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-05T10:30:15+00:00",
+     "price": 279.5,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-05T22:30:15+00:00",
+     "price": 276.36,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-06T10:30:15+00:00",
+     "price": 288.82,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-06T22:30:15+00:00",
+     "price": 313.28,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-07T10:30:15+00:00",
+     "price": 296.67,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-07T22:30:15+00:00",
+     "price": 285.6,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-08T10:30:15+00:00",
+     "price": 292.06,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-08T22:30:15+00:00",
+     "price": 295.77,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-09T10:30:15+00:00",
+     "price": 256.42,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-09T22:30:15+00:00",
+     "price": 309.9,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-10T10:30:15+00:00",
+     "price": 302.33,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-10T22:30:15+00:00",
+     "price": 308.31,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-08-10%20through%202026-08-17"
+    },
+    {
+     "at": "2026-07-11T10:30:15+00:00",
+     "price": 303.47,
+     "carriers": [
+      "AA"
+     ],
+     "depart": "2026-08-10",
+     "return": "2026-08-17",
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-08-10%20through%202026-08-17"
+    }
+   ],
+   "last_alert": null
+  }
+ },
+ "alerts": [
+  {
+   "at": "2026-07-11T22:30:15+00:00",
+   "route": "BOG",
+   "label": "Bogot\u00e1, Colombia",
+   "price": 194.98,
+   "reason": "below your $200 threshold",
+   "depart": "2026-08-10",
+   "return": "2026-08-17",
+   "carriers": [
+    "AV"
+   ],
+   "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-08-10%20through%202026-08-17"
+  }
+ ],
+ "thresholds": {
+  "MAD": 620,
+  "FCO": 650,
+  "NRT": 950,
+  "BOG": 200,
+  "BWI": 160,
+  "CUN": 280
+ },
+ "updated_at": "2026-07-11T22:30:15+00:00"
+}
