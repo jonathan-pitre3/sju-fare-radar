@@ -215,6 +215,18 @@
      "confirmed": true,
      "depart": "2026-09-24",
      "return": "2026-10-01"
+    },
+    {
+     "at": "2026-07-12T13:06:14+00:00",
+     "price": 759.0,
+     "carriers": [
+      "AA",
+      "IB"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-09-24%20through%202026-10-01",
+     "confirmed": true,
+     "depart": "2026-09-24",
+     "return": "2026-10-01"
     }
    ],
    "last_alert": null
@@ -425,6 +437,19 @@
     },
     {
      "at": "2026-07-12T03:12:11+00:00",
+     "price": 964.0,
+     "carriers": [
+      "B6",
+      "IB",
+      "TP"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-09-24%20through%202026-10-01",
+     "confirmed": true,
+     "depart": "2026-09-24",
+     "return": "2026-10-01"
+    },
+    {
+     "at": "2026-07-12T13:06:14+00:00",
      "price": 964.0,
      "carriers": [
       "B6",
@@ -654,6 +679,18 @@
      "confirmed": true,
      "depart": "2026-09-24",
      "return": "2026-10-01"
+    },
+    {
+     "at": "2026-07-12T13:06:14+00:00",
+     "price": 2023.0,
+     "carriers": [
+      "AA",
+      "UA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-09-24%20through%202026-10-01",
+     "confirmed": true,
+     "depart": "2026-09-24",
+     "return": "2026-10-01"
     }
    ],
    "last_alert": null
@@ -864,6 +901,18 @@
     },
     {
      "at": "2026-07-12T03:12:11+00:00",
+     "price": 406.0,
+     "carriers": [
+      "AV",
+      "CM"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-09-24%20through%202026-10-01",
+     "confirmed": true,
+     "depart": "2026-09-24",
+     "return": "2026-10-01"
+    },
+    {
+     "at": "2026-07-12T13:06:14+00:00",
      "price": 406.0,
      "carriers": [
       "AV",
@@ -1091,6 +1140,17 @@
      "confirmed": true,
      "depart": "2026-09-24",
      "return": "2026-10-01"
+    },
+    {
+     "at": "2026-07-12T13:06:14+00:00",
+     "price": 306.0,
+     "carriers": [
+      "AA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-09-24%20through%202026-10-01",
+     "confirmed": true,
+     "depart": "2026-09-24",
+     "return": "2026-10-01"
     }
    ],
    "last_alert": null
@@ -1310,6 +1370,18 @@
      "confirmed": true,
      "depart": "2026-09-24",
      "return": "2026-10-01"
+    },
+    {
+     "at": "2026-07-12T13:06:14+00:00",
+     "price": 409.0,
+     "carriers": [
+      "CM",
+      "UA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-09-24%20through%202026-10-01",
+     "confirmed": true,
+     "depart": "2026-09-24",
+     "return": "2026-10-01"
     }
    ],
    "last_alert": null
@@ -1329,13 +1401,25 @@
      "confirmed": true,
      "depart": "2026-09-24",
      "return": "2026-10-01"
+    },
+    {
+     "at": "2026-07-12T13:06:14+00:00",
+     "price": 815.0,
+     "carriers": [
+      "AA",
+      "IB"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20LIS%20on%202026-09-24%20through%202026-10-01",
+     "confirmed": true,
+     "depart": "2026-09-24",
+     "return": "2026-10-01"
     }
    ],
    "last_alert": null
   },
   "MDE": {
    "label": "Medell\u00edn, Colombia",
-   "floor": 317.0,
+   "floor": 299.0,
    "points": [
     {
      "at": "2026-07-12T03:12:11+00:00",
@@ -1348,9 +1432,24 @@
      "confirmed": true,
      "depart": "2026-09-24",
      "return": "2026-10-01"
+    },
+    {
+     "at": "2026-07-12T13:06:14+00:00",
+     "price": 299.0,
+     "carriers": [
+      "AV",
+      "CM"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MDE%20on%202026-09-24%20through%202026-10-01",
+     "confirmed": true,
+     "depart": "2026-09-24",
+     "return": "2026-10-01"
     }
    ],
-   "last_alert": null
+   "last_alert": {
+    "at": "2026-07-12T13:06:14+00:00",
+    "price": 299.0
+   }
   },
   "LIM": {
    "label": "Lima, Peru",
@@ -1358,6 +1457,17 @@
    "points": [
     {
      "at": "2026-07-12T03:12:11+00:00",
+     "price": 309.0,
+     "carriers": [
+      "CM"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20LIM%20on%202026-09-24%20through%202026-10-01",
+     "confirmed": true,
+     "depart": "2026-09-24",
+     "return": "2026-10-01"
+    },
+    {
+     "at": "2026-07-12T13:06:14+00:00",
      "price": 309.0,
      "carriers": [
       "CM"
@@ -1388,12 +1498,38 @@
      "confirmed": true,
      "depart": "2026-09-24",
      "return": "2026-10-01"
+    },
+    {
+     "at": "2026-07-12T13:06:14+00:00",
+     "price": 400.0,
+     "carriers": [
+      "WN"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20LAX%20on%202026-09-24%20through%202026-10-01",
+     "confirmed": true,
+     "depart": "2026-09-24",
+     "return": "2026-10-01"
     }
    ],
    "last_alert": null
   }
  },
  "alerts": [
+  {
+   "at": "2026-07-12T13:06:14+00:00",
+   "route": "MDE",
+   "label": "Medell\u00edn, Colombia",
+   "price": 299.0,
+   "reason": "new all-time observed floor (was $317.00)",
+   "confirmed": true,
+   "depart": "2026-09-24",
+   "return": "2026-10-01",
+   "carriers": [
+    "AV",
+    "CM"
+   ],
+   "link": "https://shopping.copaair.com/?roundtrip=false&area1=SJU&area2=MDE&date1=2026-09-24&adults=1&children=0&infants=0&sf=US&langid=en&advanced_air_search=false&flexible_dates_v2=false&origin=GF&gclid=ADowPOKAdd7D2H76RogQYnSnNvBCe5duQxYzHhNZ8GyfemEqFiex-9wtwIPItB7CrF-siIXV8wzxcn9IFIgVVlWwrbLTlIHijgtM9E_4N9pG-Tl5074&gclsrc=gf"
+  },
   {
    "at": "2026-07-12T03:12:11+00:00",
    "route": "LIM",
@@ -1434,5 +1570,5 @@
   "BWI": 160,
   "LAX": 250
  },
- "updated_at": "2026-07-12T03:12:11+00:00"
+ "updated_at": "2026-07-12T13:06:14+00:00"
 }
