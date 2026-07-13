@@ -55,7 +55,6 @@ def run() -> None:
     provider = get_provider(s.get("provider", "ignav"))
     history = load_history()
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    trip_len = timedelta(days=s["trip_length_days"])
     pending = []
     thresholds = {}
 
@@ -63,15 +62,20 @@ def run() -> None:
     for route in CONFIG["routes"] + CONFIG.get("split_legs", []):
         code, label = route["code"], route["label"]
         origin = route.get("origin", s["origin"])
-        key = code if origin == s["origin"] else f"{origin}→{code}"
+        key = route.get("key") or (code if origin == s["origin"] else f"{origin}→{code}")
         thresholds[key] = route["alert_below"]
+        # Buffer support: connecting legs depart offset days after the base date
+        # (overnight self-transfer), positioning legs span a longer round trip.
+        offset = timedelta(days=route.get("depart_offset_days", 0))
+        leg_trip = timedelta(days=route.get("trip_days", s["trip_length_days"]))
         print(f"Scanning {origin} -> {code} ({label})")
         results = []
-        for depart in sample_departure_dates():
-            offer = provider.search(origin, code, depart, depart + trip_len, s)
+        for base in sample_departure_dates():
+            depart = base + offset
+            offer = provider.search(origin, code, depart, depart + leg_trip, s)
             if offer:
                 offer.update({"depart": depart.isoformat(),
-                              "return": (depart + trip_len).isoformat()})
+                              "return": (depart + leg_trip).isoformat()})
                 results.append(offer)
         if not results:
             continue
@@ -145,6 +149,13 @@ def run() -> None:
             print(f"Build {name}: ALERT ${combined}{vs} — {reason}")
         else:
             print(f"Build {name}: ${combined}{vs}")
+
+    # Drop history for routes/builds removed from config so the dashboard
+    # doesn't show permanently stale rows.
+    history["routes"] = {k: v for k, v in history["routes"].items() if k in thresholds}
+    if "builds" in history:
+        history["builds"] = {k: v for k, v in history["builds"].items()
+                             if k in build_thresholds}
 
     history["updated_at"] = now
     history["thresholds"] = thresholds

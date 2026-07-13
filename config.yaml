@@ -9,10 +9,10 @@ settings:
   adults: 1
   trip_length_days: 7        # default RT length sampled
   scan_horizon_days: 120     # how far ahead to look
-  samples_per_run: 2         # 26 routes x 2 x 1 run/day = ~1,580 searches/mo (+1 booking-link call per alert).
+  samples_per_run: 2         # 30 entries x 2 x 1 run/day = ~1,825 searches/mo (+1 booking-link call per alert).
                              # Ignav's 1,000 free requests are a ONE-TIME credit; after it: $2 per 1,000
                              # successful (HTTP 200) API calls — an API call, not a link click. This config
-                             # costs ~$3.20/month. Dials to cut cost: fewer routes, samples_per_run: 1,
+                             # costs ~$3.65/month. Dials to cut cost: fewer routes, samples_per_run: 1,
                              # every-other-day cron, or route rotation.
   alert_cooldown_hours: 24   # don't repeat identical alerts within this window
   provider: ignav            # ignav (default, free tier) | amadeus (LEGACY - self-service keys die 2026-07-17)
@@ -99,38 +99,55 @@ routes:
   - code: MXP
     label: "Milan, Italy"
     alert_below: 620
-  - code: WAW
-    label: "Warsaw, Poland"
-    alert_below: 650
-  - code: BUD
-    label: "Budapest, Hungary"
-    alert_below: 700
-  - code: PRG
-    label: "Prague, Czechia"
-    alert_below: 700
+  # PRG/BUD/WAW directs removed 2026-07-13: first scans showed ~$890-910 flat,
+  # pricier than the Madrid-gateway builds below. Eastern Europe is watched
+  # via `builds`.
 
 # Positioning/connecting legs for split builds. `origin:` overrides settings.origin;
 # legs with a non-SJU origin are keyed "ORIGIN→CODE" in history and builds.
+# Buffer policy (2026-07-13): connecting legs use depart_offset_days: 1 — an
+# overnight self-transfer buffer, never a same-day connection on separate
+# tickets. Positioning legs use trip_days: 9 (7-day trip + 1 buffer night each
+# way). `key:` disambiguates a second entry for the same city pair.
 split_legs:
   - code: LAX
-    label: "Los Angeles (Zipair positioning)"
+    label: "Los Angeles (Zipair positioning, 9-day RT)"
     alert_below: 250
+    trip_days: 9
   - code: NRT
     origin: LAX
-    label: "LAX → Tokyo (Zipair leg)"
+    label: "LAX → Tokyo (Zipair leg, next-day departure)"
     alert_below: 700
+    depart_offset_days: 1
+  - code: EWR
+    label: "Newark (Air Premia positioning, 9-day RT)"
+    alert_below: 300
+    trip_days: 9
+  - code: ICN
+    origin: EWR
+    label: "EWR → Seoul (Air Premia leg, next-day departure)"
+    alert_below: 800
+    depart_offset_days: 1
+  - code: MAD
+    key: "MAD+"
+    label: "Madrid (build positioning, 9-day RT)"
+    alert_below: 660
+    trip_days: 9
   - code: PRG
     origin: MAD
-    label: "Madrid → Prague (LCC hop)"
+    label: "Madrid → Prague (LCC hop, next-day departure)"
     alert_below: 120
+    depart_offset_days: 1
   - code: BUD
     origin: MAD
-    label: "Madrid → Budapest (LCC hop)"
+    label: "Madrid → Budapest (LCC hop, next-day departure)"
     alert_below: 120
+    depart_offset_days: 1
   - code: WAW
     origin: MAD
-    label: "Madrid → Warsaw (LCC hop)"
+    label: "Madrid → Warsaw (LCC hop, next-day departure)"
     alert_below: 120
+    depart_offset_days: 1
 
 # Split builds: sum of member legs' best fares, tracked and alerted as one price
 # and compared against the direct single-ticket route (`versus`).
@@ -139,15 +156,16 @@ builds:
     legs: ["LAX", "LAX→NRT"]
     versus: NRT
     alert_below: 950          # strategy MD Step 5a: ~$899 build is the benchmark
+  - name: "Seoul via EWR (Air Premia)"
+    legs: ["EWR", "EWR→ICN"]
+    versus: ICN
+    alert_below: 1000         # Air Premia EWR-ICN ~$900 RT + cheap SJU-EWR positioning
   - name: "Prague via Madrid"
-    legs: ["MAD", "MAD→PRG"]
-    versus: PRG
+    legs: ["MAD+", "MAD→PRG"]
     alert_below: 750
   - name: "Budapest via Madrid"
-    legs: ["MAD", "MAD→BUD"]
-    versus: BUD
+    legs: ["MAD+", "MAD→BUD"]
     alert_below: 760
   - name: "Warsaw via Madrid"
-    legs: ["MAD", "MAD→WAW"]
-    versus: WAW
+    legs: ["MAD+", "MAD→WAW"]
     alert_below: 760
