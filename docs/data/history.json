@@ -271,10 +271,22 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-02"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 746.0,
+     "carriers": [
+      "IB"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "FCO": {
    "label": "Rome, Italy",
@@ -550,10 +562,22 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-02"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 998.0,
+     "carriers": [
+      "DL"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "NRT": {
    "label": "Tokyo, Japan (single ticket)",
@@ -834,10 +858,24 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-02"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 2023.0,
+     "carriers": [
+      "IB",
+      "QR",
+      "UA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "BOG": {
    "label": "Bogot\u00e1, Colombia",
@@ -1114,10 +1152,23 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-02"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 378.0,
+     "carriers": [
+      "AV",
+      "CM"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "BWI": {
    "label": "Baltimore, USA",
@@ -1392,10 +1443,23 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-02"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 306.0,
+     "carriers": [
+      "AA",
+      "WN"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "CUN": {
    "label": "Canc\u00fan, Mexico",
@@ -1672,10 +1736,23 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-02"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 409.0,
+     "carriers": [
+      "CM",
+      "UA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "LIS": {
    "label": "Lisbon, Portugal",
@@ -1756,10 +1833,24 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-02"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 818.0,
+     "carriers": [
+      "B6",
+      "IB",
+      "TP"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20LIS%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "MDE": {
    "label": "Medell\u00edn, Colombia",
@@ -1835,13 +1926,26 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-02"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 300.0,
+     "carriers": [
+      "AV",
+      "CM"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MDE%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": {
     "at": "2026-07-12T13:06:14+00:00",
     "price": 299.0
    },
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "LIM": {
    "label": "Lima, Peru",
@@ -1916,13 +2020,26 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-02"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 296.0,
+     "carriers": [
+      "AV",
+      "CM"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20LIM%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": {
     "at": "2026-07-13T14:19:36+00:00",
     "price": 296.0
    },
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "LAX": {
    "label": "Los Angeles (Zipair positioning, 9-day RT)",
@@ -1997,10 +2114,23 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-04"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 400.0,
+     "carriers": [
+      "F9",
+      "WN"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20LAX%20on%202026-09-25%20through%202026-10-04",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-04"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "positioning"
   },
   "HKG": {
    "label": "Hong Kong",
@@ -2044,10 +2174,24 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-02"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 1449.0,
+     "carriers": [
+      "B6",
+      "CX",
+      "DL"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20HKG%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "SIN": {
    "label": "Singapore",
@@ -2094,10 +2238,25 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-02"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 1409.0,
+     "carriers": [
+      "B6",
+      "CX",
+      "NH",
+      "UA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20SIN%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "ICN": {
    "label": "Seoul, South Korea",
@@ -2135,10 +2294,22 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-02"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 1587.0,
+     "carriers": [
+      "UA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20ICN%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "SGN": {
    "label": "Ho Chi Minh City, Vietnam",
@@ -2182,10 +2353,24 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-02"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 1112.0,
+     "carriers": [
+      "AA",
+      "JL",
+      "UA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20SGN%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "BKK": {
    "label": "Bangkok, Thailand",
@@ -2229,10 +2414,24 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-02"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 1058.0,
+     "carriers": [
+      "B6",
+      "EY",
+      "QR"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BKK%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "TPE": {
    "label": "Taipei, Taiwan",
@@ -2276,10 +2475,24 @@
      "confirmed": true,
      "depart": "2026-07-27",
      "return": "2026-08-03"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 1155.0,
+     "carriers": [
+      "B6",
+      "EY",
+      "UA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20TPE%20on%202026-07-27%20through%202026-08-03",
+     "confirmed": true,
+     "depart": "2026-07-27",
+     "return": "2026-08-03"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "PVG": {
    "label": "Shanghai, China",
@@ -2320,10 +2533,23 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-02"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 1342.0,
+     "carriers": [
+      "AA",
+      "UA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20PVG%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "KEF": {
    "label": "Reykjav\u00edk, Iceland",
@@ -2370,10 +2596,25 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-02"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 791.0,
+     "carriers": [
+      "AA",
+      "B6",
+      "BA",
+      "FI"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20KEF%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "LHR": {
    "label": "London, UK",
@@ -2417,10 +2658,24 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-02"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 866.0,
+     "carriers": [
+      "AA",
+      "BA",
+      "IB"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20LHR%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "FRA": {
    "label": "Frankfurt, Germany",
@@ -2464,10 +2719,24 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-02"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 916.0,
+     "carriers": [
+      "IB",
+      "LH",
+      "UA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FRA%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "DUB": {
    "label": "Dublin, Ireland",
@@ -2511,10 +2780,24 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-02"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 754.0,
+     "carriers": [
+      "DL",
+      "EI",
+      "IB"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20DUB%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "CDG": {
    "label": "Paris, France",
@@ -2552,10 +2835,22 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-02"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 876.0,
+     "carriers": [
+      "AA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CDG%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "MXP": {
    "label": "Milan, Italy",
@@ -2593,10 +2888,22 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-02"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 967.0,
+     "carriers": [
+      "DL"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MXP%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "destination"
   },
   "LAX\u2192NRT": {
    "label": "LAX \u2192 Tokyo (Zipair leg, next-day departure)",
@@ -2625,13 +2932,26 @@
      "confirmed": true,
      "depart": "2026-09-26",
      "return": "2026-10-03"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 994.0,
+     "carriers": [
+      "OZ",
+      "SQ"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20LAX%20to%20NRT%20on%202026-09-26%20through%202026-10-03",
+     "confirmed": true,
+     "depart": "2026-09-26",
+     "return": "2026-10-03"
     }
    ],
    "last_alert": {
     "at": "2026-07-13T18:51:57+00:00",
     "price": 994.0
    },
-   "origin": "LAX"
+   "origin": "LAX",
+   "kind": "connector"
   },
   "MAD\u2192PRG": {
    "label": "Madrid \u2192 Prague (LCC hop, next-day departure)",
@@ -2659,13 +2979,26 @@
      "confirmed": true,
      "depart": "2026-07-28",
      "return": "2026-08-04"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 222.0,
+     "carriers": [
+      "FR",
+      "IB"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20MAD%20to%20PRG%20on%202026-07-28%20through%202026-08-04",
+     "confirmed": true,
+     "depart": "2026-07-28",
+     "return": "2026-08-04"
     }
    ],
    "last_alert": {
     "at": "2026-07-13T18:51:57+00:00",
     "price": 222.0
    },
-   "origin": "MAD"
+   "origin": "MAD",
+   "kind": "connector"
   },
   "MAD\u2192BUD": {
    "label": "Madrid \u2192 Budapest (LCC hop, next-day departure)",
@@ -2694,13 +3027,26 @@
      "confirmed": true,
      "depart": "2026-09-26",
      "return": "2026-10-03"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 114.0,
+     "carriers": [
+      "IB",
+      "W6"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20MAD%20to%20BUD%20on%202026-09-26%20through%202026-10-03",
+     "confirmed": true,
+     "depart": "2026-09-26",
+     "return": "2026-10-03"
     }
    ],
    "last_alert": {
     "at": "2026-07-13T18:38:26+00:00",
     "price": 96.0
    },
-   "origin": "MAD"
+   "origin": "MAD",
+   "kind": "connector"
   },
   "MAD\u2192WAW": {
    "label": "Madrid \u2192 Warsaw (LCC hop, next-day departure)",
@@ -2729,13 +3075,26 @@
      "confirmed": true,
      "depart": "2026-09-26",
      "return": "2026-10-03"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 133.0,
+     "carriers": [
+      "LO",
+      "W6"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20MAD%20to%20WAW%20on%202026-09-26%20through%202026-10-03",
+     "confirmed": true,
+     "depart": "2026-09-26",
+     "return": "2026-10-03"
     }
    ],
    "last_alert": {
     "at": "2026-07-13T18:51:57+00:00",
     "price": 133.0
    },
-   "origin": "MAD"
+   "origin": "MAD",
+   "kind": "connector"
   },
   "EWR": {
    "label": "Newark (Air Premia positioning, 9-day RT)",
@@ -2752,13 +3111,26 @@
      "confirmed": true,
      "depart": "2026-09-25",
      "return": "2026-10-04"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 237.0,
+     "carriers": [
+      "DL",
+      "UA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20EWR%20on%202026-09-25%20through%202026-10-04",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-04"
     }
    ],
    "last_alert": {
     "at": "2026-07-13T18:51:57+00:00",
     "price": 237.0
    },
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "positioning"
   },
   "EWR\u2192ICN": {
    "label": "EWR \u2192 Seoul (Air Premia leg, next-day departure)",
@@ -2775,10 +3147,23 @@
      "confirmed": true,
      "depart": "2026-09-26",
      "return": "2026-10-03"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 1062.0,
+     "carriers": [
+      "UA",
+      "YP"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20EWR%20to%20ICN%20on%202026-09-26%20through%202026-10-03",
+     "confirmed": true,
+     "depart": "2026-09-26",
+     "return": "2026-10-03"
     }
    ],
    "last_alert": null,
-   "origin": "EWR"
+   "origin": "EWR",
+   "kind": "connector"
   },
   "MAD+": {
    "label": "Madrid (build positioning, 9-day RT)",
@@ -2796,10 +3181,46 @@
      "confirmed": true,
      "depart": "2026-07-27",
      "return": "2026-08-05"
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 778.0,
+     "carriers": [
+      "AA",
+      "AV",
+      "BA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-07-27%20through%202026-08-05",
+     "confirmed": true,
+     "depart": "2026-07-27",
+     "return": "2026-08-05"
     }
    ],
    "last_alert": null,
-   "origin": "SJU"
+   "origin": "SJU",
+   "kind": "positioning"
+  },
+  "SDQ": {
+   "label": "Santo Domingo, Dominican Republic",
+   "floor": 314.0,
+   "points": [
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 314.0,
+     "carriers": [
+      "AA",
+      "DM",
+      "Z9"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20SDQ%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
+    }
+   ],
+   "last_alert": null,
+   "origin": "SJU",
+   "kind": "destination"
   }
  },
  "alerts": [
@@ -2996,6 +3417,7 @@
   "BOG": 200,
   "MDE": 250,
   "CUN": 280,
+  "SDQ": 130,
   "LIM": 400,
   "BWI": 160,
   "HKG": 900,
@@ -3020,7 +3442,7 @@
   "MAD\u2192BUD": 120,
   "MAD\u2192WAW": 120
  },
- "updated_at": "2026-07-13T18:51:57+00:00",
+ "updated_at": "2026-07-13T19:18:38+00:00",
  "builds": {
   "Tokyo via LAX (Zipair)": {
    "floor": 1394.0,
@@ -3032,6 +3454,11 @@
     },
     {
      "at": "2026-07-13T18:51:57+00:00",
+     "price": 1394.0,
+     "direct": 2023.0
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
      "price": 1394.0,
      "direct": 2023.0
     }
@@ -3058,6 +3485,11 @@
      "at": "2026-07-13T18:51:57+00:00",
      "price": 1000.0,
      "direct": null
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 1000.0,
+     "direct": null
     }
    ],
    "last_alert": null,
@@ -3077,6 +3509,11 @@
     },
     {
      "at": "2026-07-13T18:51:57+00:00",
+     "price": 892.0,
+     "direct": null
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
      "price": 892.0,
      "direct": null
     }
@@ -3100,6 +3537,11 @@
      "at": "2026-07-13T18:51:57+00:00",
      "price": 911.0,
      "direct": null
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
+     "price": 911.0,
+     "direct": null
     }
    ],
    "last_alert": {
@@ -3117,6 +3559,11 @@
    "points": [
     {
      "at": "2026-07-13T18:51:57+00:00",
+     "price": 1299.0,
+     "direct": 1587.0
+    },
+    {
+     "at": "2026-07-13T19:18:38+00:00",
      "price": 1299.0,
      "direct": 1587.0
     }
