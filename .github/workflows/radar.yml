@@ -43,6 +43,7 @@ jobs:
         run: |
           git config user.name "fare-radar-bot"
           git config user.email "actions@github.com"
+          git pull --rebase
           git add docs/data/history.json data/fares.db
           git diff --cached --quiet || git commit -m "radar: price data $(date -u +'%Y-%m-%d %H:%M') [skip ci]"
           git push
