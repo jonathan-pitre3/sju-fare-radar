@@ -64,6 +64,15 @@
     </div>
     <div id="rows"><div class="empty">No sweep data yet.<br>Run the workflow once (Actions → SJU Fare Radar → Run workflow) and refresh.</div></div>
   </div>
+  <section id="builds-section" style="display:none">
+    <h2>Split builds vs direct</h2>
+    <div class="board">
+      <div class="board-head">
+        <span>Build</span><span>Combined</span><span>Direct</span><span>Status</span><span>You save</span><span></span>
+      </div>
+      <div id="builds"></div>
+    </div>
+  </section>
   <section>
     <h2>Recent alerts</h2>
     <div id="alerts"><div class="empty">Alerts appear here when a fare crosses your threshold or sets a new floor.</div></div>
@@ -112,16 +121,39 @@ async function load(){
     if(!latest) return '';
     const th = (data.thresholds || {})[code];
     const [cls, label] = flag(latest.price, r.floor, th);
+    const recent = pts.slice(-14).map(p => p.price);
+    const swing = recent.length > 1 ? Math.round(Math.max(...recent) - Math.min(...recent)) : null;
     return `<div class="row">
       <div class="dest">${code}<small>${r.label}</small></div>
       <div class="price">$${Math.round(latest.price)}</div>
       <div class="dates">${latest.depart}<br>${latest.return}</div>
       <div><span class="flag ${cls}">${label}</span></div>
-      <div class="spark-cell">${spark(pts.slice(-24))}<span class="floor">floor $${Math.round(r.floor)}</span></div>
+      <div class="spark-cell">${spark(pts.slice(-24))}<span class="floor">floor $${Math.round(r.floor)}${swing != null ? ' · swing $' + swing : ''}</span></div>
       <a class="book" href="${latest.link}" target="_blank" rel="noopener">Open live fares ↗</a>
     </div>`;
   }).join('');
   if(rows) document.getElementById('rows').innerHTML = rows;
+
+  const builds = Object.entries(data.builds || {}).map(([name, b]) => {
+    const pts = b.points || [];
+    const latest = pts[pts.length - 1];
+    if(!latest) return '';
+    const th = (data.build_thresholds || {})[name];
+    const [cls, label] = flag(latest.price, b.floor, th);
+    const save = latest.direct != null ? latest.direct - latest.price : null;
+    return `<div class="row">
+      <div class="dest">${name}<small>${(b.legs || []).join(' + ')}</small></div>
+      <div class="price">$${Math.round(latest.price)}</div>
+      <div class="price" style="color:var(--sand-dim)">${latest.direct != null ? '$' + Math.round(latest.direct) : '—'}</div>
+      <div><span class="flag ${cls}">${label}</span></div>
+      <div class="price" style="color:${save > 0 ? 'var(--go)' : 'var(--sand-dim)'}">${save != null ? (save > 0 ? '−$' + Math.round(save) : 'none') : '—'}</div>
+      <div class="spark-cell">${spark(pts.slice(-24))}<span class="floor">floor $${Math.round(b.floor)}</span></div>
+    </div>`;
+  }).join('');
+  if(builds){
+    document.getElementById('builds').innerHTML = builds;
+    document.getElementById('builds-section').style.display = '';
+  }
 
   const alerts = (data.alerts || []).slice(0, 12).map(a => `
     <div class="alert">

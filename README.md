@@ -77,6 +77,10 @@ dashboard. From then on it runs itself daily at ~08:00 Puerto Rico time.
   is the only guarantee** — which is why every alert links to live fares
   instead of quoting a cached page.
 - GitHub Actions cron can drift ±15 min; irrelevant at 1 run/day.
-- Split-ticket builds (e.g. SJU→LAX + Zipair) are monitored as separate legs
-  (`split_legs` in config); combine per the strategy MD's Step 5a and the DOT
-  24-hour rule when booking.
+- Split-ticket builds are first-class: `split_legs` can set a per-leg `origin`
+  (e.g. LAX→NRT for Zipair, MAD→PRG for LCC hops), and `builds` sums member
+  legs into one tracked price with its own threshold, floor, and alerts — shown
+  on the dashboard against the direct fare. Build legs are separate tickets:
+  self-transfer risk is yours; book per the strategy MD's Step 5a and the DOT
+  24-hour rule. Leg prices are sampled on matching dates but cheapest-of-run,
+  so treat a build alert as a signal to line up real dates, not a quote.

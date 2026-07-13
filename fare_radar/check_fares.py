@@ -35,11 +35,10 @@ def load_history() -> dict:
     return {"routes": {}, "alerts": []}
 
 
-def should_alert(history: dict, code: str, price: float, threshold: float) -> str | None:
-    route = history["routes"].get(code, {})
-    floor = route.get("floor")
+def should_alert(entry: dict, price: float, threshold: float) -> str | None:
+    floor = entry.get("floor")
     cooldown = timedelta(hours=CONFIG["settings"]["alert_cooldown_hours"])
-    last = route.get("last_alert")
+    last = entry.get("last_alert")
     if last:
         last_dt = datetime.fromisoformat(last["at"])
         if (datetime.now(timezone.utc) - last_dt) < cooldown and price >= last["price"]:
@@ -60,13 +59,16 @@ def run() -> None:
     pending = []
     thresholds = {}
 
+    run_best = {}
     for route in CONFIG["routes"] + CONFIG.get("split_legs", []):
         code, label = route["code"], route["label"]
-        thresholds[code] = route["alert_below"]
-        print(f"Scanning {s['origin']} -> {code} ({label})")
+        origin = route.get("origin", s["origin"])
+        key = code if origin == s["origin"] else f"{origin}→{code}"
+        thresholds[key] = route["alert_below"]
+        print(f"Scanning {origin} -> {code} ({label})")
         results = []
         for depart in sample_departure_dates():
-            offer = provider.search(s["origin"], code, depart, depart + trip_len, s)
+            offer = provider.search(origin, code, depart, depart + trip_len, s)
             if offer:
                 offer.update({"depart": depart.isoformat(),
                               "return": (depart + trip_len).isoformat()})
@@ -75,14 +77,16 @@ def run() -> None:
             continue
         best = min(results, key=lambda r: r["price"])
         ignav_id = best.pop("ignav_id", None)
+        run_best[key] = dict(best)
 
         entry = history["routes"].setdefault(
-            code, {"label": label, "floor": None, "points": [], "last_alert": None})
+            key, {"label": label, "floor": None, "points": [], "last_alert": None})
         entry["label"] = label
+        entry["origin"] = origin
         entry["points"].append({"at": now, **best})
         entry["points"] = entry["points"][-500:]
 
-        reason = should_alert(history, code, best["price"], route["alert_below"])
+        reason = should_alert(entry, best["price"], route["alert_below"])
         if entry["floor"] is None or best["price"] < entry["floor"]:
             entry["floor"] = best["price"]
         if reason:
@@ -91,7 +95,7 @@ def run() -> None:
                 direct = provider.booking_link(ignav_id)
                 if direct:
                     best["link"] = direct
-            alert = {"at": now, "route": code, "label": label,
+            alert = {"at": now, "route": key, "label": label, "origin": origin,
                      "price": best["price"], "reason": reason,
                      "confirmed": bool(best.get("confirmed")),
                      "depart": best["depart"], "return": best["return"],
@@ -103,8 +107,48 @@ def run() -> None:
         else:
             print(f"  best ${best['price']} ({best['depart']})")
 
+    # Split builds: combined legs vs the direct single ticket.
+    build_thresholds = {}
+    for build in CONFIG.get("builds", []):
+        name, legs = build["name"], build["legs"]
+        build_thresholds[name] = build["alert_below"]
+        missing = [l for l in legs if l not in run_best]
+        if missing:
+            print(f"Build {name}: no data for {missing}, skipped")
+            continue
+        combined = round(sum(run_best[l]["price"] for l in legs), 2)
+        direct = run_best.get(build.get("versus"), {}).get("price")
+
+        entry = history.setdefault("builds", {}).setdefault(
+            name, {"floor": None, "points": [], "last_alert": None})
+        entry.update({"legs": legs, "versus": build.get("versus")})
+        entry["points"].append({"at": now, "price": combined, "direct": direct})
+        entry["points"] = entry["points"][-500:]
+
+        reason = should_alert(entry, combined, build["alert_below"])
+        if entry["floor"] is None or combined < entry["floor"]:
+            entry["floor"] = combined
+        vs = f" vs ${direct:.0f} direct" if direct else ""
+        if reason:
+            first = run_best[legs[0]]
+            alert = {"at": now, "route": name, "label": name, "origin": s["origin"],
+                     "price": combined, "reason": reason + vs,
+                     "confirmed": all(run_best[l].get("confirmed") for l in legs),
+                     "depart": first["depart"], "return": first["return"],
+                     "carriers": sorted({c for l in legs for c in run_best[l]["carriers"]}),
+                     "link": first["link"],
+                     "breakdown": " + ".join(f"{l} ${run_best[l]['price']:.0f}" for l in legs),
+                     "leg_links": {l: run_best[l]["link"] for l in legs}}
+            entry["last_alert"] = {"at": now, "price": combined}
+            history["alerts"] = ([alert] + history.get("alerts", []))[:100]
+            pending.append(alert)
+            print(f"Build {name}: ALERT ${combined}{vs} — {reason}")
+        else:
+            print(f"Build {name}: ${combined}{vs}")
+
     history["updated_at"] = now
     history["thresholds"] = thresholds
+    history["build_thresholds"] = build_thresholds
     HISTORY_PATH.parent.mkdir(parents=True, exist_ok=True)
     HISTORY_PATH.write_text(json.dumps(history, indent=1))
 

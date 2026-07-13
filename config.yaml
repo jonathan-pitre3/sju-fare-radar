@@ -109,8 +109,45 @@ routes:
     label: "Prague, Czechia"
     alert_below: 700
 
-# Positioning legs monitored for the Tokyo split build (Step 5a):
+# Positioning/connecting legs for split builds. `origin:` overrides settings.origin;
+# legs with a non-SJU origin are keyed "ORIGIN→CODE" in history and builds.
 split_legs:
   - code: LAX
     label: "Los Angeles (Zipair positioning)"
     alert_below: 250
+  - code: NRT
+    origin: LAX
+    label: "LAX → Tokyo (Zipair leg)"
+    alert_below: 700
+  - code: PRG
+    origin: MAD
+    label: "Madrid → Prague (LCC hop)"
+    alert_below: 120
+  - code: BUD
+    origin: MAD
+    label: "Madrid → Budapest (LCC hop)"
+    alert_below: 120
+  - code: WAW
+    origin: MAD
+    label: "Madrid → Warsaw (LCC hop)"
+    alert_below: 120
+
+# Split builds: sum of member legs' best fares, tracked and alerted as one price
+# and compared against the direct single-ticket route (`versus`).
+builds:
+  - name: "Tokyo via LAX (Zipair)"
+    legs: ["LAX", "LAX→NRT"]
+    versus: NRT
+    alert_below: 950          # strategy MD Step 5a: ~$899 build is the benchmark
+  - name: "Prague via Madrid"
+    legs: ["MAD", "MAD→PRG"]
+    versus: PRG
+    alert_below: 750
+  - name: "Budapest via Madrid"
+    legs: ["MAD", "MAD→BUD"]
+    versus: BUD
+    alert_below: 760
+  - name: "Warsaw via Madrid"
+    legs: ["MAD", "MAD→WAW"]
+    versus: WAW
+    alert_below: 760

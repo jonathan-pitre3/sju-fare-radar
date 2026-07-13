@@ -18,10 +18,20 @@ def _fmt(alert: dict) -> str:
     carriers = "/".join(alert["carriers"])
     grade = ("✅ CONFIRMED bookable at this price (checkout-grade, just now)"
              if alert.get("confirmed") else "Live search result — confirm at checkout")
-    return (f"SJU → {alert['route']} ({alert['label']}) — ${alert['price']:.0f} RT\n"
-            f"{alert['depart']} → {alert['return']} · {carriers}\n"
-            f"{grade}\nWhy: {alert['reason']}\n"
-            f"Open live fares: {alert['link']}")
+    route = alert["route"]
+    if alert.get("breakdown") or "→" in route:   # build name or origin-keyed leg
+        head = route
+        lines = [f"{head} — ${alert['price']:.0f} RT"]
+    else:
+        head = f"{alert.get('origin', 'SJU')} → {route}"
+        lines = [f"{head} ({alert['label']}) — ${alert['price']:.0f} RT"]
+    if alert.get("breakdown"):
+        lines.append(f"Build: {alert['breakdown']} (book as separate tickets — DOT 24h rule)")
+    lines += [f"{alert['depart']} → {alert['return']} · {carriers}",
+              grade, f"Why: {alert['reason']}"]
+    for leg, url in (alert.get("leg_links") or {"": alert["link"]}).items():
+        lines.append(f"Open live fares{f' {leg}' if leg else ''}: {url}")
+    return "\n".join(lines)
 
 
 def send_telegram(alerts: list[dict]) -> None:
