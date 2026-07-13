@@ -14,11 +14,33 @@ from pathlib import Path
 
 import yaml
 
+import store
 from providers import get_provider
 
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG = yaml.safe_load((ROOT / "config.yaml").read_text())
 HISTORY_PATH = ROOT / "docs" / "data" / "history.json"
+
+# history.json points stay lean (dashboard payload); the full observation
+# including stops/duration/ignav_id goes to SQLite.
+POINT_FIELDS = ("price", "carriers", "link", "confirmed")
+
+
+def persist_offers(conn, origin: str, dest: str, offers: list[dict],
+                   depart: date, ret: date | None, source_job: str) -> None:
+    now = datetime.now(timezone.utc).isoformat(timespec="seconds")
+    for offer in offers:
+        store.record_observation(conn, {
+            **offer,
+            "observed_at": now,
+            "origin": origin,
+            "destination": dest,
+            "trip_type": "round_trip" if ret else "one_way",
+            "depart_date": depart.isoformat(),
+            "return_date": ret.isoformat() if ret else None,
+            "carrier": "/".join(offer.get("carriers") or []) or None,
+            "source_job": source_job,
+        })
 
 
 def sample_departure_dates() -> list[date]:
@@ -52,7 +74,9 @@ def should_alert(entry: dict, price: float, threshold: float) -> str | None:
 
 def run() -> None:
     s = CONFIG["settings"]
-    provider = get_provider(s.get("provider", "ignav"))
+    conn = store.connect()
+    provider = get_provider(s.get("provider", "ignav"),
+                            counter=lambda job, n: store.add_requests(conn, job, n))
     history = load_history()
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
     pending = []
@@ -78,15 +102,22 @@ def run() -> None:
         results = []
         for base in sample_departure_dates():
             depart = base + offset
-            offer = provider.search(origin, code, depart, depart + leg_trip, s)
-            if offer:
-                offer.update({"depart": depart.isoformat(),
-                              "return": (depart + leg_trip).isoformat()})
-                results.append(offer)
+            offers = provider.search(origin, code, depart, depart + leg_trip, s)
+            if offers:
+                persist_offers(conn, origin, code, offers,
+                               depart, depart + leg_trip, "watch")
+                best_of_date = dict(offers[0])
+                best_of_date.update({"depart": depart.isoformat(),
+                                     "return": (depart + leg_trip).isoformat()})
+                results.append(best_of_date)
         if not results:
             continue
         best = min(results, key=lambda r: r["price"])
-        ignav_id = best.pop("ignav_id", None)
+        ignav_id = best.get("ignav_id")
+        self_transfer = best.get("self_transfer", False)
+        best = {f: best[f] for f in (*POINT_FIELDS, "depart", "return")}
+        if self_transfer:
+            best["self_transfer"] = True
         run_best[key] = dict(best)
 
         entry = history["routes"].setdefault(
@@ -178,6 +209,8 @@ def run() -> None:
     history["build_thresholds"] = build_thresholds
     HISTORY_PATH.parent.mkdir(parents=True, exist_ok=True)
     HISTORY_PATH.write_text(json.dumps(history, indent=1))
+    conn.commit()
+    conn.close()
 
     if pending:
         from alerts import dispatch
