@@ -16,6 +16,7 @@ import yaml
 
 import baselines
 import store
+from budget import Budget
 from providers import get_provider
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -81,8 +82,8 @@ def should_alert(entry: dict, price: float, threshold: float) -> str | None:
 def run() -> None:
     s = CONFIG["settings"]
     conn = store.connect()
-    provider = get_provider(s.get("provider", "ignav"),
-                            counter=lambda job, n: store.add_requests(conn, job, n))
+    budget = Budget(conn, CONFIG.get("budget"))
+    provider = get_provider(s.get("provider", "ignav"), counter=budget.counter)
     history = load_history()
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
     pending = []
@@ -155,7 +156,7 @@ def run() -> None:
             entry["floor"] = best["price"]
         if tier:
             # Alert-worthy: spend one extra billable call on an airline-direct link.
-            if ignav_id and hasattr(provider, "booking_link"):
+            if ignav_id and not budget.exhausted and hasattr(provider, "booking_link"):
                 direct = provider.booking_link(ignav_id)
                 if direct:
                     best["link"] = direct
@@ -235,6 +236,8 @@ def run() -> None:
     history["build_thresholds"] = build_thresholds
     HISTORY_PATH.parent.mkdir(parents=True, exist_ok=True)
     HISTORY_PATH.write_text(json.dumps(history, indent=1))
+    budget.check_and_notify()
+    print(f"Budget: {budget.status_line()}")
     conn.commit()
     conn.close()
 

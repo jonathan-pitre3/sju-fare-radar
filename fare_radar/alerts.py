@@ -76,6 +76,19 @@ def _sorted(alerts: list[dict]) -> list[dict]:
                                          a["price"]))
 
 
+def send_telegram_text(text: str) -> None:
+    """Plain-text Telegram message (budget warnings, weekly digest)."""
+    token = os.environ.get("TELEGRAM_BOT_TOKEN")
+    if not token:
+        return
+    resp = requests.post(
+        f"https://api.telegram.org/bot{token}/sendMessage",
+        json={"chat_id": os.environ["TELEGRAM_CHAT_ID"], "text": text[:4000]},
+        timeout=30,
+    )
+    print(f"Telegram dispatch: HTTP {resp.status_code}")
+
+
 def send_telegram(alerts: list[dict], title: str = "✈️ SJU Fare Radar") -> None:
     """Free forever — no Twilio, no per-message cost."""
     token = os.environ.get("TELEGRAM_BOT_TOKEN")

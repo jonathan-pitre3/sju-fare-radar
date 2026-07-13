@@ -1,0 +1,38 @@
+name: SJU Fare Radar — weekly explore
+
+on:
+  schedule:
+    - cron: "0 13 * * 6"      # Saturdays ~09:00 Puerto Rico time
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  explore:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Explore sweep (one-way discovery)
+        env:
+          IGNAV_API_KEY: ${{ secrets.IGNAV_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python fare_radar/explore.py
+
+      - name: Commit updated data
+        run: |
+          git config user.name "fare-radar-bot"
+          git config user.email "actions@github.com"
+          git pull --rebase
+          git add data/fares.db
+          git diff --cached --quiet || git commit -m "radar: weekly explore data $(date -u +'%Y-%m-%d') [skip ci]"
+          git push

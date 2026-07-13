@@ -34,6 +34,33 @@ baselines:
   cooldown_hours: 72         # re-alert same (route, tier) after this long...
   realert_drop_pct: 8        #   ...or sooner if price drops another 8%
 
+# Monthly request-budget guardrail (Ignav bills successful requests only).
+# 80%: one-time Boti warning. 100%: explore/flex/positioning/market jobs
+# pause until next month; the daily watch keeps running.
+budget:
+  monthly_request_cap: 4000   # ≈ $8/month at $2 per 1,000 (first 1,000 free)
+  warn_at_pct: 80
+
+# Weekly "price-first" discovery sweep (explore.yml). One-way searches,
+# 3 goldilocks dates per destination snapped to Tue/Wed departures:
+# short-haul at ~5/9/13 weeks out, long-haul at ~9/18/30 weeks out.
+# Finds go through the tier engine: hot/mistake alert immediately, the rest
+# land in one weekly digest. Hard per-run request cap below.
+explore:
+  enabled: true
+  max_requests_per_run: 160
+  digest_top_n: 12
+  weeks_out:
+    short: [5, 9, 13]
+    long: [9, 18, 30]
+  destinations:
+    short:  # US mainland, Caribbean, Central America / northern South America
+      [MCO, FLL, MIA, JFK, EWR, PHL, BOS, ORD, ATL, IAH, DFW, TPA, MCI, DEN,
+       LAX, LAS, SFO, STT, SXM, PUJ, SDQ, AUA, CUR, SJO, PTY, BOG, MDE, CTG,
+       MEX, CUN, LIM, UIO, YYZ, YUL]
+    long:   # Europe + long-haul
+      [MAD, BCN, LIS, CDG, FCO, AMS, LHR, DUB, ZRH, KEF, GRU, EZE, SCL, CMN]
+
 # Dashboard color-coding: destination airport → region. Routes, legs, and
 # builds inherit the color of where they're ultimately headed.
 regions:
