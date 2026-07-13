@@ -55,7 +55,7 @@
 <header>
   <div class="eyebrow">Luis Muñoz Marín Intl · 18.4394°N 66.0018°W</div>
   <h1>SJU Fare <span class="thin">Radar</span></h1>
-  <p class="sub">Live round-trip fares scanned twice daily via Amadeus · every link opens a <b>live Google Flights query</b> · last sweep: <b id="updated">—</b></p>
+  <p class="sub">Live round-trip fares via the <b>Ignav API</b> · daily sweep ~08:00 PR, two departure windows per route (~2 &amp; ~10 weeks out, 7-day trips) · every link opens <b>live bookable prices</b> · last sweep: <b id="updated">—</b></p>
 </header>
 <main>
   <div class="board">
@@ -70,8 +70,11 @@
   </section>
 </main>
 <footer>
-  Prices are dated leads from live Amadeus queries — the fare at your checkout screen is the only guarantee.
-  Thresholds live in <span style="font-family:'IBM Plex Mono',monospace">config.yaml</span>; strategy &amp; heuristics in the companion MD playbook.
+  Prices are live Ignav queries captured at scan time (✓ = checkout-verified when scanned) — the fare at
+  your checkout screen is the only guarantee. Alerts fire on Telegram when a fare beats its target or sets
+  a new floor (24 h cooldown), and link airline-direct when Ignav can build the link, otherwise to a live
+  Google Flights query. Thresholds live in <span style="font-family:'IBM Plex Mono',monospace">config.yaml</span>;
+  strategy &amp; heuristics in the companion MD playbook.
 </footer>
 <script>
 const THRESHOLDS = {}; // filled from history floor context; flags computed vs. alert history
@@ -87,9 +90,9 @@ function spark(points){
 }
 
 function flag(price, floor, threshold){
-  if(threshold != null && price <= threshold) return ['go','BELOW FLOOR'];
-  if(floor != null && price <= floor * 1.1) return ['watch','WATCH'];
-  return ['high','HIGH'];
+  if(threshold != null && price <= threshold) return ['go','BELOW TARGET'];
+  if(floor != null && price <= floor * 1.1) return ['watch','NEAR FLOOR'];
+  return ['high','ABOVE TARGET'];
 }
 
 async function load(){
@@ -123,7 +126,7 @@ async function load(){
   const alerts = (data.alerts || []).slice(0, 12).map(a => `
     <div class="alert">
       <time>${new Date(a.at).toLocaleString()}</time>
-      <b>SJU → ${a.route}</b> $${Math.round(a.price)} RT (${a.depart} → ${a.return}) — ${a.reason}.
+      <b>SJU → ${a.route}</b> $${Math.round(a.price)} RT (${a.depart} → ${a.return}) — ${a.reason}.${a.confirmed ? ' <span style="color:var(--go)">✓ verified at scan</span>' : ''}
       <a href="${a.link}" target="_blank" rel="noopener">Open live fares ↗</a>
     </div>`).join('');
   if(alerts) document.getElementById('alerts').innerHTML = alerts;
