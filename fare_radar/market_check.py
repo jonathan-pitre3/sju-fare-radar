@@ -15,6 +15,7 @@ from __future__ import annotations
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
+import requests
 import yaml
 
 import store
@@ -23,6 +24,25 @@ from providers import get_provider
 
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG = yaml.safe_load((ROOT / "config.yaml").read_text())
+
+
+def usd_rates() -> dict[str, float]:
+    """USD→X exchange rates (free, keyless). Empty dict on failure — the
+    caller then skips any comparison that needs conversion."""
+    try:
+        resp = requests.get("https://open.er-api.com/v6/latest/USD", timeout=30)
+        if resp.status_code == 200:
+            return resp.json().get("rates") or {}
+    except requests.RequestException:
+        pass
+    return {}
+
+
+def to_usd(price: float, currency: str, rates: dict[str, float]) -> float | None:
+    if currency == "USD":
+        return price
+    rate = rates.get(currency)
+    return price / rate if rate else None
 
 
 def rotation(all_routes: list[str], per_run: int, conn) -> list[str]:
@@ -64,6 +84,7 @@ def run() -> None:
     spent_before = budget.spent
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
 
+    rates = usd_rates()
     flagged = []
     for dest in picked:
         if budget.spent - spent_before >= max_requests or budget.exhausted:
@@ -84,20 +105,21 @@ def run() -> None:
         if not (us and local):
             continue
         us_best, local_best = us[0], local[0]
-        if us_best["currency"] != local_best["currency"]:
-            print(f"  {dest}: currency mismatch "
-                  f"({us_best['currency']} vs {local_best['currency']}), skipped")
+        # Local-market fares come back in the market's currency; convert.
+        local_usd = to_usd(local_best["price"], local_best["currency"], rates)
+        if local_usd is None:
+            print(f"  {dest}: no USD rate for {local_best['currency']}, skipped")
             continue
-        if local_best["price"] <= us_best["price"] * (1 - beat):
-            pct = round(100 * (us_best["price"] - local_best["price"])
-                        / us_best["price"])
-            flagged.append(f"{dest}: ${local_best['price']:.0f} sold from "
-                           f"{markets[dest]} vs ${us_best['price']:.0f} from US "
-                           f"(-{pct}%)")
+        if local_usd <= us_best["price"] * (1 - beat):
+            pct = round(100 * (us_best["price"] - local_usd) / us_best["price"])
+            flagged.append(f"{dest}: ≈${local_usd:.0f} "
+                           f"({local_best['price']:.0f} {local_best['currency']}) "
+                           f"sold from {markets[dest]} vs ${us_best['price']:.0f} "
+                           f"from US (-{pct}%)")
             print(f"  {dest}: POS discrepancy -{pct}%")
         else:
             print(f"  {dest}: US ${us_best['price']:.0f} / "
-                  f"{markets[dest]} ${local_best['price']:.0f} — no edge")
+                  f"{markets[dest]} ≈${local_usd:.0f} — no edge")
 
     if flagged:
         from alerts import send_telegram_text

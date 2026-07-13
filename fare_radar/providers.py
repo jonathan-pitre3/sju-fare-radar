@@ -143,11 +143,12 @@ class IgnavProvider:
 
     def search(self, origin, dest, depart: date, ret: date, settings,
                market: str | None = None) -> list[dict]:
+        # NB: no `currency` field exists — currency follows `market`
+        # (verified against ignav.com/docs/one-way 2026-07-13 after a 400).
         payload = {"origin": origin, "destination": dest,
                    "departure_date": depart.isoformat(),
                    "return_date": ret.isoformat(),
                    "adults": settings["adults"],
-                   "currency": settings.get("currency", "USD"),
                    "allow_self_transfer": bool(settings.get("allow_self_transfer", True))}
         if market:
             payload["market"] = market
@@ -160,7 +161,6 @@ class IgnavProvider:
         payload = {"origin": origin, "destination": dest,
                    "departure_date": depart.isoformat(),
                    "adults": settings["adults"],
-                   "currency": settings.get("currency", "USD"),
                    "allow_self_transfer": bool(settings.get("allow_self_transfer", True))}
         if market:
             payload["market"] = market
