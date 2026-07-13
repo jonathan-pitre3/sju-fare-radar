@@ -9,7 +9,7 @@ settings:
   adults: 1
   trip_length_days: 7        # default RT length sampled
   scan_horizon_days: 120     # how far ahead to look
-  samples_per_run: 2         # 30 entries x 2 x 1 run/day = ~1,825 searches/mo (+1 booking-link call per alert).
+  samples_per_run: 2         # 32 entries x 2 x 1 run/day = ~1,950 searches/mo (+1 booking-link call per alert).
                              # Ignav's 1,000 free requests are a ONE-TIME credit; after it: $2 per 1,000
                              # successful (HTTP 200) API calls — an API call, not a link click. This config
                              # costs ~$3.65/month. Dials to cut cost: fewer routes, samples_per_run: 1,
@@ -17,6 +17,14 @@ settings:
   alert_cooldown_hours: 24   # don't repeat identical alerts within this window
   provider: ignav            # ignav (default, free tier) | amadeus (LEGACY - self-service keys die 2026-07-17)
   amadeus_env: production    # only used if provider: amadeus
+
+# Dashboard color-coding: destination airport → region. Routes, legs, and
+# builds inherit the color of where they're ultimately headed.
+regions:
+  latam: [BOG, MDE, CUN, SDQ, LIM, SJO]          # yellow
+  europe: [MAD, FCO, LIS, KEF, LHR, FRA, DUB, CDG, MXP, PRG, BUD, WAW]  # cyan
+  asia: [NRT, HKG, SIN, ICN, SGN, BKK, TPE, PVG] # violet
+  north_america: [BWI, LAX, EWR]                 # green
 
 routes:
   - code: MAD
@@ -50,6 +58,9 @@ routes:
   - code: SDQ
     label: "Santo Domingo, Dominican Republic"
     alert_below: 130          # short hop; also Arajet's hub (future LatAm builds)
+  - code: SJO
+    label: "San José, Costa Rica"
+    alert_below: 330          # Avianca/Copa via connections; sales dip ~$300
   - code: LIM
     label: "Lima, Peru"
     alert_below: 400          # Run 002: $160 OW floor → ~$350-400 RT target

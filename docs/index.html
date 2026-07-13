@@ -28,6 +28,13 @@
   .row{background:var(--panel);border-top:1px solid var(--line);transition:background .15s}
   .row:hover{background:#134050}
   .dest{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:600;letter-spacing:.02em}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;vertical-align:2px;background:var(--sand-dim)}
+  .dot.latam{background:#E8B84B}
+  .dot.europe{background:#7FD4E8}
+  .dot.asia{background:#CE93E8}
+  .dot.north_america{background:#37D98A}
+  .legend{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--sand-dim);margin-top:8px}
+  .legend span{margin-right:16px;white-space:nowrap}
   .dest small{display:block;font-family:'IBM Plex Sans',sans-serif;font-size:11px;font-weight:400;color:var(--sand-dim);letter-spacing:0}
   .price{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600}
   .dates,.floor{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--sand-dim)}
@@ -56,6 +63,12 @@
   <div class="eyebrow">Luis Muñoz Marín Intl · 18.4394°N 66.0018°W</div>
   <h1>SJU Fare <span class="thin">Radar</span></h1>
   <p class="sub">Live round-trip fares via the <b>Ignav API</b> · daily sweep ~08:00 PR, two departure windows per route (~2 &amp; ~10 weeks out, 7-day trips) · every link opens <b>live bookable prices</b> · last sweep: <b id="updated">—</b></p>
+  <p class="legend">
+    <span><i class="dot latam"></i>Latin America &amp; Caribbean</span>
+    <span><i class="dot europe"></i>Europe</span>
+    <span><i class="dot asia"></i>Asia</span>
+    <span><i class="dot north_america"></i>North America (hubs)</span>
+  </p>
 </header>
 <main>
   <section id="sec-destination">
@@ -146,7 +159,7 @@ async function load(){
     const recent = pts.slice(-14).map(p => p.price);
     const swing = recent.length > 1 ? Math.round(Math.max(...recent) - Math.min(...recent)) : null;
     (groups[r.kind] || groups.destination).push(`<div class="row">
-      <div class="dest">${code}<small>${r.label}</small></div>
+      <div class="dest"><i class="dot ${r.region || ''}"></i>${code}<small>${r.label}</small></div>
       <div class="price">$${Math.round(latest.price)}</div>
       <div class="dates">${latest.depart}<br>${latest.return}</div>
       <div><span class="flag ${cls}">${label}</span></div>
@@ -168,7 +181,7 @@ async function load(){
     const [cls, label] = flag(latest.price, b.floor, th);
     const save = latest.direct != null ? latest.direct - latest.price : null;
     return `<div class="row">
-      <div class="dest">${name}<small>${(b.legs || []).join(' + ')}</small></div>
+      <div class="dest"><i class="dot ${b.region || ''}"></i>${name}<small>${(b.legs || []).join(' + ')}</small></div>
       <div class="price">$${Math.round(latest.price)}</div>
       <div class="price" style="color:var(--sand-dim)">${latest.direct != null ? '$' + Math.round(latest.direct) : '—'}</div>
       <div><span class="flag ${cls}">${label}</span></div>

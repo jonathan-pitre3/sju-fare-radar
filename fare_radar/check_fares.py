@@ -58,6 +58,9 @@ def run() -> None:
     pending = []
     thresholds = {}
 
+    region_of = {code: reg for reg, codes in CONFIG.get("regions", {}).items()
+                 for code in codes}
+
     run_best = {}
     tagged = ([(r, "destination") for r in CONFIG["routes"]] +
               [(r, "positioning" if r.get("origin", s["origin"]) == s["origin"]
@@ -91,6 +94,7 @@ def run() -> None:
         entry["label"] = label
         entry["origin"] = origin
         entry["kind"] = kind
+        entry["region"] = region_of.get(code, "other")
         entry["points"].append({"at": now, **best})
         entry["points"] = entry["points"][-500:]
 
@@ -129,7 +133,9 @@ def run() -> None:
 
         entry = history.setdefault("builds", {}).setdefault(
             name, {"floor": None, "points": [], "last_alert": None})
-        entry.update({"legs": legs, "versus": build.get("versus")})
+        final_dest = (build.get("versus") or legs[-1]).split("→")[-1].rstrip("+")
+        entry.update({"legs": legs, "versus": build.get("versus"),
+                      "region": region_of.get(final_dest, "other")})
         entry["points"].append({"at": now, "price": combined, "direct": direct})
         entry["points"] = entry["points"][-500:]
 
