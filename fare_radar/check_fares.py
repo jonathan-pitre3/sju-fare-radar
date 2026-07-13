@@ -14,6 +14,7 @@ from pathlib import Path
 
 import yaml
 
+import baselines
 import store
 from providers import get_provider
 
@@ -22,8 +23,13 @@ CONFIG = yaml.safe_load((ROOT / "config.yaml").read_text())
 HISTORY_PATH = ROOT / "docs" / "data" / "history.json"
 
 # history.json points stay lean (dashboard payload); the full observation
-# including stops/duration/ignav_id goes to SQLite.
-POINT_FIELDS = ("price", "carriers", "link", "confirmed")
+# including duration/ignav_id goes to SQLite.
+POINT_FIELDS = ("price", "carriers", "link", "confirmed", "stops")
+
+
+def tier_reason(price: float, stats: dict) -> str:
+    pct = round(100 * (price - stats["median"]) / stats["median"])
+    return f"${price:.0f} — typically ~${stats['median']:.0f} ({pct:+d}%)"
 
 
 def persist_offers(conn, origin: str, dest: str, offers: list[dict],
@@ -129,24 +135,43 @@ def run() -> None:
         entry["points"].append({"at": now, **best})
         entry["points"] = entry["points"][-500:]
 
-        reason = should_alert(entry, best["price"], route["alert_below"])
+        # Tiered alerts against the route baseline; static threshold + floor
+        # logic remains the fallback until the route has enough history.
+        bl_cfg = CONFIG.get("baselines", {})
+        stats = baselines.route_stats(conn, origin, code, "round_trip", bl_cfg)
+        tier = reason = None
+        if stats["ready"]:
+            tier = baselines.classify(best["price"], stats, bl_cfg)
+            if tier:
+                if baselines.should_send(conn, key, tier, best["price"], bl_cfg):
+                    reason = tier_reason(best["price"], stats)
+                else:
+                    print(f"  {tier} ${best['price']} — in cooldown, skipped")
+                    tier = None
+        else:
+            reason = should_alert(entry, best["price"], route["alert_below"])
+            tier = "legacy" if reason else None
         if entry["floor"] is None or best["price"] < entry["floor"]:
             entry["floor"] = best["price"]
-        if reason:
+        if tier:
             # Alert-worthy: spend one extra billable call on an airline-direct link.
             if ignav_id and hasattr(provider, "booking_link"):
                 direct = provider.booking_link(ignav_id)
                 if direct:
                     best["link"] = direct
             alert = {"at": now, "route": key, "label": label, "origin": origin,
-                     "price": best["price"], "reason": reason,
+                     "price": best["price"], "reason": reason, "tier": tier,
+                     "typical": stats["median"] if stats["ready"] else None,
+                     "self_transfer": bool(best.get("self_transfer")),
                      "confirmed": bool(best.get("confirmed")),
                      "depart": best["depart"], "return": best["return"],
+                     "stops": best.get("stops"),
                      "carriers": best["carriers"], "link": best["link"]}
             entry["last_alert"] = {"at": now, "price": best["price"]}
+            store.record_alert(conn, key, tier, best["price"], now)
             history["alerts"] = ([alert] + history.get("alerts", []))[:100]
             pending.append(alert)
-            print(f"  ALERT: ${best['price']} — {reason}")
+            print(f"  ALERT [{tier}]: ${best['price']} — {reason}")
         else:
             print(f"  best ${best['price']} ({best['depart']})")
 
@@ -183,6 +208,7 @@ def run() -> None:
         if reason:
             first = run_best[legs[0]]
             alert = {"at": now, "route": name, "label": name, "origin": s["origin"],
+                     "tier": "legacy", "self_transfer": True,
                      "price": combined, "reason": reason + vs,
                      "confirmed": all(run_best[l].get("confirmed") for l in legs),
                      "depart": first["depart"], "return": first["return"],

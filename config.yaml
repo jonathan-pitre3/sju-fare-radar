@@ -17,6 +17,22 @@ settings:
   alert_cooldown_hours: 24   # don't repeat identical alerts within this window
   provider: ignav            # ignav (default, free tier) | amadeus (LEGACY - self-service keys die 2026-07-17)
   amadeus_env: production    # only used if provider: amadeus
+  allow_self_transfer: true  # sent explicitly on every Ignav search; self-transfer
+                             # itineraries are labeled "separate tickets" in alerts
+
+# Percentile baselines + tiered alerts. A route's tiers activate once it has
+# >= min_observations spanning >= min_span_days inside the rolling window;
+# until then the static alert_below threshold + floor logic applies.
+baselines:
+  window_days: 120           # rolling observation window
+  min_observations: 20       # gate before percentile tiers activate
+  min_span_days: 21          #   ... and history must span at least this long
+  deal_percentile: 25        # 💰 deal: price < p25 → goes into the normal digest
+  hot_percentile: 10         # 🔥 hot deal: price < p10 → immediate, distinct format
+  mistake_median_ratio: 0.45 # 🚨 possible mistake fare: price < 45% of median...
+  mistake_min_obs: 30        #   ...and only with at least this many observations
+  cooldown_hours: 72         # re-alert same (route, tier) after this long...
+  realert_drop_pct: 8        #   ...or sooner if price drops another 8%
 
 # Dashboard color-coding: destination airport → region. Routes, legs, and
 # builds inherit the color of where they're ultimately headed.
