@@ -8,6 +8,12 @@ on:
 permissions:
   contents: write
 
+# Serialized with radar.yml: both commit data/fares.db (binary, unmergeable),
+# so they must never run concurrently.
+concurrency:
+  group: fare-data-commits
+  cancel-in-progress: false
+
 jobs:
   explore:
     runs-on: ubuntu-latest
