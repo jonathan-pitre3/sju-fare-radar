@@ -1,0 +1,28 @@
+name: SJU Fare Radar — Telegram commands
+
+on:
+  schedule:
+    - cron: "17 */2 * * *"    # every 2 hours; replies are read-only, no commit
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  commands:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Answer Telegram commands
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python fare_radar/telegram_commands.py
