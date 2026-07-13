@@ -227,6 +227,17 @@
      "confirmed": true,
      "depart": "2026-09-24",
      "return": "2026-10-01"
+    },
+    {
+     "at": "2026-07-13T14:19:36+00:00",
+     "price": 748.0,
+     "carriers": [
+      "IB"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null
@@ -460,6 +471,18 @@
      "confirmed": true,
      "depart": "2026-09-24",
      "return": "2026-10-01"
+    },
+    {
+     "at": "2026-07-13T14:19:36+00:00",
+     "price": 1001.0,
+     "carriers": [
+      "DL",
+      "IB"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null
@@ -691,6 +714,19 @@
      "confirmed": true,
      "depart": "2026-09-24",
      "return": "2026-10-01"
+    },
+    {
+     "at": "2026-07-13T14:19:36+00:00",
+     "price": 2023.0,
+     "carriers": [
+      "IB",
+      "QR",
+      "UA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null
@@ -922,6 +958,18 @@
      "confirmed": true,
      "depart": "2026-09-24",
      "return": "2026-10-01"
+    },
+    {
+     "at": "2026-07-13T14:19:36+00:00",
+     "price": 378.0,
+     "carriers": [
+      "AV",
+      "CM"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null
@@ -1151,6 +1199,18 @@
      "confirmed": true,
      "depart": "2026-09-24",
      "return": "2026-10-01"
+    },
+    {
+     "at": "2026-07-13T14:19:36+00:00",
+     "price": 306.0,
+     "carriers": [
+      "AA",
+      "WN"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null
@@ -1382,6 +1442,18 @@
      "confirmed": true,
      "depart": "2026-09-24",
      "return": "2026-10-01"
+    },
+    {
+     "at": "2026-07-13T14:19:36+00:00",
+     "price": 409.0,
+     "carriers": [
+      "CM",
+      "UA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null
@@ -1413,6 +1485,19 @@
      "confirmed": true,
      "depart": "2026-09-24",
      "return": "2026-10-01"
+    },
+    {
+     "at": "2026-07-13T14:19:36+00:00",
+     "price": 818.0,
+     "carriers": [
+      "B6",
+      "IB",
+      "TP"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20LIS%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null
@@ -1444,6 +1529,17 @@
      "confirmed": true,
      "depart": "2026-09-24",
      "return": "2026-10-01"
+    },
+    {
+     "at": "2026-07-13T14:19:36+00:00",
+     "price": 300.0,
+     "carriers": [
+      "CM"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MDE%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": {
@@ -1453,7 +1549,7 @@
   },
   "LIM": {
    "label": "Lima, Peru",
-   "floor": 309.0,
+   "floor": 296.0,
    "points": [
     {
      "at": "2026-07-12T03:12:11+00:00",
@@ -1476,11 +1572,23 @@
      "confirmed": true,
      "depart": "2026-09-24",
      "return": "2026-10-01"
+    },
+    {
+     "at": "2026-07-13T14:19:36+00:00",
+     "price": 296.0,
+     "carriers": [
+      "AV",
+      "CM"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20LIM%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": {
-    "at": "2026-07-12T03:12:11+00:00",
-    "price": 309.0
+    "at": "2026-07-13T14:19:36+00:00",
+    "price": 296.0
    }
   },
   "LAX": {
@@ -1509,12 +1617,38 @@
      "confirmed": true,
      "depart": "2026-09-24",
      "return": "2026-10-01"
+    },
+    {
+     "at": "2026-07-13T14:19:36+00:00",
+     "price": 400.0,
+     "carriers": [
+      "DL"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20LAX%20on%202026-09-25%20through%202026-10-02",
+     "confirmed": true,
+     "depart": "2026-09-25",
+     "return": "2026-10-02"
     }
    ],
    "last_alert": null
   }
  },
  "alerts": [
+  {
+   "at": "2026-07-13T14:19:36+00:00",
+   "route": "LIM",
+   "label": "Lima, Peru",
+   "price": 296.0,
+   "reason": "below your $400 threshold",
+   "confirmed": true,
+   "depart": "2026-09-25",
+   "return": "2026-10-02",
+   "carriers": [
+    "AV",
+    "CM"
+   ],
+   "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20LIM%20on%202026-09-25%20through%202026-10-02"
+  },
   {
    "at": "2026-07-12T13:06:14+00:00",
    "route": "MDE",
@@ -1570,5 +1704,5 @@
   "BWI": 160,
   "LAX": 250
  },
- "updated_at": "2026-07-12T13:06:14+00:00"
+ "updated_at": "2026-07-13T14:19:36+00:00"
 }
