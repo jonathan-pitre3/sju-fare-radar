@@ -59,7 +59,10 @@ def run() -> None:
     thresholds = {}
 
     run_best = {}
-    for route in CONFIG["routes"] + CONFIG.get("split_legs", []):
+    tagged = ([(r, "destination") for r in CONFIG["routes"]] +
+              [(r, "positioning" if r.get("origin", s["origin"]) == s["origin"]
+                   else "connector") for r in CONFIG.get("split_legs", [])])
+    for route, kind in tagged:
         code, label = route["code"], route["label"]
         origin = route.get("origin", s["origin"])
         key = route.get("key") or (code if origin == s["origin"] else f"{origin}→{code}")
@@ -87,6 +90,7 @@ def run() -> None:
             key, {"label": label, "floor": None, "points": [], "last_alert": None})
         entry["label"] = label
         entry["origin"] = origin
+        entry["kind"] = kind
         entry["points"].append({"at": now, **best})
         entry["points"] = entry["points"][-500:]
 
@@ -133,6 +137,12 @@ def run() -> None:
         if entry["floor"] is None or combined < entry["floor"]:
             entry["floor"] = combined
         vs = f" vs ${direct:.0f} direct" if direct else ""
+        suppressed = False
+        if reason and direct is not None and combined >= direct:
+            # A build that doesn't beat the single ticket isn't actionable.
+            print(f"Build {name}: ${combined}{vs} — {reason}, "
+                  f"suppressed (direct is cheaper)")
+            reason, suppressed = None, True
         if reason:
             first = run_best[legs[0]]
             alert = {"at": now, "route": name, "label": name, "origin": s["origin"],
@@ -147,7 +157,7 @@ def run() -> None:
             history["alerts"] = ([alert] + history.get("alerts", []))[:100]
             pending.append(alert)
             print(f"Build {name}: ALERT ${combined}{vs} — {reason}")
-        else:
+        elif not suppressed:
             print(f"Build {name}: ${combined}{vs}")
 
     # Drop history for routes/builds removed from config so the dashboard

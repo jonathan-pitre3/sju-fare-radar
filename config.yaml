@@ -47,6 +47,9 @@ routes:
     label: "Cancún, Mexico"
     alert_below: 280          # Run 002: JetBlue $274 RT
     cheap_months: [4]
+  - code: SDQ
+    label: "Santo Domingo, Dominican Republic"
+    alert_below: 130          # short hop; also Arajet's hub (future LatAm builds)
   - code: LIM
     label: "Lima, Peru"
     alert_below: 400          # Run 002: $160 OW floor → ~$350-400 RT target

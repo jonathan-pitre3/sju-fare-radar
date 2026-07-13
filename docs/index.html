@@ -58,12 +58,33 @@
   <p class="sub">Live round-trip fares via the <b>Ignav API</b> · daily sweep ~08:00 PR, two departure windows per route (~2 &amp; ~10 weeks out, 7-day trips) · every link opens <b>live bookable prices</b> · last sweep: <b id="updated">—</b></p>
 </header>
 <main>
-  <div class="board">
-    <div class="board-head">
-      <span>Destination</span><span>Best fare</span><span>Dates</span><span>Status</span><span>90-day trend</span><span></span>
+  <section id="sec-destination">
+    <h2>Destinations · direct round trips</h2>
+    <div class="board">
+      <div class="board-head">
+        <span>Destination</span><span>Best fare</span><span>Dates</span><span>Status</span><span>90-day trend</span><span></span>
+      </div>
+      <div id="rows-destination"><div class="empty">No sweep data yet.<br>Run the workflow once (Actions → SJU Fare Radar → Run workflow) and refresh.</div></div>
     </div>
-    <div id="rows"><div class="empty">No sweep data yet.<br>Run the workflow once (Actions → SJU Fare Radar → Run workflow) and refresh.</div></div>
-  </div>
+  </section>
+  <section id="sec-positioning" style="display:none">
+    <h2>Positioning legs · SJU → hub (build ingredients)</h2>
+    <div class="board">
+      <div class="board-head">
+        <span>Leg</span><span>Best fare</span><span>Dates</span><span>Status</span><span>90-day trend</span><span></span>
+      </div>
+      <div id="rows-positioning"></div>
+    </div>
+  </section>
+  <section id="sec-connector" style="display:none">
+    <h2>Connecting hops · hub → onward (next-day departure)</h2>
+    <div class="board">
+      <div class="board-head">
+        <span>Leg</span><span>Best fare</span><span>Dates</span><span>Status</span><span>90-day trend</span><span></span>
+      </div>
+      <div id="rows-connector"></div>
+    </div>
+  </section>
   <section id="builds-section" style="display:none">
     <h2>Split builds vs direct</h2>
     <div class="board">
@@ -115,24 +136,29 @@ async function load(){
   document.getElementById('updated').textContent =
     data.updated_at ? new Date(data.updated_at).toLocaleString() : '—';
 
-  const rows = Object.entries(data.routes || {}).map(([code, r]) => {
+  const groups = {destination: [], positioning: [], connector: []};
+  for(const [code, r] of Object.entries(data.routes || {})){
     const pts = r.points || [];
     const latest = pts[pts.length - 1];
-    if(!latest) return '';
+    if(!latest) continue;
     const th = (data.thresholds || {})[code];
     const [cls, label] = flag(latest.price, r.floor, th);
     const recent = pts.slice(-14).map(p => p.price);
     const swing = recent.length > 1 ? Math.round(Math.max(...recent) - Math.min(...recent)) : null;
-    return `<div class="row">
+    (groups[r.kind] || groups.destination).push(`<div class="row">
       <div class="dest">${code}<small>${r.label}</small></div>
       <div class="price">$${Math.round(latest.price)}</div>
       <div class="dates">${latest.depart}<br>${latest.return}</div>
       <div><span class="flag ${cls}">${label}</span></div>
       <div class="spark-cell">${spark(pts.slice(-24))}<span class="floor">floor $${Math.round(r.floor)}${swing != null ? ' · swing $' + swing : ''}</span></div>
       <a class="book" href="${latest.link}" target="_blank" rel="noopener">Open live fares ↗</a>
-    </div>`;
-  }).join('');
-  if(rows) document.getElementById('rows').innerHTML = rows;
+    </div>`);
+  }
+  for(const [kind, rows] of Object.entries(groups)){
+    if(!rows.length) continue;
+    document.getElementById('rows-' + kind).innerHTML = rows.join('');
+    document.getElementById('sec-' + kind).style.display = '';
+  }
 
   const builds = Object.entries(data.builds || {}).map(([name, b]) => {
     const pts = b.points || [];
