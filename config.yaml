@@ -9,10 +9,11 @@ settings:
   adults: 1
   trip_length_days: 7        # default RT length sampled
   scan_horizon_days: 120     # how far ahead to look
-  samples_per_run: 2         # 10 routes x 2 x 1 run/day = ~600 searches/mo (+1 booking-link call per alert).
-                             # NOTE: Ignav's "first 1,000 requests free" reads as a one-time credit, not
-                             # monthly (FAQ doesn't say; confirm at gus@ignav.com). After it: $2 per 1,000,
-                             # so this config costs roughly $1.30/month. Only HTTP 200s are billed.
+  samples_per_run: 2         # 26 routes x 2 x 1 run/day = ~1,580 searches/mo (+1 booking-link call per alert).
+                             # Ignav's 1,000 free requests are a ONE-TIME credit; after it: $2 per 1,000
+                             # successful (HTTP 200) API calls — an API call, not a link click. This config
+                             # costs ~$3.20/month. Dials to cut cost: fewer routes, samples_per_run: 1,
+                             # every-other-day cron, or route rotation.
   alert_cooldown_hours: 24   # don't repeat identical alerts within this window
   provider: ignav            # ignav (default, free tier) | amadeus (LEGACY - self-service keys die 2026-07-17)
   amadeus_env: production    # only used if provider: amadeus
@@ -54,6 +55,59 @@ routes:
     label: "Baltimore, USA"
     alert_below: 160          # Run 000: Frontier $150 RT
     cheap_months: [1, 2]
+
+  # --- Asia expansion (2026-07-13). Targets are provisional "great deal" levels;
+  # --- the radar self-calibrates via observed floors after the first scans.
+  - code: HKG
+    label: "Hong Kong"
+    alert_below: 900
+  - code: SIN
+    label: "Singapore"
+    alert_below: 1000
+  - code: ICN
+    label: "Seoul, South Korea"
+    alert_below: 950
+  - code: SGN
+    label: "Ho Chi Minh City, Vietnam"
+    alert_below: 1000
+  - code: BKK
+    label: "Bangkok, Thailand"
+    alert_below: 950
+  - code: TPE
+    label: "Taipei, Taiwan"
+    alert_below: 950
+  - code: PVG
+    label: "Shanghai, China"
+    alert_below: 900
+
+  # --- Europe expansion (2026-07-13)
+  - code: KEF
+    label: "Reykjavík, Iceland"
+    alert_below: 500
+  - code: LHR
+    label: "London, UK"
+    alert_below: 600
+  - code: FRA
+    label: "Frankfurt, Germany"
+    alert_below: 600
+  - code: DUB
+    label: "Dublin, Ireland"
+    alert_below: 550
+  - code: CDG
+    label: "Paris, France"
+    alert_below: 600
+  - code: MXP
+    label: "Milan, Italy"
+    alert_below: 620
+  - code: WAW
+    label: "Warsaw, Poland"
+    alert_below: 650
+  - code: BUD
+    label: "Budapest, Hungary"
+    alert_below: 700
+  - code: PRG
+    label: "Prague, Czechia"
+    alert_below: 700
 
 # Positioning legs monitored for the Tokyo split build (Step 5a):
 split_legs:
