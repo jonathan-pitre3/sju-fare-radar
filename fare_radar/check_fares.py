@@ -319,6 +319,26 @@ def run() -> None:
         history["builds"] = {k: v for k, v in history["builds"].items()
                              if k in build_thresholds}
 
+    # Dashboard payload: per-route baseline stats + a 60-day daily-min spark
+    # series, computed from SQLite at build time.
+    bl_cfg = CONFIG.get("baselines", {})
+    spark_cutoff = (date.today() - timedelta(days=60)).isoformat()
+    for key, entry in history["routes"].items():
+        origin_e = key.split("→")[0] if "→" in key else entry.get("origin", s["origin"])
+        dest_e = (key.split("→")[-1] if "→" in key else key).rstrip("+")
+        rstats = baselines.route_stats(conn, origin_e, dest_e, "round_trip", bl_cfg)
+        latest = entry["points"][-1] if entry.get("points") else None
+        delta = (round(100 * (latest["price"] - rstats["median"]) / rstats["median"])
+                 if latest and rstats["median"] else None)
+        entry["stats"] = {"median": rstats["median"], "p25": rstats["p25"],
+                          "p10": rstats["p10"], "n": rstats["n_observations"],
+                          "ready": rstats["ready"], "delta_pct": delta}
+        entry["spark60"] = [r["p"] for r in conn.execute(
+            "SELECT substr(observed_at, 1, 10) AS d, MIN(price) AS p "
+            "FROM fare_observations WHERE origin = ? AND destination = ? "
+            "AND trip_type = 'round_trip' AND observed_at >= ? "
+            "GROUP BY d ORDER BY d", (origin_e, dest_e, spark_cutoff))]
+
     history["updated_at"] = now
     history["thresholds"] = thresholds
     history["build_thresholds"] = build_thresholds

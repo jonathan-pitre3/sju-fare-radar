@@ -23,7 +23,11 @@
   .sub b{color:var(--sand)}
   main{max-width:980px;margin:18px auto 60px;padding:0 20px}
   .board{border:1px solid var(--line);border-radius:10px;overflow:hidden}
-  .board-head,.row{display:grid;grid-template-columns:1.5fr .7fr .9fr .6fr 1fr .9fr;gap:10px;align-items:center;padding:12px 16px}
+  .board-head,.row{display:grid;grid-template-columns:1.5fr .65fr .75fr .8fr .6fr 1fr .9fr;gap:10px;align-items:center;padding:12px 16px}
+  .board.six .board-head,.board.six .row{grid-template-columns:1.5fr .7fr .9fr .6fr 1fr .9fr}
+  .typ{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--sand-dim)}
+  .typ b{font-size:15px;color:var(--sand)}
+  .typ .up{color:var(--high)} .typ .down{color:var(--go)}
   .board-head{background:var(--panel-2);font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--sand-dim)}
   .row{background:var(--panel);border-top:1px solid var(--line);transition:background .15s}
   .row:hover{background:#134050}
@@ -63,7 +67,7 @@
 <header>
   <div class="eyebrow">Luis Muñoz Marín Intl · 18.4394°N 66.0018°W</div>
   <h1>SJU Fare <span class="thin">Radar</span></h1>
-  <p class="sub">Live round-trip fares via the <b>Ignav API</b> · daily sweep ~08:00 PR, two departure windows per route (~2 &amp; ~10 weeks out, 7-day trips) · every link opens <b>live bookable prices</b> · last sweep: <b id="updated">—</b></p>
+  <p class="sub">Live round-trip fares via the <b>Ignav API</b> · daily sweep ~08:00 PR · typical price = 120-day median; alerts tier off the route's own percentiles (💰 &lt;p25 · 🔥 &lt;p10 · 🚨 possible mistake fare) · every link opens <b>live bookable prices</b> · last sweep: <b id="updated">—</b></p>
   <p class="legend">
     <span><i class="dot latam"></i>Latin America &amp; Caribbean</span>
     <span><i class="dot europe"></i>Europe</span>
@@ -76,7 +80,7 @@
     <h2>Destinations · direct round trips</h2>
     <div class="board">
       <div class="board-head">
-        <span>Destination</span><span>Best fare</span><span>Dates</span><span>Status</span><span>90-day trend</span><span></span>
+        <span>Destination</span><span>Best fare</span><span>Typical</span><span>Dates</span><span>Status</span><span>60-day trend</span><span></span>
       </div>
       <div id="rows-destination"><div class="empty">No sweep data yet.<br>Run the workflow once (Actions → SJU Fare Radar → Run workflow) and refresh.</div></div>
     </div>
@@ -85,7 +89,7 @@
     <h2>Positioning legs · SJU → hub (build ingredients)</h2>
     <div class="board">
       <div class="board-head">
-        <span>Leg</span><span>Best fare</span><span>Dates</span><span>Status</span><span>90-day trend</span><span></span>
+        <span>Leg</span><span>Best fare</span><span>Typical</span><span>Dates</span><span>Status</span><span>60-day trend</span><span></span>
       </div>
       <div id="rows-positioning"></div>
     </div>
@@ -94,14 +98,14 @@
     <h2>Connecting hops · hub → onward (next-day departure)</h2>
     <div class="board">
       <div class="board-head">
-        <span>Leg</span><span>Best fare</span><span>Dates</span><span>Status</span><span>90-day trend</span><span></span>
+        <span>Leg</span><span>Best fare</span><span>Typical</span><span>Dates</span><span>Status</span><span>60-day trend</span><span></span>
       </div>
       <div id="rows-connector"></div>
     </div>
   </section>
   <section id="builds-section" style="display:none">
     <h2>Split builds vs direct</h2>
-    <div class="board">
+    <div class="board six">
       <div class="board-head">
         <span>Build</span><span>Combined</span><span>Direct</span><span>Status</span><span>You save</span><span></span>
       </div>
@@ -125,7 +129,7 @@ const THRESHOLDS = {}; // filled from history floor context; flags computed vs. 
 
 function spark(points){
   if(points.length < 2) return '<span class="dates">—</span>';
-  const prices = points.map(p => p.price);
+  const prices = points.map(p => typeof p === 'number' ? p : p.price);
   const min = Math.min(...prices), max = Math.max(...prices), range = (max - min) || 1;
   const w = 110, h = 26;
   const step = w / (prices.length - 1);
@@ -159,12 +163,19 @@ async function load(){
     const [cls, label] = flag(latest.price, r.floor, th);
     const recent = pts.slice(-14).map(p => p.price);
     const swing = recent.length > 1 ? Math.round(Math.max(...recent) - Math.min(...recent)) : null;
+    const st = r.stats || {};
+    const typ = st.median != null
+      ? `<b>~$${Math.round(st.median)}</b><br>${st.delta_pct != null
+          ? `<span class="${st.delta_pct > 0 ? 'up' : 'down'}">${st.delta_pct > 0 ? '+' : ''}${st.delta_pct}% now</span>`
+          : ''}${st.ready ? '' : `<span title="percentile tiers warming up"> ·${st.n || 0}obs</span>`}`
+      : '—';
     (groups[r.kind] || groups.destination).push(`<div class="row">
       <div class="dest"><i class="dot ${r.region || ''}"></i>${code}<small>${r.label}</small></div>
       <div class="price">$${Math.round(latest.price)}</div>
+      <div class="typ">${typ}</div>
       <div class="dates">${latest.depart}<br>${latest.return}</div>
       <div><span class="flag ${cls}">${label}</span></div>
-      <div class="spark-cell">${spark(pts.slice(-24))}<span class="floor">floor $${Math.round(r.floor)}${swing != null ? ' · swing $' + swing : ''}</span></div>
+      <div class="spark-cell">${spark((r.spark60 && r.spark60.length > 1) ? r.spark60 : pts.slice(-24))}<span class="floor">floor $${Math.round(r.floor)}${swing != null ? ' · swing $' + swing : ''}</span></div>
       <a class="book" href="${latest.link}" target="_blank" rel="noopener">Open live fares ↗</a>
     </div>`);
   }
@@ -195,10 +206,11 @@ async function load(){
     document.getElementById('builds-section').style.display = '';
   }
 
+  const TIER_MARK = {mistake: '🚨 ', hot: '🔥 ', deal: '💰 '};
   const alerts = (data.alerts || []).slice(0, 12).map(a => `
     <div class="alert">
       <time>${new Date(a.at).toLocaleString()}</time>
-      <b>SJU → ${a.route}</b> $${Math.round(a.price)} RT (${a.depart} → ${a.return}) — ${a.reason}.${a.confirmed ? ' <span style="color:var(--go)">✓ verified at scan</span>' : ''}
+      ${TIER_MARK[a.tier] || ''}<b>SJU → ${a.route}</b> $${Math.round(a.price)} RT (${a.depart} → ${a.return}) — ${a.reason}.${a.confirmed ? ' <span style="color:var(--go)">✓ verified at scan</span>' : ''}
       <a href="${a.link}" target="_blank" rel="noopener">Open live fares ↗</a>
     </div>`).join('');
   if(alerts) document.getElementById('alerts').innerHTML = alerts;

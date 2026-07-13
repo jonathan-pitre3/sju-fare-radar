@@ -298,7 +298,30 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "destination",
-   "region": "europe"
+   "region": "europe",
+   "stats": {
+    "median": 673.75,
+    "p25": 629.065,
+    "p10": 599.46,
+    "n": 31,
+    "ready": false,
+    "delta_pct": 11
+   },
+   "spark60": [
+    636.47,
+    611.0,
+    599.46,
+    597.34,
+    594.32,
+    599.08,
+    602.15,
+    607.02,
+    621.66,
+    673.75,
+    647.19,
+    759.0,
+    746.0
+   ]
   },
   "FCO": {
    "label": "Rome, Italy",
@@ -601,7 +624,30 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "destination",
-   "region": "europe"
+   "region": "europe",
+   "stats": {
+    "median": 769.585,
+    "p25": 716.7175,
+    "p10": 688.608,
+    "n": 28,
+    "ready": false,
+    "delta_pct": 30
+   },
+   "spark60": [
+    835.51,
+    679.42,
+    695.82,
+    691.38,
+    701.94,
+    769.25,
+    734.13,
+    681.61,
+    706.18,
+    724.35,
+    769.92,
+    964.0,
+    998.0
+   ]
   },
   "NRT": {
    "label": "Tokyo, Japan (single ticket)",
@@ -913,7 +959,30 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "destination",
-   "region": "asia"
+   "region": "asia",
+   "stats": {
+    "median": 1171.01,
+    "p25": 1103.9925,
+    "p10": 1047.366,
+    "n": 28,
+    "ready": false,
+    "delta_pct": 73
+   },
+   "spark60": [
+    1106.17,
+    1068.06,
+    1054.23,
+    1124.06,
+    1174.79,
+    1065.12,
+    1022.93,
+    1031.35,
+    1003.34,
+    1159.58,
+    1135.94,
+    2023.0,
+    2023.0
+   ]
   },
   "BOG": {
    "label": "Bogot\u00e1, Colombia",
@@ -1219,7 +1288,30 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "destination",
-   "region": "latam"
+   "region": "latam",
+   "stats": {
+    "median": 205.32,
+    "p25": 195.38500000000002,
+    "p10": 188.129,
+    "n": 28,
+    "ready": false,
+    "delta_pct": 84
+   },
+   "spark60": [
+    213.06,
+    188.51,
+    200.14,
+    194.74,
+    195.52,
+    177.45,
+    203.08,
+    210.72,
+    187.24,
+    175.79,
+    194.98,
+    406.0,
+    378.0
+   ]
   },
   "BWI": {
    "label": "Baltimore, USA",
@@ -1523,7 +1615,30 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "destination",
-   "region": "north_america"
+   "region": "north_america",
+   "stats": {
+    "median": 181.92,
+    "p25": 162.0775,
+    "p10": 156.56900000000002,
+    "n": 28,
+    "ready": false,
+    "delta_pct": 68
+   },
+   "spark60": [
+    158.18,
+    154.04,
+    156.71,
+    161.2,
+    154.86,
+    168.85,
+    182.89,
+    162.37,
+    165.42,
+    185.36,
+    157.53,
+    306.0,
+    306.0
+   ]
   },
   "CUN": {
    "label": "Canc\u00fan, Mexico",
@@ -1829,7 +1944,30 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "destination",
-   "region": "latam"
+   "region": "latam",
+   "stats": {
+    "median": 296.22,
+    "p25": 278.71500000000003,
+    "p10": 266.61400000000003,
+    "n": 28,
+    "ready": false,
+    "delta_pct": 38
+   },
+   "spark60": [
+    264.15,
+    267.67,
+    283.67,
+    253.26,
+    276.36,
+    288.82,
+    285.6,
+    292.06,
+    256.42,
+    302.33,
+    303.47,
+    409.0,
+    409.0
+   ]
   },
   "LIS": {
    "label": "Lisbon, Portugal",
@@ -1941,7 +2079,19 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "destination",
-   "region": "europe"
+   "region": "europe",
+   "stats": {
+    "median": 818.0,
+    "p25": 817.25,
+    "p10": 815.0,
+    "n": 8,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    815.0,
+    818.0
+   ]
   },
   "MDE": {
    "label": "Medell\u00edn, Colombia",
@@ -2049,7 +2199,19 @@
    },
    "origin": "SJU",
    "kind": "destination",
-   "region": "latam"
+   "region": "latam",
+   "stats": {
+    "median": 300.0,
+    "p25": 300.0,
+    "p10": 299.7,
+    "n": 8,
+    "ready": false,
+    "delta_pct": 4
+   },
+   "spark60": [
+    299.0,
+    300.0
+   ]
   },
   "LIM": {
    "label": "Lima, Peru",
@@ -2156,7 +2318,19 @@
    },
    "origin": "SJU",
    "kind": "destination",
-   "region": "latam"
+   "region": "latam",
+   "stats": {
+    "median": 296.0,
+    "p25": 296.0,
+    "p10": 296.0,
+    "n": 8,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    309.0,
+    296.0
+   ]
   },
   "LAX": {
    "label": "Los Angeles (Zipair positioning, 9-day RT)",
@@ -2260,7 +2434,19 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "positioning",
-   "region": "north_america"
+   "region": "north_america",
+   "stats": {
+    "median": 400.0,
+    "p25": 400.0,
+    "p10": 400.0,
+    "n": 8,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    400.0,
+    400.0
+   ]
   },
   "HKG": {
    "label": "Hong Kong",
@@ -2335,7 +2521,18 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "destination",
-   "region": "asia"
+   "region": "asia",
+   "stats": {
+    "median": 1449.0,
+    "p25": 1449.0,
+    "p10": 1449.0,
+    "n": 5,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    1449.0
+   ]
   },
   "SIN": {
    "label": "Singapore",
@@ -2415,7 +2612,18 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "destination",
-   "region": "asia"
+   "region": "asia",
+   "stats": {
+    "median": 1409.0,
+    "p25": 1409.0,
+    "p10": 1409.0,
+    "n": 5,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    1409.0
+   ]
   },
   "ICN": {
    "label": "Seoul, South Korea",
@@ -2480,7 +2688,18 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "destination",
-   "region": "asia"
+   "region": "asia",
+   "stats": {
+    "median": 1587.0,
+    "p25": 1587.0,
+    "p10": 1587.0,
+    "n": 5,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    1587.0
+   ]
   },
   "SGN": {
    "label": "Ho Chi Minh City, Vietnam",
@@ -2555,7 +2774,18 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "destination",
-   "region": "asia"
+   "region": "asia",
+   "stats": {
+    "median": 1112.0,
+    "p25": 1112.0,
+    "p10": 1112.0,
+    "n": 5,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    1112.0
+   ]
   },
   "BKK": {
    "label": "Bangkok, Thailand",
@@ -2630,7 +2860,18 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "destination",
-   "region": "asia"
+   "region": "asia",
+   "stats": {
+    "median": 1058.0,
+    "p25": 1058.0,
+    "p10": 1058.0,
+    "n": 5,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    1058.0
+   ]
   },
   "TPE": {
    "label": "Taipei, Taiwan",
@@ -2705,7 +2946,18 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "destination",
-   "region": "asia"
+   "region": "asia",
+   "stats": {
+    "median": 1155.0,
+    "p25": 1155.0,
+    "p10": 1155.0,
+    "n": 5,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    1155.0
+   ]
   },
   "PVG": {
    "label": "Shanghai, China",
@@ -2775,7 +3027,18 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "destination",
-   "region": "asia"
+   "region": "asia",
+   "stats": {
+    "median": 1342.0,
+    "p25": 1342.0,
+    "p10": 1342.0,
+    "n": 5,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    1342.0
+   ]
   },
   "KEF": {
    "label": "Reykjav\u00edk, Iceland",
@@ -2855,7 +3118,18 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "destination",
-   "region": "europe"
+   "region": "europe",
+   "stats": {
+    "median": 791.0,
+    "p25": 791.0,
+    "p10": 791.0,
+    "n": 5,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    791.0
+   ]
   },
   "LHR": {
    "label": "London, UK",
@@ -2930,7 +3204,18 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "destination",
-   "region": "europe"
+   "region": "europe",
+   "stats": {
+    "median": 866.0,
+    "p25": 866.0,
+    "p10": 866.0,
+    "n": 5,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    866.0
+   ]
   },
   "FRA": {
    "label": "Frankfurt, Germany",
@@ -3004,7 +3289,18 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "destination",
-   "region": "europe"
+   "region": "europe",
+   "stats": {
+    "median": 916.0,
+    "p25": 916.0,
+    "p10": 916.0,
+    "n": 5,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    916.0
+   ]
   },
   "DUB": {
    "label": "Dublin, Ireland",
@@ -3079,7 +3375,18 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "destination",
-   "region": "europe"
+   "region": "europe",
+   "stats": {
+    "median": 754.0,
+    "p25": 754.0,
+    "p10": 754.0,
+    "n": 5,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    754.0
+   ]
   },
   "CDG": {
    "label": "Paris, France",
@@ -3144,7 +3451,18 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "destination",
-   "region": "europe"
+   "region": "europe",
+   "stats": {
+    "median": 876.0,
+    "p25": 876.0,
+    "p10": 876.0,
+    "n": 5,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    876.0
+   ]
   },
   "MXP": {
    "label": "Milan, Italy",
@@ -3209,7 +3527,18 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "destination",
-   "region": "europe"
+   "region": "europe",
+   "stats": {
+    "median": 967.0,
+    "p25": 967.0,
+    "p10": 967.0,
+    "n": 5,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    967.0
+   ]
   },
   "LAX\u2192NRT": {
    "label": "LAX \u2192 Tokyo (Zipair leg, next-day departure)",
@@ -3270,7 +3599,18 @@
    },
    "origin": "LAX",
    "kind": "connector",
-   "region": "asia"
+   "region": "asia",
+   "stats": {
+    "median": 994.0,
+    "p25": 994.0,
+    "p10": 994.0,
+    "n": 4,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    994.0
+   ]
   },
   "MAD\u2192PRG": {
    "label": "Madrid \u2192 Prague (LCC hop, next-day departure)",
@@ -3330,7 +3670,18 @@
    },
    "origin": "MAD",
    "kind": "connector",
-   "region": "europe"
+   "region": "europe",
+   "stats": {
+    "median": 222.0,
+    "p25": 221.5,
+    "p10": 220.60000000000002,
+    "n": 4,
+    "ready": false,
+    "delta_pct": -1
+   },
+   "spark60": [
+    220.0
+   ]
   },
   "MAD\u2192BUD": {
    "label": "Madrid \u2192 Budapest (LCC hop, next-day departure)",
@@ -3391,7 +3742,18 @@
    },
    "origin": "MAD",
    "kind": "connector",
-   "region": "europe"
+   "region": "europe",
+   "stats": {
+    "median": 114.0,
+    "p25": 109.5,
+    "p10": 101.39999999999999,
+    "n": 4,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    96.0
+   ]
   },
   "MAD\u2192WAW": {
    "label": "Madrid \u2192 Warsaw (LCC hop, next-day departure)",
@@ -3452,7 +3814,18 @@
    },
    "origin": "MAD",
    "kind": "connector",
-   "region": "europe"
+   "region": "europe",
+   "stats": {
+    "median": 133.0,
+    "p25": 132.75,
+    "p10": 132.3,
+    "n": 4,
+    "ready": false,
+    "delta_pct": -1
+   },
+   "spark60": [
+    132.0
+   ]
   },
   "EWR": {
    "label": "Newark (Air Premia positioning, 9-day RT)",
@@ -3500,7 +3873,18 @@
    },
    "origin": "SJU",
    "kind": "positioning",
-   "region": "north_america"
+   "region": "north_america",
+   "stats": {
+    "median": 237.0,
+    "p25": 237.0,
+    "p10": 237.00000000000003,
+    "n": 3,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    237.0
+   ]
   },
   "EWR\u2192ICN": {
    "label": "EWR \u2192 Seoul (Air Premia leg, next-day departure)",
@@ -3546,7 +3930,18 @@
    "last_alert": null,
    "origin": "EWR",
    "kind": "connector",
-   "region": "asia"
+   "region": "asia",
+   "stats": {
+    "median": 1062.0,
+    "p25": 1062.0,
+    "p10": 1062.0,
+    "n": 3,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    1062.0
+   ]
   },
   "MAD+": {
    "label": "Madrid (build positioning, 9-day RT)",
@@ -3597,7 +3992,30 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "positioning",
-   "region": "europe"
+   "region": "europe",
+   "stats": {
+    "median": 673.75,
+    "p25": 629.065,
+    "p10": 599.46,
+    "n": 31,
+    "ready": false,
+    "delta_pct": 15
+   },
+   "spark60": [
+    636.47,
+    611.0,
+    599.46,
+    597.34,
+    594.32,
+    599.08,
+    602.15,
+    607.02,
+    621.66,
+    673.75,
+    647.19,
+    759.0,
+    746.0
+   ]
   },
   "SDQ": {
    "label": "Santo Domingo, Dominican Republic",
@@ -3633,7 +4051,18 @@
    "last_alert": null,
    "origin": "SJU",
    "kind": "destination",
-   "region": "latam"
+   "region": "latam",
+   "stats": {
+    "median": 314.0,
+    "p25": 314.0,
+    "p10": 314.0,
+    "n": 2,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    314.0
+   ]
   },
   "SJO": {
    "label": "San Jos\u00e9, Costa Rica",
@@ -3658,7 +4087,18 @@
    },
    "origin": "SJU",
    "kind": "destination",
-   "region": "latam"
+   "region": "latam",
+   "stats": {
+    "median": 327.0,
+    "p25": 327.0,
+    "p10": 327.0,
+    "n": 1,
+    "ready": false,
+    "delta_pct": 0
+   },
+   "spark60": [
+    327.0
+   ]
   }
  },
  "alerts": [
