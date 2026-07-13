@@ -28,6 +28,13 @@ jobs:
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         run: python fare_radar/explore.py
 
+      - name: Market / point-of-sale check
+        env:
+          IGNAV_API_KEY: ${{ secrets.IGNAV_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python fare_radar/market_check.py
+
       - name: Commit updated data
         run: |
           git config user.name "fare-radar-bot"

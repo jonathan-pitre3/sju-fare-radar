@@ -106,19 +106,46 @@ def run() -> None:
         offset = timedelta(days=route.get("depart_offset_days", 0))
         leg_trip = timedelta(days=route.get("trip_days", s["trip_length_days"]))
         print(f"Scanning {origin} -> {code} ({label})")
+        # Flex-date grid: a route with target_depart scans target ±flex_days
+        # instead of the horizon samples, so neighboring dates can beat it.
+        flex_target = route.get("target_depart") if route.get("flex", True) else None
+        if isinstance(flex_target, str):
+            flex_target = date.fromisoformat(flex_target)
+        if flex_target:
+            flex_days = int(route.get("flex_days", s.get("flex_days", 3)))
+            bases = [(flex_target + timedelta(days=d), "flex" if d else "watch")
+                     for d in range(-flex_days, flex_days + 1)]
+        else:
+            bases = [(b, "watch") for b in sample_departure_dates()]
         results = []
-        for base in sample_departure_dates():
+        for base, job in bases:
             depart = base + offset
+            provider.job = job
             offers = provider.search(origin, code, depart, depart + leg_trip, s)
             if offers:
                 persist_offers(conn, origin, code, offers,
-                               depart, depart + leg_trip, "watch")
+                               depart, depart + leg_trip, job)
                 best_of_date = dict(offers[0])
                 best_of_date.update({"depart": depart.isoformat(),
                                      "return": (depart + leg_trip).isoformat()})
                 results.append(best_of_date)
+        provider.job = "watch"
         if not results:
             continue
+        flex_note = None
+        if flex_target:
+            target_iso = (flex_target + offset).isoformat()
+            on_target = next((r for r in results if r["depart"] == target_iso), None)
+            neighbors = [r for r in results if r["depart"] != target_iso]
+            beat = s.get("flex_beat_pct", 15) / 100
+            if on_target and neighbors:
+                nb = min(neighbors, key=lambda r: r["price"])
+                if nb["price"] <= on_target["price"] * (1 - beat):
+                    nb_day = date.fromisoformat(nb["depart"])
+                    flex_note = (f"${on_target['price'] - nb['price']:.0f} less "
+                                 f"departing {nb_day.strftime('%a %b %d')} "
+                                 f"(${nb['price']:.0f} vs ${on_target['price']:.0f} "
+                                 f"on your target date)")
         best = min(results, key=lambda r: r["price"])
         ignav_id = best.get("ignav_id")
         self_transfer = best.get("self_transfer", False)
@@ -161,6 +188,7 @@ def run() -> None:
                 if direct:
                     best["link"] = direct
             alert = {"at": now, "route": key, "label": label, "origin": origin,
+                     "flex_note": flex_note,
                      "price": best["price"], "reason": reason, "tier": tier,
                      "typical": stats["median"] if stats["ready"] else None,
                      "self_transfer": bool(best.get("self_transfer")),
@@ -175,6 +203,66 @@ def run() -> None:
             print(f"  ALERT [{tier}]: ${best['price']} — {reason}")
         else:
             print(f"  best ${best['price']} ({best['depart']})")
+
+    # Positioning comparison: on configured weekdays, price the through
+    # itinerary against SJU↔hub + hub↔destination splits (RT legs with the
+    # repo's overnight self-transfer buffer) for flagged long-haul routes.
+    pos_cfg = CONFIG.get("positioning", {})
+    pos_notes: dict[str, dict] = {}
+    if (pos_cfg.get("enabled")
+            and datetime.now(timezone.utc).weekday() in pos_cfg.get("run_weekdays", [0, 3])
+            and not budget.exhausted):
+        provider.job = "positioning"
+        for route in CONFIG["routes"]:
+            code = route["code"]
+            through = run_best.get(code)
+            if not route.get("positioning_check") or not through:
+                continue
+            depart = date.fromisoformat(through["depart"])
+            ret = date.fromisoformat(through["return"])
+            best_split = None
+            for hub in pos_cfg.get("hubs", ["MCO", "FLL", "JFK", "BOS"]):
+                if budget.exhausted:
+                    break
+                pos_offers = provider.search(s["origin"], hub, depart,
+                                             ret + timedelta(days=2), s)
+                conn_offers = provider.search(hub, code, depart + timedelta(days=1),
+                                              ret + timedelta(days=1), s)
+                if pos_offers:
+                    persist_offers(conn, s["origin"], hub, pos_offers,
+                                   depart, ret + timedelta(days=2), "positioning")
+                if conn_offers:
+                    persist_offers(conn, hub, code, conn_offers,
+                                   depart + timedelta(days=1),
+                                   ret + timedelta(days=1), "positioning")
+                if not (pos_offers and conn_offers):
+                    continue
+                total = round(pos_offers[0]["price"] + conn_offers[0]["price"], 2)
+                if best_split is None or total < best_split["total"]:
+                    best_split = {"hub": hub, "total": total,
+                                  "pos": pos_offers[0]["price"],
+                                  "conn": conn_offers[0]["price"]}
+            ratio = pos_cfg.get("beat_ratio", 0.80)
+            if best_split and best_split["total"] < through["price"] * ratio:
+                note = (f"Split via {best_split['hub']}: ${best_split['total']:.0f} "
+                        f"(SJU↔{best_split['hub']} ${best_split['pos']:.0f} + "
+                        f"{best_split['hub']}↔{code} ${best_split['conn']:.0f}) vs "
+                        f"${through['price']:.0f} through — separate tickets, no "
+                        f"protection on missed connections, leave a 4h+ buffer.")
+                pos_notes[code] = {"note": note, "total": best_split["total"]}
+                print(f"  positioning {code}: split ${best_split['total']:.0f} "
+                      f"beats through ${through['price']:.0f}")
+        provider.job = "watch"
+        # Attach to this run's alerts; anything left is worth its own message.
+        for alert in pending:
+            if alert["route"] in pos_notes:
+                alert["positioning_note"] = pos_notes.pop(alert["route"])["note"]
+        for code, found in pos_notes.items():
+            if baselines.should_send(conn, code, "positioning", found["total"],
+                                     CONFIG.get("baselines", {})):
+                store.record_alert(conn, code, "positioning", found["total"], now)
+                from alerts import send_telegram_text
+                send_telegram_text(f"🧩 Positioning find — SJU→{code}\n{found['note']}")
 
     # Split builds: combined legs vs the direct single ticket.
     build_thresholds = {}

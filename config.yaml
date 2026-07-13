@@ -19,6 +19,8 @@ settings:
   amadeus_env: production    # only used if provider: amadeus
   allow_self_transfer: true  # sent explicitly on every Ignav search; self-transfer
                              # itineraries are labeled "separate tickets" in alerts
+  flex_days: 3               # flex grid: routes with target_depart scan ±N days
+  flex_beat_pct: 15          # mention a neighbor date when it beats target by >= 15%
 
 # Percentile baselines + tiered alerts. A route's tiers activate once it has
 # >= min_observations spanning >= min_span_days inside the rolling window;
@@ -61,6 +63,49 @@ explore:
     long:   # Europe + long-haul
       [MAD, BCN, LIS, CDG, FCO, AMS, LHR, DUB, ZRH, KEF, GRU, EZE, SCL, CMN]
 
+# Positioning comparison: on run_weekdays (UTC; 0=Mon), routes flagged
+# `positioning_check: true` also price SJU↔hub + hub↔destination splits
+# (RT legs, overnight buffer) against the through fare. A split that beats
+# through x beat_ratio rides along on the route's alert — or gets its own
+# note. 2 requests per hub per route per run day.
+positioning:
+  enabled: true
+  hubs: [MCO, FLL, JFK, BOS]
+  run_weekdays: [0, 3]       # Mon + Thu
+  beat_ratio: 0.80
+
+# Weekly point-of-sale check: rotating subset of watched routes re-queried
+# with market set to the destination country vs US, both in USD. A local
+# fare >= beat_pct cheaper is flagged in Telegram. 2 requests per route.
+market_check:
+  enabled: true
+  routes_per_run: 8
+  max_requests_per_run: 20
+  beat_pct: 15
+  markets:                   # watched destination → point-of-sale market
+    MAD: ES
+    FCO: IT
+    LIS: PT
+    BOG: CO
+    MDE: CO
+    CUN: MX
+    SDQ: DO
+    SJO: CR
+    LIM: PE
+    KEF: IS
+    LHR: GB
+    FRA: DE
+    DUB: IE
+    CDG: FR
+    MXP: IT
+    HKG: HK
+    SIN: SG
+    ICN: KR
+    SGN: VN
+    BKK: TH
+    TPE: TW
+    PVG: CN
+
 # Dashboard color-coding: destination airport → region. Routes, legs, and
 # builds inherit the color of where they're ultimately headed.
 regions:
@@ -69,11 +114,18 @@ regions:
   asia: [NRT, HKG, SIN, ICN, SGN, BKK, TPE, PVG] # violet
   north_america: [BWI, LAX, EWR]                 # green
 
+# Per-route optional knobs:
+#   target_depart: 2026-12-04  → flex grid: scans target ±flex_days instead of
+#                                horizon samples; alerts mention cheaper neighbors
+#   flex: false                → opt a target_depart route out of the grid
+#   flex_days: 2               → per-route override of settings.flex_days
+#   positioning_check: true    → include in the Mon/Thu hub-split comparison
 routes:
   - code: MAD
     label: "Madrid, Spain"
     alert_below: 620          # Run 006: AA $619 Dec 2026
     cheap_months: [2, 9, 10, 11]
+    positioning_check: true
   - code: FCO
     label: "Rome, Italy"
     alert_below: 650          # Run 005b: live floor $721; alert on real dip
@@ -108,6 +160,7 @@ routes:
     label: "Lima, Peru"
     alert_below: 400          # Run 002: $160 OW floor → ~$350-400 RT target
     cheap_months: [9]
+    positioning_check: true
   - code: BWI
     label: "Baltimore, USA"
     alert_below: 160          # Run 000: Frontier $150 RT
