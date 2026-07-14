@@ -59,9 +59,22 @@ fetched only for alert-worthy fares, since those lookups bill). The same
 ## The jobs
 
 - **Watch (daily).** Every route/leg/build in `config.yaml`, top-3 offers per
-  sampled date persisted. Routes with `target_depart` scan the **flex grid**
-  (±`flex_days`, default 3) and alerts mention when a neighbor date beats the
-  target by ≥ 15%. On Mon/Thu, routes flagged `positioning_check` also price
+  sampled date persisted. Departure dates come from a **rotating calendar
+  rake**: each run prices a different slice of the 2–9-month booking curve
+  (weekday-rotating), so every route sees the whole calendar every ~3–4
+  weeks at constant request cost. When an alert fires, a **date-window
+  probe** prices ±1/±2 weeks so the alert reports a travel window
+  ("similar prices Sep 11 – Oct 09"), and **fare-war propagation** probes
+  the fired route's regional siblings on the same dates — siblings that
+  clear the tier engine alert too. Routes with `target_depart` scan the
+  **flex grid** (±`flex_days`, default 3) and alerts mention when a
+  neighbor date beats the target by ≥ 15%.
+- **Wide net (daily, needs `TRAVELPAYOUTS_TOKEN`).** A Going-style
+  two-stage funnel: free cached Aviasales calendars (per-day prices, months
+  ahead) surface candidate dates priced under a route's own p25; only the
+  best candidates get a billable live Ignav verification (≤ 10/run), and
+  only live-verified fares persist or alert. Cached prices never touch the
+  baselines. Skips silently until the secret is set. On Mon/Thu, routes flagged `positioning_check` also price
   SJU↔hub + hub↔destination splits (hubs `MCO/FLL/JFK/BOS`, round-trip legs
   with the repo's overnight self-transfer buffer); a split under 80% of the
   through fare is called out — with an explicit separate-tickets warning.
@@ -120,6 +133,7 @@ lookups, ~1 each).
 | Secret | Value |
 |---|---|
 | `IGNAV_API_KEY` | from step 1 |
+| `TRAVELPAYOUTS_TOKEN` | optional — activates the wide net (free token from travelpayouts.com, Profile → API token) |
 | `TELEGRAM_BOT_TOKEN` / `TELEGRAM_CHAT_ID` | free, via @BotFather — no Twilio needed |
 | `SMTP_HOST` / `SMTP_PORT` | e.g. `smtp.gmail.com` / `465` (optional) |
 | `SMTP_USER` / `SMTP_PASS` | Gmail address + [App Password](https://myaccount.google.com/apppasswords) |
