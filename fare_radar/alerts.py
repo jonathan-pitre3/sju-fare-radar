@@ -59,6 +59,8 @@ def _fmt(alert: dict) -> str:
     lines += [detail, grade, f"Why: {alert['reason']}"]
     if alert.get("flex_note"):
         lines.append(f"📅 {alert['flex_note']}")
+    if alert.get("window_note"):
+        lines.append(f"🗓️ {alert['window_note']}")
     if alert.get("positioning_note"):
         lines.append(f"🧩 {alert['positioning_note']}")
     if alert.get("self_transfer") and not alert.get("breakdown"):

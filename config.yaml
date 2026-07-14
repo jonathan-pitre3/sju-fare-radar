@@ -8,7 +8,12 @@ settings:
   currency: USD
   adults: 1
   trip_length_days: 7        # default RT length sampled
-  scan_horizon_days: 120     # how far ahead to look
+  rake_min_days: 14          # rotating rake: nearest departure sampled
+  scan_horizon_days: 270     # ...to this far out (Going's "2-9 months" deal window).
+                             # Each daily run prices a different slice of the curve
+                             # (deterministic rotation, weekday-rotating), so every
+                             # route sees the whole calendar every ~3-4 weeks at the
+                             # same request cost as fixed offsets.
   samples_per_run: 2         # 32 entries x 2 x 1 run/day = ~1,950 searches/mo (+1 booking-link call per alert).
                              # Ignav's 1,000 free requests are a ONE-TIME credit; after it: $2 per 1,000
                              # successful (HTTP 200) API calls — an API call, not a link click. This config
@@ -62,6 +67,53 @@ explore:
        MEX, CUN, LIM, UIO, YYZ, YUL]
     long:   # Europe + long-haul
       [MAD, BCN, LIS, CDG, FCO, AMS, LHR, DUB, ZRH, KEF, GRU, EZE, SCL, CMN]
+
+# Wide net (Going-style two-stage funnel): free cached Aviasales calendars
+# surface candidate dates priced under a route's own p25; only candidates
+# get a billable live Ignav verification, and only verified fares persist
+# or alert. Needs the TRAVELPAYOUTS_TOKEN repo secret; inactive without it.
+# Routes without an active baseline are skipped (no yardstick, no candidates).
+widenet:
+  enabled: true
+  months_ahead: 4            # cached calendars pulled per route (free requests)
+  max_verifications_per_run: 10   # billable Ignav checks per daily run
+
+# Date-window probe: when a route alert fires, also price these day offsets
+# around the alerted departure so the alert reports a travel window
+# ("similar prices Sep 11 – Oct 09"), Going-style. Costs len(offsets)
+# requests per alerted route, capped per run; skipped for flex-grid routes
+# (they already scan a window).
+window:
+  enabled: true
+  offsets_days: [-14, -7, 7, 14]
+  tolerance_pct: 15          # neighbor counts as "similar" within +15%
+  max_alerts_per_run: 3
+
+# Fare-war propagation: a hot/mistake fare often means the region is on
+# sale. When one of these routes fires, probe its siblings (same dates,
+# round trip); siblings that clear the tier engine alert too, everything
+# else just banks baseline data (source_job='war').
+fare_war:
+  enabled: true
+  max_siblings: 3
+  max_requests_per_run: 12
+  siblings:
+    MAD: [BCN, AGP]
+    LIS: [OPO, BCN]
+    FCO: [ATH, NAP]
+    LHR: [AMS, BCN]
+    CDG: [AMS, BRU]
+    FRA: [AMS, ZRH]
+    KEF: [AMS, OSL]
+    BOG: [CTG, PTY]
+    MDE: [CTG, BAQ]
+    CUN: [MEX, GDL]
+    SDQ: [PUJ, STI]
+    SJO: [PTY, GUA]
+    LIM: [UIO, SCL]
+    NRT: [KIX, MNL]
+    ICN: [KIX, MNL]
+    BKK: [HAN, KUL]
 
 # Positioning comparison: on run_weekdays (UTC; 0=Mon), routes flagged
 # `positioning_check: true` also price SJU↔hub + hub↔destination splits

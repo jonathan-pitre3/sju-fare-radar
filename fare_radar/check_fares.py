@@ -33,6 +33,21 @@ def tier_reason(price: float, stats: dict) -> str:
     return f"${price:.0f} — typically ~${stats['median']:.0f} ({pct:+d}%)"
 
 
+def summarize_window(anchor: date, anchor_price: float,
+                     probes: list[tuple[date, float]],
+                     tolerance_pct: float = 15) -> str | None:
+    """Going-style date window: which probed dates price within tolerance of
+    the alerted fare. Returns copy like 'similar prices Sep 11 – Oct 09' when
+    at least one neighbor qualifies, else None."""
+    tol = 1 + tolerance_pct / 100
+    good = sorted([d for d, p in probes if p <= anchor_price * tol] + [anchor])
+    if len(good) < 2:
+        return None
+    return (f"similar prices {good[0].strftime('%b %d')} – "
+            f"{good[-1].strftime('%b %d')} departures "
+            f"({len(good)} of {len(probes) + 1} dates checked)")
+
+
 def persist_offers(conn, origin: str, dest: str, offers: list[dict],
                    depart: date, ret: date | None, source_job: str) -> None:
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
@@ -50,12 +65,23 @@ def persist_offers(conn, origin: str, dest: str, offers: list[dict],
         })
 
 
+def rake_dates(today: date, n: int, lo: int, hi: int, stride: int = 5) -> list[date]:
+    """Rotating calendar rake. The booking curve [lo, hi) days out is split
+    into n strata; each daily run prices a different offset inside every
+    stratum, advancing `stride` days per run. stride=5 is coprime with 7, so
+    departure weekdays rotate too. Coarse coverage of the whole curve lands
+    within ~stratum/stride runs; full daily granularity within one stratum
+    cycle. Deterministic in `today` — no state to persist."""
+    span = max(hi - lo, n)
+    stratum = max(span // n, 1)
+    walk = (today.toordinal() * stride) % stratum
+    return [today + timedelta(days=lo + i * stratum + walk) for i in range(n)]
+
+
 def sample_departure_dates() -> list[date]:
     s = CONFIG["settings"]
-    today = date.today()
-    n = max(1, s["samples_per_run"])
-    step = max(7, s["scan_horizon_days"] // n)
-    return [today + timedelta(days=14 + i * step) for i in range(n)]
+    return rake_dates(date.today(), max(1, s["samples_per_run"]),
+                      s.get("rake_min_days", 14), s["scan_horizon_days"])
 
 
 def load_history() -> dict:
@@ -93,6 +119,9 @@ def run() -> None:
                  for code in codes}
 
     run_best = {}
+    win_cfg = CONFIG.get("window", {})
+    windows_probed = 0
+    war_triggers = []   # (code, depart_iso, return_iso) of hot/mistake routes
     tagged = ([(r, "destination") for r in CONFIG["routes"]] +
               [(r, "positioning" if r.get("origin", s["origin"]) == s["origin"]
                    else "connector") for r in CONFIG.get("split_legs", [])])
@@ -198,11 +227,75 @@ def run() -> None:
                      "carriers": best["carriers"], "link": best["link"]}
             entry["last_alert"] = {"at": now, "price": best["price"]}
             store.record_alert(conn, key, tier, best["price"], now)
+            # Date-window probe: price ±1/±2 weeks around the alerted depart
+            # so the alert reports a Going-style travel window, not one date.
+            if (win_cfg.get("enabled", True) and not flex_target
+                    and windows_probed < win_cfg.get("max_alerts_per_run", 3)
+                    and not budget.exhausted):
+                windows_probed += 1
+                anchor = date.fromisoformat(best["depart"])
+                probes = []
+                provider.job = "flex"
+                for off in win_cfg.get("offsets_days", [-14, -7, 7, 14]):
+                    d = anchor + timedelta(days=off)
+                    if d <= date.today():
+                        continue
+                    offers = provider.search(origin, code, d, d + leg_trip, s)
+                    if offers:
+                        persist_offers(conn, origin, code, offers,
+                                       d, d + leg_trip, "flex")
+                        probes.append((d, offers[0]["price"]))
+                provider.job = "watch"
+                alert["window_note"] = summarize_window(
+                    anchor, best["price"], probes,
+                    win_cfg.get("tolerance_pct", 15))
+            if tier in ("hot", "mistake") and kind == "destination":
+                war_triggers.append((code, best["depart"], best["return"]))
             history["alerts"] = ([alert] + history.get("alerts", []))[:100]
             pending.append(alert)
             print(f"  ALERT [{tier}]: ${best['price']} — {reason}")
         else:
             print(f"  best ${best['price']} ({best['depart']})")
+
+    # Fare-war propagation: a hot/mistake fare on one route often means the
+    # whole region is on sale (Going's experts' heuristic). Probe configured
+    # siblings on the same dates; survivors of the tier engine alert too.
+    war_cfg = CONFIG.get("fare_war", {})
+    if war_triggers and war_cfg.get("enabled", True) and not budget.exhausted:
+        bl_cfg = CONFIG.get("baselines", {})
+        spent_before_war = budget.spent
+        provider.job = "war"
+        probed = set()
+        for code, dep_iso, ret_iso in war_triggers:
+            for sib in war_cfg.get("siblings", {}).get(code, [])[:war_cfg.get("max_siblings", 3)]:
+                if (sib in thresholds or sib in probed or budget.exhausted
+                        or budget.spent - spent_before_war >= war_cfg.get("max_requests_per_run", 12)):
+                    continue
+                probed.add(sib)
+                dep, ret = date.fromisoformat(dep_iso), date.fromisoformat(ret_iso)
+                offers = provider.search(s["origin"], sib, dep, ret, s)
+                if not offers:
+                    continue
+                persist_offers(conn, s["origin"], sib, offers, dep, ret, "war")
+                price = offers[0]["price"]
+                sstats = baselines.route_stats(conn, s["origin"], sib, "round_trip", bl_cfg)
+                stier = baselines.classify(price, sstats, bl_cfg)
+                if stier and baselines.should_send(conn, sib, stier, price, bl_cfg):
+                    store.record_alert(conn, sib, stier, price, now)
+                    pending.append({
+                        "at": now, "route": sib, "label": f"{sib} (fare-war check, {code} is on sale)",
+                        "origin": s["origin"], "price": price, "tier": stier,
+                        "reason": tier_reason(price, sstats),
+                        "typical": sstats["median"],
+                        "self_transfer": bool(offers[0].get("self_transfer")),
+                        "confirmed": bool(offers[0].get("confirmed")),
+                        "depart": dep_iso, "return": ret_iso,
+                        "stops": offers[0].get("stops"),
+                        "carriers": offers[0]["carriers"], "link": offers[0]["link"]})
+                    print(f"  fare-war {code}→{sib}: ALERT [{stier}] ${price}")
+                else:
+                    print(f"  fare-war {code}→{sib}: ${price} banked")
+        provider.job = "watch"
 
     # Positioning comparison: on configured weekdays, price the through
     # itinerary against SJU↔hub + hub↔destination splits (RT legs with the
