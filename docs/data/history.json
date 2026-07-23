@@ -394,6 +394,19 @@
      "stops": 2,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 752.0,
+     "carriers": [
+      "AA",
+      "IB"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202027-01-09%20through%202027-01-16",
+     "confirmed": true,
+     "stops": 2,
+     "depart": "2027-01-09",
+     "return": "2027-01-16"
     }
    ],
    "last_alert": null,
@@ -401,12 +414,12 @@
    "kind": "destination",
    "region": "europe",
    "stats": {
-    "median": 775.0,
-    "p25": 675.6025,
-    "p10": 642.0,
-    "n": 110,
-    "ready": false,
-    "delta_pct": -1
+    "median": 779.5,
+    "p25": 698.0,
+    "p10": 642.063,
+    "n": 122,
+    "ready": true,
+    "delta_pct": -4
    },
    "spark60": [
     636.47,
@@ -426,7 +439,8 @@
     759.0,
     698.0,
     865.0,
-    765.0
+    765.0,
+    743.0
    ]
   },
   "FCO": {
@@ -831,6 +845,20 @@
      "stops": 3,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 873.0,
+     "carriers": [
+      "AC",
+      "IB",
+      "LH"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FCO%20on%202027-01-09%20through%202027-01-16",
+     "confirmed": true,
+     "stops": 3,
+     "depart": "2027-01-09",
+     "return": "2027-01-16"
     }
    ],
    "last_alert": null,
@@ -838,12 +866,12 @@
    "kind": "destination",
    "region": "europe",
    "stats": {
-    "median": 955.5,
-    "p25": 764.99,
-    "p10": 722.442,
-    "n": 78,
-    "ready": false,
-    "delta_pct": -1
+    "median": 964.0,
+    "p25": 769.7524999999999,
+    "p10": 723.678,
+    "n": 84,
+    "ready": true,
+    "delta_pct": -9
    },
    "spark60": [
     835.51,
@@ -863,7 +891,8 @@
     1002.0,
     905.0,
     878.0,
-    947.0
+    947.0,
+    873.0
    ]
   },
   "NRT": {
@@ -1281,19 +1310,34 @@
      "stops": 3,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 1580.0,
+     "carriers": [
+      "AC"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20NRT%20on%202027-01-09%20through%202027-01-16",
+     "confirmed": true,
+     "stops": 3,
+     "depart": "2027-01-09",
+     "return": "2027-01-16"
     }
    ],
-   "last_alert": null,
+   "last_alert": {
+    "at": "2026-07-23T13:42:45+00:00",
+    "price": 1580.0
+   },
    "origin": "SJU",
    "kind": "destination",
    "region": "asia",
    "stats": {
-    "median": 2023.0,
-    "p25": 1230.5549999999998,
-    "p10": 1110.615,
-    "n": 76,
-    "ready": false,
-    "delta_pct": -4
+    "median": 2022.0,
+    "p25": 1547.0,
+    "p10": 1127.624,
+    "n": 94,
+    "ready": true,
+    "delta_pct": -22
    },
    "spark60": [
     1106.17,
@@ -1313,7 +1357,8 @@
     1719.0,
     1969.0,
     2019.0,
-    1942.0
+    1942.0,
+    1500.0
    ]
   },
   "BOG": {
@@ -1716,6 +1761,19 @@
      "stops": 1,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 419.0,
+     "carriers": [
+      "AV",
+      "CM"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BOG%20on%202026-09-03%20through%202026-09-10",
+     "confirmed": true,
+     "stops": 1,
+     "depart": "2026-09-03",
+     "return": "2026-09-10"
     }
    ],
    "last_alert": null,
@@ -1723,12 +1781,12 @@
    "kind": "destination",
    "region": "latam",
    "stats": {
-    "median": 406.0,
-    "p25": 216.08,
-    "p10": 196.44400000000002,
-    "n": 73,
-    "ready": false,
-    "delta_pct": -7
+    "median": 424.0,
+    "p25": 274.6,
+    "p10": 199.216,
+    "n": 79,
+    "ready": true,
+    "delta_pct": -1
    },
    "spark60": [
     213.06,
@@ -1748,7 +1806,8 @@
     687.0,
     331.0,
     527.0,
-    379.0
+    379.0,
+    419.0
    ]
   },
   "BWI": {
@@ -2137,6 +2196,18 @@
      "stops": 1,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 270.0,
+     "carriers": [
+      "F9"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BWI%20on%202026-09-03%20through%202026-09-10",
+     "confirmed": true,
+     "stops": 1,
+     "depart": "2026-09-03",
+     "return": "2026-09-10"
     }
    ],
    "last_alert": null,
@@ -2144,12 +2215,12 @@
    "kind": "destination",
    "region": "north_america",
    "stats": {
-    "median": 324.0,
-    "p25": 185.33,
-    "p10": 162.25300000000001,
-    "n": 70,
-    "ready": false,
-    "delta_pct": -13
+    "median": 326.0,
+    "p25": 187.45250000000001,
+    "p10": 163.89499999999998,
+    "n": 76,
+    "ready": true,
+    "delta_pct": -17
    },
    "spark60": [
     158.18,
@@ -2168,7 +2239,8 @@
     326.0,
     302.0,
     296.0,
-    282.0
+    282.0,
+    270.0
    ]
   },
   "CUN": {
@@ -2560,6 +2632,19 @@
      "stops": 2,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 435.0,
+     "carriers": [
+      "CM",
+      "UA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CUN%20on%202027-01-09%20through%202027-01-16",
+     "confirmed": true,
+     "stops": 2,
+     "depart": "2027-01-09",
+     "return": "2027-01-16"
     }
    ],
    "last_alert": null,
@@ -2567,12 +2652,12 @@
    "kind": "destination",
    "region": "latam",
    "stats": {
-    "median": 423.5,
-    "p25": 309.5025,
-    "p10": 279.917,
-    "n": 72,
-    "ready": false,
-    "delta_pct": 4
+    "median": 434.0,
+    "p25": 328.96,
+    "p10": 282.41900000000004,
+    "n": 78,
+    "ready": true,
+    "delta_pct": 0
    },
    "spark60": [
     264.15,
@@ -2591,7 +2676,8 @@
     376.0,
     474.0,
     428.0,
-    439.0
+    439.0,
+    435.0
    ]
   },
   "LIS": {
@@ -2803,6 +2889,19 @@
      "stops": 2,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 810.0,
+     "carriers": [
+      "AA",
+      "AC"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20LIS%20on%202027-01-09%20through%202027-01-16",
+     "confirmed": true,
+     "stops": 2,
+     "depart": "2027-01-09",
+     "return": "2027-01-16"
     }
    ],
    "last_alert": {
@@ -2814,11 +2913,11 @@
    "region": "europe",
    "stats": {
     "median": 906.0,
-    "p25": 817.25,
-    "p10": 733.2,
-    "n": 68,
+    "p25": 818.0,
+    "p10": 744.9000000000001,
+    "n": 74,
     "ready": false,
-    "delta_pct": 10
+    "delta_pct": -11
    },
    "spark60": [
     815.0,
@@ -2827,7 +2926,8 @@
     1057.0,
     1167.0,
     1018.0,
-    999.0
+    999.0,
+    810.0
    ]
   },
   "MDE": {
@@ -3016,10 +3116,23 @@
      "stops": 2,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 246.0,
+     "carriers": [
+      "AV",
+      "CM"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MDE%20on%202027-01-09%20through%202027-01-16",
+     "confirmed": true,
+     "stops": 2,
+     "depart": "2027-01-09",
+     "return": "2027-01-16"
     }
    ],
    "last_alert": {
-    "at": "2026-07-22T13:29:27+00:00",
+    "at": "2026-07-23T13:42:45+00:00",
     "price": 246.0
    },
    "origin": "SJU",
@@ -3027,9 +3140,9 @@
    "region": "latam",
    "stats": {
     "median": 300.0,
-    "p25": 251.0,
+    "p25": 246.0,
     "p10": 246.0,
-    "n": 77,
+    "n": 95,
     "ready": false,
     "delta_pct": -18
    },
@@ -3039,7 +3152,8 @@
     238.0,
     382.0,
     238.0,
-    246.0
+    246.0,
+    238.0
    ]
   },
   "LIM": {
@@ -3227,22 +3341,35 @@
      "stops": 2,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 337.0,
+     "carriers": [
+      "AV",
+      "CM"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20LIM%20on%202027-01-09%20through%202027-01-16",
+     "confirmed": true,
+     "stops": 2,
+     "depart": "2027-01-09",
+     "return": "2027-01-16"
     }
    ],
    "last_alert": {
-    "at": "2026-07-22T13:29:27+00:00",
-    "price": 299.0
+    "at": "2026-07-23T13:42:45+00:00",
+    "price": 337.0
    },
    "origin": "SJU",
    "kind": "destination",
    "region": "latam",
    "stats": {
-    "median": 348.0,
-    "p25": 312.0,
+    "median": 349.0,
+    "p25": 318.75,
     "p10": 307.0,
-    "n": 98,
+    "n": 104,
     "ready": false,
-    "delta_pct": -14
+    "delta_pct": -3
    },
    "spark60": [
     309.0,
@@ -3250,7 +3377,8 @@
     310.0,
     307.0,
     307.0,
-    299.0
+    299.0,
+    337.0
    ]
   },
   "LAX": {
@@ -3440,6 +3568,19 @@
      "stops": 2,
      "depart": "2026-08-28",
      "return": "2026-09-06"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 334.0,
+     "carriers": [
+      "B6",
+      "UA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20LAX%20on%202026-09-03%20through%202026-09-12",
+     "confirmed": true,
+     "stops": 2,
+     "depart": "2026-09-03",
+     "return": "2026-09-12"
     }
    ],
    "last_alert": {
@@ -3452,8 +3593,8 @@
    "stats": {
     "median": 466.0,
     "p25": 400.0,
-    "p10": 400.0,
-    "n": 50,
+    "p10": 374.5,
+    "n": 56,
     "ready": false,
     "delta_pct": -28
    },
@@ -3463,12 +3604,13 @@
     420.0,
     401.0,
     442.0,
+    334.0,
     334.0
    ]
   },
   "HKG": {
    "label": "Hong Kong",
-   "floor": 1383.0,
+   "floor": 1255.0,
    "points": [
     {
      "at": "2026-07-13T18:22:07+00:00",
@@ -3632,34 +3774,49 @@
      "stops": 3,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 1255.0,
+     "carriers": [
+      "B6",
+      "DL",
+      "EY"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20HKG%20on%202026-09-03%20through%202026-09-10",
+     "confirmed": true,
+     "stops": 4,
+     "depart": "2026-09-03",
+     "return": "2026-09-10"
     }
    ],
    "last_alert": {
-    "at": "2026-07-22T13:29:27+00:00",
-    "price": 1383.0
+    "at": "2026-07-23T13:42:45+00:00",
+    "price": 1255.0
    },
    "origin": "SJU",
    "kind": "destination",
    "region": "asia",
    "stats": {
     "median": 1592.0,
-    "p25": 1477.5,
-    "p10": 1449.0,
-    "n": 43,
+    "p25": 1469.0,
+    "p10": 1447.6,
+    "n": 49,
     "ready": false,
-    "delta_pct": -13
+    "delta_pct": -21
    },
    "spark60": [
     1449.0,
     1455.0,
     1623.0,
     1535.0,
-    1383.0
+    1383.0,
+    1255.0
    ]
   },
   "SIN": {
    "label": "Singapore",
-   "floor": 1409.0,
+   "floor": 1317.0,
    "points": [
     {
      "at": "2026-07-13T18:22:07+00:00",
@@ -3801,26 +3958,44 @@
      "stops": 4,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 1317.0,
+     "carriers": [
+      "B6",
+      "EY",
+      "JL"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20SIN%20on%202026-09-03%20through%202026-09-10",
+     "confirmed": true,
+     "stops": 4,
+     "depart": "2026-09-03",
+     "return": "2026-09-10"
     }
    ],
-   "last_alert": null,
+   "last_alert": {
+    "at": "2026-07-23T13:42:45+00:00",
+    "price": 1317.0
+   },
    "origin": "SJU",
    "kind": "destination",
    "region": "asia",
    "stats": {
-    "median": 1793.0,
-    "p25": 1452.0,
+    "median": 1776.5,
+    "p25": 1452.5,
     "p10": 1409.0,
-    "n": 35,
+    "n": 40,
     "ready": false,
-    "delta_pct": -16
+    "delta_pct": -26
    },
    "spark60": [
     1409.0,
     1451.0,
     1744.0,
     1665.0,
-    1512.0
+    1512.0,
+    1317.0
    ]
   },
   "ICN": {
@@ -3969,6 +4144,20 @@
      "stops": 4,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 1352.0,
+     "carriers": [
+      "DL",
+      "KE",
+      "UA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20ICN%20on%202026-09-03%20through%202026-09-10",
+     "confirmed": true,
+     "stops": 3,
+     "depart": "2026-09-03",
+     "return": "2026-09-10"
     }
    ],
    "last_alert": {
@@ -3981,17 +4170,18 @@
    "stats": {
     "median": 1587.0,
     "p25": 1372.0,
-    "p10": 1225.4,
-    "n": 59,
+    "p10": 1230.0,
+    "n": 65,
     "ready": false,
-    "delta_pct": -22
+    "delta_pct": -15
    },
    "spark60": [
     1587.0,
     1372.0,
     1183.0,
     2057.0,
-    1233.0
+    1233.0,
+    1352.0
    ]
   },
   "SGN": {
@@ -4133,6 +4323,19 @@
      "stops": 4,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 1112.0,
+     "carriers": [
+      "NH",
+      "UA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20SGN%20on%202026-09-03%20through%202026-09-10",
+     "confirmed": true,
+     "stops": 5,
+     "depart": "2026-09-03",
+     "return": "2026-09-10"
     }
    ],
    "last_alert": null,
@@ -4141,9 +4344,9 @@
    "region": "asia",
    "stats": {
     "median": 1467.0,
-    "p25": 1118.5,
+    "p25": 1113.0,
     "p10": 1112.0,
-    "n": 35,
+    "n": 41,
     "ready": false,
     "delta_pct": -24
    },
@@ -4152,7 +4355,8 @@
     1112.0,
     1709.0,
     1114.0,
-    1113.0
+    1113.0,
+    1112.0
    ]
   },
   "BKK": {
@@ -4325,6 +4529,21 @@
      "stops": 4,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 1058.0,
+     "carriers": [
+      "B6",
+      "EY",
+      "NH",
+      "UA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20BKK%20on%202026-09-03%20through%202026-09-10",
+     "confirmed": true,
+     "stops": 4,
+     "depart": "2026-09-03",
+     "return": "2026-09-10"
     }
    ],
    "last_alert": null,
@@ -4334,22 +4553,23 @@
    "stats": {
     "median": 1373.0,
     "p25": 1198.0,
-    "p10": 1059.0,
-    "n": 49,
+    "p10": 1058.4,
+    "n": 55,
     "ready": false,
-    "delta_pct": -13
+    "delta_pct": -23
    },
    "spark60": [
     1058.0,
     1059.0,
     1342.0,
     1456.0,
-    1198.0
+    1198.0,
+    1058.0
    ]
   },
   "TPE": {
    "label": "Taipei, Taiwan",
-   "floor": 1155.0,
+   "floor": 1081.0,
    "points": [
     {
      "at": "2026-07-13T18:22:07+00:00",
@@ -4484,31 +4704,47 @@
      "stops": 4,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 1081.0,
+     "carriers": [
+      "UA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20TPE%20on%202026-09-03%20through%202026-09-10",
+     "confirmed": true,
+     "stops": 4,
+     "depart": "2026-09-03",
+     "return": "2026-09-10"
     }
    ],
-   "last_alert": null,
+   "last_alert": {
+    "at": "2026-07-23T13:42:45+00:00",
+    "price": 1081.0
+   },
    "origin": "SJU",
    "kind": "destination",
    "region": "asia",
    "stats": {
-    "median": 1593.0,
-    "p25": 1417.0,
+    "median": 1577.5,
+    "p25": 1155.0,
     "p10": 1155.0,
-    "n": 29,
+    "n": 32,
     "ready": false,
-    "delta_pct": -2
+    "delta_pct": -31
    },
    "spark60": [
     1155.0,
     1466.0,
     1726.0,
     1591.0,
-    1564.0
+    1564.0,
+    1081.0
    ]
   },
   "PVG": {
    "label": "Shanghai, China",
-   "floor": 1342.0,
+   "floor": 1242.0,
    "points": [
     {
      "at": "2026-07-13T18:22:07+00:00",
@@ -4636,9 +4872,25 @@
      "stops": 4,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 1242.0,
+     "carriers": [
+      "DL",
+      "UA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20PVG%20on%202026-09-03%20through%202026-09-10",
+     "confirmed": true,
+     "stops": 4,
+     "depart": "2026-09-03",
+     "return": "2026-09-10"
     }
    ],
-   "last_alert": null,
+   "last_alert": {
+    "at": "2026-07-23T13:42:45+00:00",
+    "price": 1242.0
+   },
    "origin": "SJU",
    "kind": "destination",
    "region": "asia",
@@ -4646,16 +4898,17 @@
     "median": 1709.0,
     "p25": 1342.0,
     "p10": 1342.0,
-    "n": 35,
+    "n": 41,
     "ready": false,
-    "delta_pct": -21
+    "delta_pct": -27
    },
    "spark60": [
     1342.0,
     1342.0,
     1867.0,
     1579.0,
-    1342.0
+    1342.0,
+    1242.0
    ]
   },
   "KEF": {
@@ -4830,6 +5083,21 @@
      "stops": 2,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 983.0,
+     "carriers": [
+      "B6",
+      "BA",
+      "FI",
+      "IB"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20KEF%20on%202027-01-09%20through%202027-01-16",
+     "confirmed": true,
+     "stops": 3,
+     "depart": "2027-01-09",
+     "return": "2027-01-16"
     }
    ],
    "last_alert": null,
@@ -4837,19 +5105,20 @@
    "kind": "destination",
    "region": "europe",
    "stats": {
-    "median": 979.5,
-    "p25": 839.0,
+    "median": 983.5,
+    "p25": 867.5,
     "p10": 791.0,
-    "n": 46,
+    "n": 52,
     "ready": false,
-    "delta_pct": -18
+    "delta_pct": 0
    },
    "spark60": [
     791.0,
     791.0,
     976.0,
     891.0,
-    804.0
+    804.0,
+    983.0
    ]
   },
   "LHR": {
@@ -5013,6 +5282,21 @@
      "stops": 3,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 897.0,
+     "carriers": [
+      "DL",
+      "SN",
+      "UA",
+      "VS"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20LHR%20on%202026-09-03%20through%202026-09-10",
+     "confirmed": true,
+     "stops": 3,
+     "depart": "2026-09-03",
+     "return": "2026-09-10"
     }
    ],
    "last_alert": {
@@ -5024,18 +5308,19 @@
    "region": "europe",
    "stats": {
     "median": 902.0,
-    "p25": 863.0,
-    "p10": 826.0,
-    "n": 47,
+    "p25": 866.0,
+    "p10": 832.0,
+    "n": 53,
     "ready": false,
-    "delta_pct": 5
+    "delta_pct": -1
    },
    "spark60": [
     866.0,
     826.0,
     922.0,
     902.0,
-    947.0
+    947.0,
+    897.0
    ]
   },
   "FRA": {
@@ -5197,6 +5482,20 @@
      "stops": 2,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 800.0,
+     "carriers": [
+      "B6",
+      "DE",
+      "TP"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20FRA%20on%202026-09-03%20through%202026-09-10",
+     "confirmed": true,
+     "stops": 3,
+     "depart": "2026-09-03",
+     "return": "2026-09-10"
     }
    ],
    "last_alert": {
@@ -5210,16 +5509,17 @@
     "median": 954.0,
     "p25": 916.0,
     "p10": 775.0,
-    "n": 43,
+    "n": 49,
     "ready": false,
-    "delta_pct": -6
+    "delta_pct": -16
    },
    "spark60": [
     875.0,
     772.0,
     930.0,
     914.0,
-    900.0
+    900.0,
+    800.0
    ]
   },
   "DUB": {
@@ -5384,6 +5684,19 @@
      "stops": 2,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 756.0,
+     "carriers": [
+      "B6",
+      "IB"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20DUB%20on%202026-09-03%20through%202026-09-10",
+     "confirmed": true,
+     "stops": 2,
+     "depart": "2026-09-03",
+     "return": "2026-09-10"
     }
    ],
    "last_alert": {
@@ -5394,19 +5707,20 @@
    "kind": "destination",
    "region": "europe",
    "stats": {
-    "median": 773.0,
-    "p25": 727.0,
+    "median": 778.0,
+    "p25": 751.0,
     "p10": 667.0,
-    "n": 49,
+    "n": 55,
     "ready": false,
-    "delta_pct": -1
+    "delta_pct": -3
    },
    "spark60": [
     727.0,
     663.0,
     778.0,
     748.0,
-    763.0
+    763.0,
+    756.0
    ]
   },
   "CDG": {
@@ -5555,6 +5869,19 @@
      "stops": 2,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 788.0,
+     "carriers": [
+      "AA",
+      "AC"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20CDG%20on%202027-01-09%20through%202027-01-16",
+     "confirmed": true,
+     "stops": 2,
+     "depart": "2027-01-09",
+     "return": "2027-01-16"
     }
    ],
    "last_alert": {
@@ -5567,17 +5894,18 @@
    "stats": {
     "median": 939.0,
     "p25": 860.0,
-    "p10": 755.0,
-    "n": 49,
+    "p10": 767.0,
+    "n": 55,
     "ready": false,
-    "delta_pct": 1
+    "delta_pct": -16
    },
    "spark60": [
     785.0,
     752.0,
     968.0,
     1065.0,
-    950.0
+    950.0,
+    788.0
    ]
   },
   "MXP": {
@@ -5729,6 +6057,20 @@
      "stops": 2,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 824.0,
+     "carriers": [
+      "AC",
+      "EN",
+      "IB"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MXP%20on%202027-01-09%20through%202027-01-16",
+     "confirmed": true,
+     "stops": 3,
+     "depart": "2027-01-09",
+     "return": "2027-01-16"
     }
    ],
    "last_alert": {
@@ -5739,19 +6081,20 @@
    "kind": "destination",
    "region": "europe",
    "stats": {
-    "median": 1028.0,
-    "p25": 967.0,
+    "median": 1003.0,
+    "p25": 945.5,
     "p10": 736.0,
-    "n": 41,
+    "n": 47,
     "ready": false,
-    "delta_pct": -3
+    "delta_pct": -18
    },
    "spark60": [
     967.0,
     728.0,
     944.0,
     1024.0,
-    994.0
+    994.0,
+    824.0
    ]
   },
   "LAX\u2192NRT": {
@@ -5896,6 +6239,19 @@
      "stops": 1,
      "depart": "2026-08-29",
      "return": "2026-09-05"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 867.0,
+     "carriers": [
+      "SQ",
+      "ZG"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20LAX%20to%20NRT%20on%202027-01-10%20through%202027-01-17",
+     "confirmed": true,
+     "stops": 0,
+     "depart": "2027-01-10",
+     "return": "2027-01-17"
     }
    ],
    "last_alert": {
@@ -5907,18 +6263,19 @@
    "region": "asia",
    "stats": {
     "median": 1053.5,
-    "p25": 946.0,
-    "p10": 858.2,
-    "n": 70,
+    "p25": 945.25,
+    "p10": 863.5,
+    "n": 76,
     "ready": false,
-    "delta_pct": -30
+    "delta_pct": -18
    },
    "spark60": [
     994.0,
     946.0,
     740.0,
     739.0,
-    738.0
+    738.0,
+    867.0
    ]
   },
   "MAD\u2192PRG": {
@@ -6061,6 +6418,19 @@
      "stops": 0,
      "depart": "2027-01-04",
      "return": "2027-01-11"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 121.0,
+     "carriers": [
+      "FR",
+      "IB"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20MAD%20to%20PRG%20on%202027-01-10%20through%202027-01-17",
+     "confirmed": true,
+     "stops": 0,
+     "depart": "2027-01-10",
+     "return": "2027-01-17"
     }
    ],
    "last_alert": {
@@ -6071,19 +6441,20 @@
    "kind": "connector",
    "region": "europe",
    "stats": {
-    "median": 248.0,
-    "p25": 219.0,
-    "p10": 164.0,
-    "n": 46,
+    "median": 244.5,
+    "p25": 200.25,
+    "p10": 161.3,
+    "n": 52,
     "ready": false,
-    "delta_pct": -36
+    "delta_pct": -51
    },
    "spark60": [
     220.0,
     114.0,
     180.0,
     254.0,
-    159.0
+    159.0,
+    121.0
    ]
   },
   "MAD\u2192BUD": {
@@ -6227,6 +6598,19 @@
      "stops": 0,
      "depart": "2027-01-04",
      "return": "2027-01-11"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 144.0,
+     "carriers": [
+      "AF",
+      "W6"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20MAD%20to%20BUD%20on%202027-01-10%20through%202027-01-17",
+     "confirmed": true,
+     "stops": 1,
+     "depart": "2027-01-10",
+     "return": "2027-01-17"
     }
    ],
    "last_alert": {
@@ -6237,19 +6621,20 @@
    "kind": "connector",
    "region": "europe",
    "stats": {
-    "median": 189.5,
-    "p25": 131.25,
-    "p10": 113.0,
-    "n": 46,
+    "median": 189.0,
+    "p25": 137.25,
+    "p10": 114.0,
+    "n": 52,
     "ready": false,
-    "delta_pct": -37
+    "delta_pct": -24
    },
    "spark60": [
     96.0,
     99.0,
     190.0,
     161.0,
-    120.0
+    120.0,
+    144.0
    ]
   },
   "MAD\u2192WAW": {
@@ -6394,6 +6779,19 @@
      "stops": 1,
      "depart": "2027-01-04",
      "return": "2027-01-11"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 132.0,
+     "carriers": [
+      "LO",
+      "W6"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20MAD%20to%20WAW%20on%202026-09-04%20through%202026-09-11",
+     "confirmed": true,
+     "stops": 0,
+     "depart": "2026-09-04",
+     "return": "2026-09-11"
     }
    ],
    "last_alert": {
@@ -6404,19 +6802,20 @@
    "kind": "connector",
    "region": "europe",
    "stats": {
-    "median": 267.0,
-    "p25": 193.25,
+    "median": 259.0,
+    "p25": 187.75,
     "p10": 133.0,
-    "n": 46,
+    "n": 52,
     "ready": false,
-    "delta_pct": -42
+    "delta_pct": -49
    },
    "spark60": [
     132.0,
     106.0,
     223.0,
     149.0,
-    156.0
+    156.0,
+    132.0
    ]
   },
   "EWR": {
@@ -6546,29 +6945,43 @@
      "stops": 0,
      "depart": "2026-08-28",
      "return": "2026-09-06"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 237.0,
+     "carriers": [
+      "B6",
+      "UA"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20EWR%20on%202026-09-03%20through%202026-09-12",
+     "confirmed": true,
+     "stops": 0,
+     "depart": "2026-09-03",
+     "return": "2026-09-12"
     }
    ],
    "last_alert": {
-    "at": "2026-07-22T13:29:27+00:00",
-    "price": 267.0
+    "at": "2026-07-23T13:42:45+00:00",
+    "price": 237.0
    },
    "origin": "SJU",
    "kind": "positioning",
    "region": "north_america",
    "stats": {
     "median": 387.0,
-    "p25": 303.0,
+    "p25": 279.5,
     "p10": 237.0,
-    "n": 45,
+    "n": 51,
     "ready": false,
-    "delta_pct": -31
+    "delta_pct": -39
    },
    "spark60": [
     237.0,
     257.0,
     357.0,
     303.0,
-    267.0
+    267.0,
+    237.0
    ]
   },
   "EWR\u2192ICN": {
@@ -6701,6 +7114,18 @@
      "stops": 1,
      "depart": "2026-08-29",
      "return": "2026-09-05"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 1042.0,
+     "carriers": [
+      "YP"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20EWR%20to%20ICN%20on%202026-09-04%20through%202026-09-11",
+     "confirmed": true,
+     "stops": 0,
+     "depart": "2026-09-04",
+     "return": "2026-09-11"
     }
    ],
    "last_alert": {
@@ -6711,19 +7136,20 @@
    "kind": "connector",
    "region": "asia",
    "stats": {
-    "median": 1256.0,
+    "median": 1276.0,
     "p25": 1062.0,
-    "p10": 819.6,
-    "n": 45,
+    "p10": 876.0,
+    "n": 51,
     "ready": false,
-    "delta_pct": -15
+    "delta_pct": -18
    },
    "spark60": [
     1062.0,
     752.0,
     1309.0,
     1041.0,
-    1071.0
+    1071.0,
+    1042.0
    ]
   },
   "MAD+": {
@@ -6865,6 +7291,19 @@
      "stops": 1,
      "depart": "2026-08-28",
      "return": "2026-09-06"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 743.0,
+     "carriers": [
+      "AA",
+      "IB"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20MAD%20on%202027-01-09%20through%202027-01-18",
+     "confirmed": true,
+     "stops": 3,
+     "depart": "2027-01-09",
+     "return": "2027-01-18"
     }
    ],
    "last_alert": {
@@ -6875,12 +7314,12 @@
    "kind": "positioning",
    "region": "europe",
    "stats": {
-    "median": 775.0,
-    "p25": 675.6025,
-    "p10": 642.0,
-    "n": 110,
-    "ready": false,
-    "delta_pct": 4
+    "median": 779.5,
+    "p25": 698.0,
+    "p10": 642.063,
+    "n": 122,
+    "ready": true,
+    "delta_pct": -5
    },
    "spark60": [
     636.47,
@@ -6900,12 +7339,13 @@
     759.0,
     698.0,
     865.0,
-    765.0
+    765.0,
+    743.0
    ]
   },
   "SDQ": {
    "label": "Santo Domingo, Dominican Republic",
-   "floor": 207.0,
+   "floor": 205.0,
    "points": [
     {
      "at": "2026-07-13T19:18:38+00:00",
@@ -7023,29 +7463,43 @@
      "stops": 0,
      "depart": "2027-01-03",
      "return": "2027-01-10"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 205.0,
+     "carriers": [
+      "B6",
+      "DM"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20SDQ%20on%202027-01-09%20through%202027-01-16",
+     "confirmed": true,
+     "stops": 0,
+     "depart": "2027-01-09",
+     "return": "2027-01-16"
     }
    ],
    "last_alert": {
-    "at": "2026-07-14T13:20:35+00:00",
-    "price": 207.0
+    "at": "2026-07-23T13:42:45+00:00",
+    "price": 205.0
    },
    "origin": "SJU",
    "kind": "destination",
    "region": "latam",
    "stats": {
     "median": 335.5,
-    "p25": 309.25,
-    "p10": 232.8,
-    "n": 44,
+    "p25": 279.75,
+    "p10": 214.2,
+    "n": 62,
     "ready": false,
-    "delta_pct": -29
+    "delta_pct": -39
    },
    "spark60": [
     314.0,
     207.0,
     294.0,
     231.0,
-    237.0
+    237.0,
+    195.0
    ]
   },
   "SJO": {
@@ -7152,6 +7606,19 @@
      "stops": 2,
      "depart": "2026-08-28",
      "return": "2026-09-04"
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 360.0,
+     "carriers": [
+      "AA",
+      "AV"
+     ],
+     "link": "https://www.google.com/travel/flights?q=Flights%20from%20SJU%20to%20SJO%20on%202027-01-09%20through%202027-01-16",
+     "confirmed": true,
+     "stops": 2,
+     "depart": "2027-01-09",
+     "return": "2027-01-16"
     }
    ],
    "last_alert": {
@@ -7163,22 +7630,215 @@
    "region": "latam",
    "stats": {
     "median": 362.0,
-    "p25": 348.5,
-    "p10": 325.8,
-    "n": 55,
+    "p25": 360.0,
+    "p10": 327.0,
+    "n": 61,
     "ready": false,
-    "delta_pct": -17
+    "delta_pct": -1
    },
    "spark60": [
     327.0,
     327.0,
     362.0,
     724.0,
-    290.0
+    290.0,
+    360.0
    ]
   }
  },
  "alerts": [
+  {
+   "at": "2026-07-23T13:42:45+00:00",
+   "route": "EWR",
+   "label": "Newark (Air Premia positioning, 9-day RT)",
+   "origin": "SJU",
+   "flex_note": null,
+   "price": 237.0,
+   "reason": "below your $300 threshold",
+   "tier": "legacy",
+   "typical": null,
+   "self_transfer": false,
+   "confirmed": true,
+   "depart": "2026-09-03",
+   "return": "2026-09-12",
+   "stops": 0,
+   "carriers": [
+    "B6",
+    "UA"
+   ],
+   "link": "https://www.jetblue.com/booking/trip-summary?searchType=NORMAL&journeySpan=OW&origin=SJU&destination=EWR&departureDate=2026-09-03&fareFamily=DN&flightNumbers=2890&fareBasisCode=PI2QBEL1&bookingClass=L&numAdults=1&numChildren=0&numInfants=0&travelersDetails=true&source=googleflights&t=1784814533&sig=AdhrDbgwRQIhAI7iijeLphBYRde2Y_SBYOa6E52g5XFUKAuDUuKPx1jiAiBKR1_gxUR1WkXYdgc7vaTUIKISPtvP2nXL4dGO2ns5eQ%3D%3D&gclid=ADowPOIaBpiWhk7p55SbGfrWgg30NhCKchmPvgll1HGTu_mcxeLCoeOfyYYEHRdIc7h-oCxHdgJCwjTGrJArYv8dSSDtC8nhaoqCUZh0zDD4cknoBTQ&gclsrc=gf"
+  },
+  {
+   "at": "2026-07-23T13:42:45+00:00",
+   "route": "PVG",
+   "label": "Shanghai, China",
+   "origin": "SJU",
+   "flex_note": null,
+   "price": 1242.0,
+   "reason": "new all-time observed floor (was $1342.00)",
+   "tier": "legacy",
+   "typical": null,
+   "self_transfer": false,
+   "confirmed": true,
+   "depart": "2026-09-03",
+   "return": "2026-09-10",
+   "stops": 4,
+   "carriers": [
+    "DL",
+    "UA"
+   ],
+   "link": "https://www.united.com/ual/en/us/Booking/SearchInjection/VendorQueryPinDown?encodedParameters=5c7f2830-6f75-4d36-9a49-26eea8eb7a81%5E5b0f214d-7224-4dad-a134-39fafe717625&Name=Google-Web&gclid=ADowPOJJrv5_0cocaaISY08tbDgzTVB24cEfs1bLpDsV1vlN1si0rlbNEEEksNPRBzdq77Gkw_qBKgsloaY59ouIuzVAz0lfy7OOS4JrRFTW9elo7IY&gclsrc=gf"
+  },
+  {
+   "at": "2026-07-23T13:42:45+00:00",
+   "route": "TPE",
+   "label": "Taipei, Taiwan",
+   "origin": "SJU",
+   "flex_note": null,
+   "price": 1081.0,
+   "reason": "new all-time observed floor (was $1155.00)",
+   "tier": "legacy",
+   "typical": null,
+   "self_transfer": false,
+   "confirmed": true,
+   "depart": "2026-09-03",
+   "return": "2026-09-10",
+   "stops": 4,
+   "carriers": [
+    "UA"
+   ],
+   "link": "https://www.united.com/ual/en/us/Booking/SearchInjection/VendorQueryPinDown?encodedParameters=5c7f2830-6f75-4d36-9a49-26eea8eb7a81%5Ed60cbdc3-f6fb-48b5-b84a-cdd1f001aaec&Name=Google-Web&gclid=ADowPOIisUx59LtX9cFcNJoSxaypYSEQX0z8lUtkl_3AxYkDW1vsW3E4vbO0HMr7lB75hD_ae9r6QxUCRCSmt6-Sn1VuBmVlKYlXiAa-tmGeD-e5bHA&gclsrc=gf"
+  },
+  {
+   "at": "2026-07-23T13:42:45+00:00",
+   "route": "SIN",
+   "label": "Singapore",
+   "origin": "SJU",
+   "flex_note": null,
+   "price": 1317.0,
+   "reason": "new all-time observed floor (was $1409.00)",
+   "tier": "legacy",
+   "typical": null,
+   "self_transfer": false,
+   "confirmed": true,
+   "depart": "2026-09-03",
+   "return": "2026-09-10",
+   "stops": 4,
+   "carriers": [
+    "B6",
+    "EY",
+    "JL"
+   ],
+   "link": "https://digital.etihad.com/book/search?B_LOCATION_1=SJU&E_LOCATION_1=SIN&B_LOCATION_1_1=SJU&E_LOCATION_1_1=JFK&B_DATE_1_1=2026-09-03T15:24:00-04:00&E_DATE_1_1=2026-09-03T19:22:00-04:00&MARKETINGAIRLINECODE_1_1=EY&MARKETINGFLIGHT_NUMBER_1_1=8411&AIRCRAFTCODE_1_1=321&CABIN_1_1=E&BOOKINGCLASS_1_1=V&FARETYPE_1_1=public&FARECLASS_1_1=VLN10H19&OPERATINGAIRLINECODE_1_1=B6&B_LOCATION_1_2=JFK&E_LOCATION_1_2=AUH&B_DATE_1_2=2026-09-03T22:20:00-04:00&E_DATE_1_2=2026-09-04T19:20:00%2B04:00&MARKETINGAIRLINECODE_1_2=EY&MARKETINGFLIGHT_NUMBER_1_2=4&AIRCRAFTCODE_1_2=351&CABIN_1_2=E&BOOKINGCLASS_1_2=V&FARETYPE_1_2=public&FARECLASS_1_2=VLN10H19&OPERATINGAIRLINECODE_1_2=EY&B_LOCATION_1_3=AUH&E_LOCATION_1_3=SIN&B_DATE_1_3=2026-09-04T21:40:00%2B04:00&E_DATE_1_3=2026-09-05T09:40:00%2B08:00&MARKETINGAIRLINECODE_1_3=EY&MARKETINGFLIGHT_NUMBER_1_3=498&AIRCRAFTCODE_1_3=789&CABIN_1_3=E&BOOKINGCLASS_1_3=V&FARETYPE_1_3=public&FARECLASS_1_3=VLN10H19&OPERATINGAIRLINECODE_1_3=EY&TRAVELERS=ADT&LANGUAGE=EN&TRIP_FLOW_TYPE=CARTREVIEW&OFFERPRICE_TOTAL=869.60&OFFERPRICE_CURRENCYCODE=USD&source=MSE_NAME&utm_source=googleflightsearch&utm_medium=ms_core&utm_campaign=always_on&utm_term=cpa&utm_content=cpa-GoogleFlightSearch_Global&gclid=ADowPOIYwKQAW4OVtjHFDZgAtVL1wrAhWDHjZr6ciOyYfxqrQ_-kCPmc8pflHRAOtiFcH9xXE_FmyQn2UBoWeRUk7x_3RBcUhGVAwtDhvrSj9smkywU&gclsrc=gf"
+  },
+  {
+   "at": "2026-07-23T13:42:45+00:00",
+   "route": "HKG",
+   "label": "Hong Kong",
+   "origin": "SJU",
+   "flex_note": null,
+   "price": 1255.0,
+   "reason": "new all-time observed floor (was $1383.00)",
+   "tier": "legacy",
+   "typical": null,
+   "self_transfer": false,
+   "confirmed": true,
+   "depart": "2026-09-03",
+   "return": "2026-09-10",
+   "stops": 4,
+   "carriers": [
+    "B6",
+    "DL",
+    "EY"
+   ],
+   "link": "https://digital.etihad.com/book/search?B_LOCATION_1=SJU&E_LOCATION_1=HKG&B_LOCATION_1_1=SJU&E_LOCATION_1_1=JFK&B_DATE_1_1=2026-09-03T07:55:00-04:00&E_DATE_1_1=2026-09-03T11:52:00-04:00&MARKETINGAIRLINECODE_1_1=EY&MARKETINGFLIGHT_NUMBER_1_1=8435&AIRCRAFTCODE_1_1=321&CABIN_1_1=E&BOOKINGCLASS_1_1=E&FARETYPE_1_1=public&FARECLASS_1_1=ELN00H15&OPERATINGAIRLINECODE_1_1=B6&B_LOCATION_1_2=JFK&E_LOCATION_1_2=AUH&B_DATE_1_2=2026-09-03T15:45:00-04:00&E_DATE_1_2=2026-09-04T12:25:00%2B04:00&MARKETINGAIRLINECODE_1_2=EY&MARKETINGFLIGHT_NUMBER_1_2=2&AIRCRAFTCODE_1_2=351&CABIN_1_2=E&BOOKINGCLASS_1_2=E&FARETYPE_1_2=public&FARECLASS_1_2=ELN00H15&OPERATINGAIRLINECODE_1_2=EY&B_LOCATION_1_3=AUH&E_LOCATION_1_3=HKG&B_DATE_1_3=2026-09-04T21:10:00%2B04:00&E_DATE_1_3=2026-09-05T09:00:00%2B08:00&MARKETINGAIRLINECODE_1_3=EY&MARKETINGFLIGHT_NUMBER_1_3=870&AIRCRAFTCODE_1_3=789&CABIN_1_3=E&BOOKINGCLASS_1_3=E&FARETYPE_1_3=public&FARECLASS_1_3=ELN00H15&OPERATINGAIRLINECODE_1_3=EY&TRAVELERS=ADT&LANGUAGE=EN&TRIP_FLOW_TYPE=CARTREVIEW&OFFERPRICE_TOTAL=867.60&OFFERPRICE_CURRENCYCODE=USD&source=MSE_NAME&utm_source=googleflightsearch&utm_medium=ms_core&utm_campaign=always_on&utm_term=cpa&utm_content=cpa-GoogleFlightSearch_Global&gclid=ADowPOIfv-F38ZBO4VTr3U2v1dAHcImIen0dXAAkrpmRDrDtHErYGAVYHuNiMIyalyJnDdjH_3LlkIeBZvdgWdBLQbdi5aXh5Vy1ZEaZSeTgA9rs6oo&gclsrc=gf"
+  },
+  {
+   "at": "2026-07-23T13:42:45+00:00",
+   "route": "LIM",
+   "label": "Lima, Peru",
+   "origin": "SJU",
+   "flex_note": null,
+   "price": 337.0,
+   "reason": "below your $400 threshold",
+   "tier": "legacy",
+   "typical": null,
+   "self_transfer": false,
+   "confirmed": true,
+   "depart": "2027-01-09",
+   "return": "2027-01-16",
+   "stops": 2,
+   "carriers": [
+    "AV",
+    "CM"
+   ],
+   "link": "https://controller.avianca.com/api/redirectMetasearch?fi=202701091300&cco=SJU&ccd=LIM&na=1&nn=0&ni=0&fromFlights=AV215,AV51&lan=EN&backend=PRD&Pais=US&utm_source=googleflight&utm_medium=core&utm_campaign=nam_us_por_met_gfs_des_ing_cor_20211101-core&utm_content=sju-lim&gclid=ADowPOJZ0Os9ehUNU6lONr38vn2XpUu_SqEuI33426Z0Nu7YAUmej--HM4HswKmBAwmtkr55MF3OFtEc4irOtzBZBZNg05m775ZNAxqUOq99KTxsFEG8&gclsrc=gf"
+  },
+  {
+   "at": "2026-07-23T13:42:45+00:00",
+   "route": "SDQ",
+   "label": "Santo Domingo, Dominican Republic",
+   "origin": "SJU",
+   "flex_note": null,
+   "price": 205.0,
+   "reason": "new all-time observed floor (was $207.00)",
+   "tier": "legacy",
+   "typical": null,
+   "self_transfer": false,
+   "confirmed": true,
+   "depart": "2027-01-09",
+   "return": "2027-01-16",
+   "stops": 0,
+   "carriers": [
+    "B6",
+    "DM"
+   ],
+   "link": "https://www.arajet.com/en/search?routes%5B0%5D%5Bfrom%5D=SJU&routes%5B0%5D%5Bto%5D=SDQ&routes%5B0%5D%5Bdate%5D=2027-01-09&passengers%5B0%5D%5Bcode%5D=ADT&passengers%5B0%5D%5Bcount%5D=1&passengers%5B1%5D%5Bcode%5D=CHD&passengers%5B1%5D%5Bcount%5D=0&passengers%5B2%5D%5Bcode%5D=INF&passengers%5B2%5D%5Bcount%5D=0&currency=USD&execute=true&utm_source=googleflights&utm_medium=metasearch&gclid=ADowPOLpOPtF4BmWK5J9SAvYqmyJ9gYSaZ1O2X1aPhlGpszko8Fzh2AKpuIzCoEDlwRW-C-aPISzXF4XmMaUGP7OC51ajJnOdq3DUMSNWMUG3jS6ph32&gclsrc=gf",
+   "window_note": "similar prices Jan 09 \u2013 Jan 23 departures (3 of 5 dates checked)"
+  },
+  {
+   "at": "2026-07-23T13:42:45+00:00",
+   "route": "MDE",
+   "label": "Medell\u00edn, Colombia",
+   "origin": "SJU",
+   "flex_note": null,
+   "price": 246.0,
+   "reason": "below your $250 threshold",
+   "tier": "legacy",
+   "typical": null,
+   "self_transfer": false,
+   "confirmed": true,
+   "depart": "2027-01-09",
+   "return": "2027-01-16",
+   "stops": 2,
+   "carriers": [
+    "AV",
+    "CM"
+   ],
+   "link": "https://controller.avianca.com/api/redirectMetasearch?fi=202701091300&cco=SJU&ccd=MDE&na=1&nn=0&ni=0&fromFlights=AV215,AV9326&lan=EN&backend=PRD&Pais=US&utm_source=googleflight&utm_medium=core&utm_campaign=nam_us_por_met_gfs_des_ing_cor_20211101-core&utm_content=sju-mde&gclid=ADowPOKhVng8_SgtcBzqXA2EL0tL3SRXua7cAQ3i2gRVuY1M1cqSWhifJCBsS6sekg4TnYngrP4wfM3s_rYLMyfzr6E-V1KDnNMvmiw07234t02ok35L&gclsrc=gf",
+   "window_note": "similar prices Jan 09 \u2013 Jan 23 departures (3 of 5 dates checked)"
+  },
+  {
+   "at": "2026-07-23T13:42:45+00:00",
+   "route": "NRT",
+   "label": "Tokyo, Japan (single ticket)",
+   "origin": "SJU",
+   "flex_note": null,
+   "price": 1580.0,
+   "reason": "$1580 \u2014 typically ~$2022 (-22%)",
+   "tier": "deal",
+   "typical": 2022.0,
+   "self_transfer": false,
+   "confirmed": true,
+   "depart": "2027-01-09",
+   "return": "2027-01-16",
+   "stops": 3,
+   "carriers": [
+    "AC"
+   ],
+   "link": "https://book.aircanada.com/pl/AConline/en/RedirectionServlet?numberOfAdults=1&numberOfYouth=0&numberOfChildren=0&numberOfInfants=0&tripType=R&country=US&countryOfResidence=US&language=EN&fromThirdParty=YES&thirdPartyID=0004159&isDynamic=true&AUTHORIZATION_ID=&PRICING_MODE=1&FareRequest=YES&departure1=09/01/2027&org1=SJU&dest1=NRT&B_LOCATION_1_1=SJU&E_LOCATION_1_1=YUL&B_DATE_1_1=202701091535&E_DATE_1_1=202701091930&AIRLINE_1_1=AC&FLIGHT_NUMBER_1_1=1729&RBD_1_1=K&FARE_CLASS_1_1=KNA5ACTG&FARE_BREAK_POINT_1_1=TRUE&B_LOCATION_1_2=YUL&E_LOCATION_1_2=NRT&B_DATE_1_2=202701101240&E_DATE_1_2=202701111630&AIRLINE_1_2=AC&FLIGHT_NUMBER_1_2=5&RBD_1_2=G&FARE_CLASS_1_2=GLXR82TG&FARE_BREAK_POINT_1_2=TRUE&departure2=16/01/2027&org2=NRT&dest2=SJU&B_LOCATION_2_1=NRT&E_LOCATION_2_1=YUL&B_DATE_2_1=202701161845&E_DATE_2_1=202701161700&AIRLINE_2_1=AC&FLIGHT_NUMBER_2_1=6&RBD_2_1=K&FARE_CLASS_2_1=KLWR13TG&FARE_BREAK_POINT_2_1=FALSE&B_LOCATION_2_2=YUL&E_LOCATION_2_2=YYZ&B_DATE_2_2=202701170500&E_DATE_2_2=202701170636&AIRLINE_2_2=AC&FLIGHT_NUMBER_2_2=7883&RBD_2_2=K&FARE_CLASS_2_2=KLWR13TG&FARE_BREAK_POINT_2_2=FALSE&B_LOCATION_2_3=YYZ&E_LOCATION_2_3=SJU&B_DATE_2_3=202701170750&E_DATE_2_3=202701171330&AIRLINE_2_3=AC&FLIGHT_NUMBER_2_3=1200&RBD_2_3=K&FARE_CLASS_2_3=KLWR13TG&FARE_BREAK_POINT_2_3=TRUE&gclid=ADowPOIF2MMEI_jJdUc9ddUhXfps90UmrZ5LFOdNGCiTbzZnbuu7NznLO5xfqgAwFoui_m1qirHyPlAhAQNrIYqFEBIDa0VA-W-Oous_k-gz8pa5-TM&gclsrc=gf",
+   "window_note": "similar prices Jan 09 \u2013 Jan 23 departures (3 of 5 dates checked)"
+  },
   {
    "at": "2026-07-22T13:29:27+00:00",
    "route": "Tokyo via LAX (Zipair)",
@@ -8322,7 +8982,7 @@
   "MAD\u2192BUD": 120,
   "MAD\u2192WAW": 120
  },
- "updated_at": "2026-07-22T13:29:27+00:00",
+ "updated_at": "2026-07-23T13:42:45+00:00",
  "builds": {
   "Tokyo via LAX (Zipair)": {
    "floor": 1072.0,
@@ -8381,6 +9041,11 @@
      "at": "2026-07-22T13:29:27+00:00",
      "price": 1072.0,
      "direct": 1942.0
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 1201.0,
+     "direct": 1580.0
     }
    ],
    "last_alert": {
@@ -8450,6 +9115,11 @@
     {
      "at": "2026-07-22T13:29:27+00:00",
      "price": 967.0,
+     "direct": null
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 864.0,
      "direct": null
     }
    ],
@@ -8521,6 +9191,11 @@
      "at": "2026-07-22T13:29:27+00:00",
      "price": 928.0,
      "direct": null
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 887.0,
+     "direct": null
     }
    ],
    "last_alert": {
@@ -8591,6 +9266,11 @@
      "at": "2026-07-22T13:29:27+00:00",
      "price": 964.0,
      "direct": null
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 875.0,
+     "direct": null
     }
    ],
    "last_alert": {
@@ -8656,6 +9336,11 @@
      "at": "2026-07-22T13:29:27+00:00",
      "price": 1338.0,
      "direct": 1233.0
+    },
+    {
+     "at": "2026-07-23T13:42:45+00:00",
+     "price": 1279.0,
+     "direct": 1352.0
     }
    ],
    "last_alert": {
