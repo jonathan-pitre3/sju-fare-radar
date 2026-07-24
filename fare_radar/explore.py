@@ -63,7 +63,8 @@ def run() -> None:
         conn.close()
         return
 
-    provider = get_provider(s.get("provider", "ignav"), counter=budget.counter)
+    provider = get_provider(s.get("provider", "ignav"), counter=budget.counter,
+                            excluded_providers=s.get("excluded_providers"))
     provider.job = "explore"
     origin = s["origin"]
     max_requests = cfg.get("max_requests_per_run", 160)
@@ -106,10 +107,16 @@ def run() -> None:
             finds.append(best)
             if tier in ("hot", "mistake") and baselines.should_send(
                     conn, key, tier, best["price"], bl_cfg):
+                booking = None
                 if best.get("ignav_id") and not budget.exhausted:
-                    direct = provider.booking_link(best["ignav_id"])
-                    if direct:
-                        best["link"] = direct
+                    booking = provider.resolve_booking(best["ignav_id"])
+                if booking and booking["excluded_only"]:
+                    print(f"  {dest} {best['depart']}: [{tier}] only sold by an "
+                          f"excluded seller, suppressed")
+                    finds.remove(best)   # keep it out of the weekly digest too
+                    continue
+                if booking and booking["link"]:
+                    best["link"] = booking["link"]
                 store.record_alert(conn, key, tier, best["price"], now)
                 urgent.append({
                     "at": now, "route": key, "label": dest, "origin": origin,

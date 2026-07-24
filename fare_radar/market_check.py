@@ -74,7 +74,8 @@ def run() -> None:
         return
     picked = rotation(sorted(watched), cfg.get("routes_per_run", 8), conn)
 
-    provider = get_provider(s.get("provider", "ignav"), counter=budget.counter)
+    provider = get_provider(s.get("provider", "ignav"), counter=budget.counter,
+                            excluded_providers=s.get("excluded_providers"))
     provider.job = "market_check"
     origin = s["origin"]
     depart = date.today() + timedelta(days=28)

@@ -29,11 +29,20 @@ responses — they bill and they count.
 from __future__ import annotations
 
 import os
+import re
 import sys
 import time
 from datetime import date
+from urllib.parse import urlsplit
 
 import requests
+
+
+def _norm(text: str | None) -> str:
+    """Casefold and strip everything but a-z0-9, so 'Holiday Breakz',
+    'holidaybreakz.com', and 'www.HolidayBreakz.com' all collapse to the same
+    comparable token."""
+    return re.sub(r"[^a-z0-9]", "", (text or "").casefold())
 
 TOP_N = 3          # offers returned per search (cheapest first)
 MAX_TRIES = 3      # total attempts per request (424 / network errors)
@@ -58,11 +67,21 @@ class IgnavProvider:
 
     BASE = "https://ignav.com/api"
 
-    def __init__(self, counter=None):
+    def __init__(self, counter=None, excluded_providers=None):
         # counter(job, n) is called once per billable (HTTP 200) request so
         # the SQLite budget ledger matches Ignav's invoice.
         self.counter = counter
         self.job = "watch"
+        # Sellers to keep out of results. Each blocklist entry is normalized to
+        # an alnum token and matched against BOTH the booking link's
+        # provider_name AND its destination host — a real deeplink lands on
+        # e.g. holidaybreakz.com even when Ignav labels the seller something
+        # else (a metasearch name like CoreMeta/Wego), so the host is the
+        # reliable signal. Search itineraries carry no seller attribution
+        # (verified against ignav.com/docs 2026-07-24), so this can only be
+        # enforced where booking links are fetched.
+        self._excluded_tokens = {t for p in (excluded_providers or [])
+                                 if len(t := _norm(p)) >= 3}
 
     def _headers(self):
         return {"X-Api-Key": os.environ["IGNAV_API_KEY"],
@@ -167,17 +186,66 @@ class IgnavProvider:
         data = self._post("/fares/one-way", payload)
         return self._offers(data, origin, dest, depart.isoformat(), None, settings)
 
-    def booking_link(self, ignav_id: str) -> str | None:
-        """Airline-direct booking URL. Bills as its own request — call sparingly."""
+    def _is_excluded(self, link: dict) -> bool:
+        """A booking link is blocked if any blocklist token appears in its
+        seller name or in the host it deep-links to."""
+        if not self._excluded_tokens:
+            return False
+        name = _norm(link.get("provider_name"))
+        host = _norm(urlsplit(link.get("url") or "").hostname or "")
+        return any(tok in name or tok in host for tok in self._excluded_tokens)
+
+    def _booking_links(self, ignav_id: str) -> list[dict] | None:
+        """All bookable links for an itinerary. Bills as its own request.
+
+        Returns a list of {provider_name, provider_type, price, url}, or None
+        when the lookup itself failed (network/budget/no data). Callers MUST
+        treat None as "unknown seller", not "no seller" — an empty list means
+        Ignav genuinely returned zero booking options.
+        """
         data = self._post("/fares/booking-links", {"ignav_id": ignav_id}, timeout=30)
         if not data:
             return None
-        links = [l for opt in data.get("booking_options", [])
-                 for l in opt.get("links", []) if l.get("url")]
-        if not links:
+        return [{"provider_name": l.get("provider_name"),
+                 "provider_type": l.get("provider_type"),
+                 "price": (l.get("price") or {}).get("amount"),
+                 "url": l["url"]}
+                for opt in data.get("booking_options", [])
+                for l in opt.get("links", []) if l.get("url")]
+
+    def resolve_booking(self, ignav_id: str) -> dict | None:
+        """Pick a booking URL for an alert-worthy fare, honoring the seller
+        blocklist. Bills as its own request — call sparingly.
+
+        Returns:
+          {"link": url,  "excluded_only": False}  a usable non-blocked link
+                                                  (airline-direct preferred,
+                                                  else cheapest allowed seller)
+          {"link": None, "excluded_only": True}   itinerary is sold ONLY by
+                                                  blocked seller(s) — caller
+                                                  should suppress the fare
+          None                                    lookup unavailable; caller
+                                                  keeps the fare and falls back
+                                                  to the Google Flights link
+        """
+        links = self._booking_links(ignav_id)
+        if links is None:
             return None
-        airline = [l for l in links if l.get("provider_type") == "airline"]
-        return (airline or links)[0]["url"]
+        allowed = [l for l in links if not self._is_excluded(l)]
+        if not allowed:
+            # Every option is blocked → excluded-only (only when links existed;
+            # an empty list is "no sellers known", not "all blocked").
+            return {"link": None, "excluded_only": bool(links)}
+        airline = [l for l in allowed if l["provider_type"] == "airline"]
+        pool = airline or allowed
+        priced = [l for l in pool if l["price"] is not None]
+        best = min(priced, key=lambda l: l["price"]) if priced else pool[0]
+        return {"link": best["url"], "excluded_only": False}
+
+    def booking_link(self, ignav_id: str) -> str | None:
+        """Back-compat shim: a single non-blocked booking URL, or None."""
+        resolved = self.resolve_booking(ignav_id)
+        return resolved["link"] if resolved else None
 
 
 class AmadeusProvider:
@@ -243,5 +311,10 @@ class AmadeusProvider:
 PROVIDERS = {"ignav": IgnavProvider, "amadeus": AmadeusProvider}
 
 
-def get_provider(name: str, counter=None):
-    return PROVIDERS[name](counter=counter)
+def get_provider(name: str, counter=None, excluded_providers=None):
+    try:
+        return PROVIDERS[name](counter=counter, excluded_providers=excluded_providers)
+    except TypeError:
+        # Legacy adapters (e.g. Amadeus) don't take excluded_providers; they
+        # never resolve booking links, so there is nothing to filter anyway.
+        return PROVIDERS[name](counter=counter)

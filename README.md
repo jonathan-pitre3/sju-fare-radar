@@ -107,7 +107,7 @@ lookups, ~1 each).
 
 | Section | What it controls |
 |---|---|
-| `settings` | origin, currency, trip length, samples per run, provider, `allow_self_transfer`, `flex_days`, `flex_beat_pct` |
+| `settings` | origin, currency, trip length, samples per run, provider, `excluded_providers`, `allow_self_transfer`, `flex_days`, `flex_beat_pct` |
 | `baselines` | window, tier activation gates, percentiles, mistake-fare guard, cooldowns |
 | `budget` | `monthly_request_cap`, `warn_at_pct` |
 | `explore` | destination lists (short/long haul), weeks-out triplets, per-run request cap, digest size |
@@ -116,6 +116,38 @@ lookups, ~1 each).
 | `routes` | watched destinations: `alert_below`, optional `target_depart`/`flex`/`flex_days`, `positioning_check`, `cheap_months` |
 | `split_legs` / `builds` | split-ticket ingredients and tracked combinations (see below) |
 | `regions` | dashboard color-coding |
+
+### Excluding sellers
+
+`settings.excluded_providers` is a case-insensitive blocklist of OTAs you don't
+want to be sent to (e.g. sketchy business practices). Each entry is matched
+against **both** the `provider_name` Ignav returns for a booking option **and
+the host its link deep-links to** — so either a brand name (`Holiday Breakz`) or
+a domain (`holidaybreakz.com`) works, and a seller is still caught when Ignav
+labels it by a metasearch name (CoreMeta, Wego, …) but the link lands on the
+blocked domain. For any **alert-worthy** fare the radar already spends one
+billable booking-links lookup — that's the only point Ignav names the selling
+OTA — so the policy rides on that call at no extra cost:
+
+- a blocked seller is **never** used for a fare's booking link (an airline-direct
+  link is preferred, otherwise the cheapest *allowed* OTA); and
+- a fare that **only** a blocked seller offers is **suppressed** — no alert, and
+  it's dropped from the weekly explore digest — instead of luring you to a site
+  you've said you won't book.
+
+A booking-links lookup that fails (network/budget) is treated as *unknown*, not
+*blocked*: the fare survives and falls back to its Google Flights link, so a
+transient error never silently hides a legit deal.
+
+**Limitation (by design).** Ignav's *search* results carry no seller
+attribution — an itinerary's headline price is just the cheapest across all
+sellers, and the selling OTA is knowable only via the per-fare booking-links
+call. Fetching that for every observation (~2,800/month) would blow the request
+budget, so recorded observations and the 120-day baselines may still reflect a
+blocked seller's price. The user-facing surfaces you act on — alerts and the
+links they carry — are filtered; the aggregate baselines are not. If you want
+hard filtering on every observation too, that's a budget trade-off, not a code
+limitation — say the word.
 
 ## Setup (≈20 min, one time)
 

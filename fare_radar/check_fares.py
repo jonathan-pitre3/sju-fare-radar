@@ -109,7 +109,8 @@ def run() -> None:
     s = CONFIG["settings"]
     conn = store.connect()
     budget = Budget(conn, CONFIG.get("budget"))
-    provider = get_provider(s.get("provider", "ignav"), counter=budget.counter)
+    provider = get_provider(s.get("provider", "ignav"), counter=budget.counter,
+                            excluded_providers=s.get("excluded_providers"))
     history = load_history()
     now = datetime.now(timezone.utc).isoformat(timespec="seconds")
     pending = []
@@ -210,12 +211,18 @@ def run() -> None:
             tier = "legacy" if reason else None
         if entry["floor"] is None or best["price"] < entry["floor"]:
             entry["floor"] = best["price"]
+        # Alert-worthy fares spend one extra billable call to resolve a real
+        # booking link — also the only point Ignav reveals the selling OTA, so
+        # it's where the excluded-seller policy is enforced.
+        booking = None
+        if tier and ignav_id and not budget.exhausted and hasattr(provider, "resolve_booking"):
+            booking = provider.resolve_booking(ignav_id)
+        if tier and booking and booking["excluded_only"]:
+            print(f"  {tier} ${best['price']} — only sold by an excluded seller, suppressed")
+            tier = None
         if tier:
-            # Alert-worthy: spend one extra billable call on an airline-direct link.
-            if ignav_id and not budget.exhausted and hasattr(provider, "booking_link"):
-                direct = provider.booking_link(ignav_id)
-                if direct:
-                    best["link"] = direct
+            if booking and booking["link"]:
+                best["link"] = booking["link"]
             alert = {"at": now, "route": key, "label": label, "origin": origin,
                      "flex_note": flex_note,
                      "price": best["price"], "reason": reason, "tier": tier,

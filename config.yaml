@@ -22,6 +22,14 @@ settings:
   alert_cooldown_hours: 24   # don't repeat identical alerts within this window
   provider: ignav            # ignav (default, free tier) | amadeus (LEGACY - self-service keys die 2026-07-17)
   amadeus_env: production    # only used if provider: amadeus
+  excluded_providers:        # OTAs to keep out of results (untrusted / sketchy business practices).
+                             # Each entry is matched (case/space-insensitive) against BOTH the Ignav
+                             # booking_options provider_name AND the host the link deep-links to, so a
+                             # brand name or a domain both work. For an alert-worthy fare we already pull
+                             # booking links (see providers.py): a blocked seller is never linked, and a
+                             # fare that ONLY a blocked seller offers is suppressed rather than alerted.
+                             # See README "Excluding sellers".
+    - Holiday Breakz         # domain: holidaybreakz.com
   allow_self_transfer: true  # sent explicitly on every Ignav search; self-transfer
                              # itineraries are labeled "separate tickets" in alerts
   flex_days: 3               # flex grid: routes with target_depart scan ±N days

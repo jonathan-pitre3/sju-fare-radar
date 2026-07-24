@@ -83,7 +83,8 @@ def run() -> None:
         conn.close()
         return
 
-    provider = get_provider(s.get("provider", "ignav"), counter=budget.counter)
+    provider = get_provider(s.get("provider", "ignav"), counter=budget.counter,
+                            excluded_providers=s.get("excluded_providers"))
     provider.job = "widenet"
     origin = s["origin"]
     trip = timedelta(days=s["trip_length_days"])
@@ -134,10 +135,14 @@ def run() -> None:
                   f"in cooldown (already alerted), skipped")
             continue
         if tier:
+            booking = None
             if live.get("ignav_id") and not budget.exhausted:
-                direct = provider.booking_link(live["ignav_id"])
-                if direct:
-                    live["link"] = direct
+                booking = provider.resolve_booking(live["ignav_id"])
+            if booking and booking["excluded_only"]:
+                print(f"  {dest} {d}: [{tier}] only sold by an excluded seller, suppressed")
+                continue
+            if booking and booking["link"]:
+                live["link"] = booking["link"]
             store.record_alert(conn, dest, tier, live["price"], now)
             verified_alerts.append({
                 "at": now, "route": dest,
