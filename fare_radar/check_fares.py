@@ -16,6 +16,7 @@ import yaml
 
 import baselines
 import store
+import watches
 from budget import Budget
 from providers import get_provider
 
@@ -103,6 +104,110 @@ def should_alert(entry: dict, price: float, threshold: float) -> str | None:
     if floor is not None and price < floor:
         return f"new all-time observed floor (was ${floor:.2f})"
     return None
+
+
+def scan_watches(conn, provider, budget, s, pending: list, now: str,
+                 today: date | None = None) -> None:
+    """Price each active standing watch's travel window and alert on deals.
+
+    Watches pin an explicit departure window the rotating rake won't otherwise
+    hit, so each gets a small, budget-capped batch of live searches per run.
+    Finds run through the same tier engine as routes (and the watch's optional
+    max_price cap), and ride the same alert dispatch. Non-essential like
+    explore: the whole pass is skipped once the monthly budget is exhausted.
+    """
+    wcfg = CONFIG.get("watches", {})
+    if not wcfg.get("enabled", True) or budget.exhausted:
+        return
+    data = watches.load()
+    active = [w for w in data["watches"] if w.get("status") == "active"]
+    if not active:
+        return
+    bl_cfg = CONFIG.get("baselines", {})
+    per_run_cap = wcfg.get("max_requests_per_run", 24)
+    max_dates = wcfg.get("max_dates_per_watch", 4)
+    today = today or datetime.now(timezone.utc).date()
+    spent_before = budget.spent
+    provider.job = "watch_adhoc"
+    changed = False
+    for w in active:
+        if budget.exhausted or budget.spent - spent_before >= per_run_cap:
+            break
+        origin, dest = w["origin"], w["destination"]
+        one_way = w.get("trip_type") == "one_way"
+        trip_len = timedelta(days=w.get("return_length_days")
+                             or s["trip_length_days"])
+        results = []
+        for depart in watches.sample_dates(w, max_dates, today):
+            if budget.exhausted or budget.spent - spent_before >= per_run_cap:
+                break
+            ret = None if one_way else depart + trip_len
+            offers = (provider.search_one_way(origin, dest, depart, s) if one_way
+                      else provider.search(origin, dest, depart, ret, s))
+            if not offers:
+                continue
+            persist_offers(conn, origin, dest, offers, depart, ret, "watch_adhoc")
+            best_of_date = dict(offers[0])
+            best_of_date.update({"depart": depart.isoformat(),
+                                 "return": ret.isoformat() if ret else None})
+            results.append(best_of_date)
+        w["last_scanned"] = now
+        changed = True
+        if not results:
+            continue
+        best = min(results, key=lambda r: r["price"])
+        price = best["price"]
+        trip_type = "one_way" if one_way else "round_trip"
+        stats = baselines.route_stats(conn, origin, dest, trip_type, bl_cfg)
+        key = f"watch:{w['id']}"
+        # Tier first; the explicit price cap is an independent fallback trigger.
+        candidate = None
+        if stats["ready"]:
+            t = baselines.classify(price, stats, bl_cfg)
+            if t:
+                candidate = (t, tier_reason(price, stats))
+        if candidate is None and w.get("max_price") and price <= w["max_price"]:
+            candidate = ("legacy", f"under your ${w['max_price']:.0f} cap")
+        tier = reason = None
+        if candidate and baselines.should_send(conn, key, candidate[0], price, bl_cfg):
+            tier, reason = candidate
+        if not tier:
+            print(f"  watch {key} {origin}→{dest}: best ${price:.0f}, no alert")
+            continue
+        link = best["link"]
+        if best.get("ignav_id") and not budget.exhausted \
+                and hasattr(provider, "resolve_booking"):
+            resolved = provider.resolve_booking(best["ignav_id"])
+            if resolved and resolved.get("excluded_only"):
+                print(f"  watch {key}: only an excluded seller, suppressed")
+                continue
+            if resolved and resolved.get("link"):
+                link = resolved["link"]
+        window = (w["depart_from"] if w["depart_from"] == w["depart_to"]
+                  else f"{w['depart_from']}…{w['depart_to']}")
+        store.record_alert(conn, key, tier, price, now)
+        pending.append({
+            "at": now, "route": f"{origin}→{dest}",
+            "label": f"{dest} (your watch)", "origin": origin,
+            "price": price, "tier": tier,
+            "reason": f"{reason} · your {window} watch",
+            "typical": stats["median"] if stats["ready"] else None,
+            "one_way": one_way,
+            "self_transfer": bool(best.get("self_transfer")),
+            "confirmed": bool(best.get("confirmed")),
+            "depart": best["depart"], "return": best.get("return"),
+            "stops": best.get("stops"),
+            "carriers": best.get("carriers") or [], "link": link})
+        print(f"  watch {key}: ALERT [{tier}] ${price:.0f} — {reason}")
+    provider.job = "watch"
+    # Persist last_scanned + auto-expire windows that have now passed.
+    for w in data["watches"]:
+        if w.get("status") == "active" and w.get("expires_at") \
+                and today > date.fromisoformat(w["expires_at"]):
+            w["status"] = "expired"
+            changed = True
+    if changed:
+        watches.save(data)
 
 
 def run() -> None:
@@ -411,6 +516,10 @@ def run() -> None:
             print(f"Build {name}: ALERT ${combined}{vs} — {reason}")
         elif not suppressed:
             print(f"Build {name}: ${combined}{vs}")
+
+    # Standing user watches: price each active window (capped live searches),
+    # alert through the same engine, and expire windows that have passed.
+    scan_watches(conn, provider, budget, s, pending, now)
 
     # Drop history for routes/builds removed from config so the dashboard
     # doesn't show permanently stale rows.

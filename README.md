@@ -27,7 +27,8 @@ GitHub Actions
 │    └─ alerts.py                Telegram + email + WhatsApp
 ├─ weekly.yml    Saturdays        explore.py (48-destination one-way sweep)
 │                                 market_check.py (point-of-sale probe)
-└─ commands.yml  every 2h         telegram_commands.py (/historial, /presupuesto)
+└─ commands.yml  every 2h         telegram_commands.py (natural language + slash cmds)
+                                  parses free text (nl.py → Anthropic) → asks / watches
 
 GitHub Pages serves docs/ → your dashboard
 ```
@@ -85,10 +86,44 @@ fetched only for alert-worthy fares, since those lookups bill). The same
 - **Market check (weekly).** Rotating subset of 8 watched routes re-queried
   with Ignav's `market` set to the destination country vs `US`, both in USD.
   A local fare ≥ 15% cheaper is flagged as a point-of-sale discrepancy.
-- **Telegram commands (every 2h).** `/historial [ORIGIN] DEST` → route stats
-  (n, median/p25/p10, best fare ever seen, whether tiers are active);
-  `/presupuesto` → request-budget status. Replies arrive on the next poll,
-  not instantly (no server by design).
+- **Telegram bot (every 2h).** Talk to Boti in plain language *or* with slash
+  commands (see "Talking to Boti" below). `/historial [ORIGIN] DEST` → route
+  stats (n, median/p25/p10, best fare ever seen, whether tiers are active);
+  `/presupuesto` → request-budget status; `/watches` and `/stop` manage
+  standing watches. Replies arrive on the next poll, not instantly (no server
+  by design).
+
+## Talking to Boti (natural language + watches)
+
+The Telegram bot understands plain text, not just slash commands. Your message
+is parsed by `nl.py` (Anthropic API, Claude Haiku) into a structured intent, so
+you can write the way you'd text a friend:
+
+- **Ask** — *"how cheap does Rome usually get?"* → answered instantly from stored
+  history (median/p25/p10, best ever seen), free. Add *"right now"* / *"check
+  Lisbon today"* to also run **one** live search and show the current fare +
+  booking link (bills one Ignav request, budget-gated).
+- **Watch** — *"watch Madrid Nov 19–20 under $600 until I say stop"* creates a
+  **standing, date-bounded deal monitor**. On every daily radar run the watch's
+  travel window is priced with a small batch of live searches (the rotating rake
+  won't otherwise hit an arbitrary window); a find that clears the route's deal
+  tiers **or** your stated price cap alerts through the normal channels. The
+  watch runs until its window passes (auto-expiry) or you stop it.
+- **Manage** — *"stop the Madrid watch"* / `/stop MAD` / `/stop all`, and
+  `/watches` (or *"what are you watching?"*) to list active watches with their ids.
+
+Standing watches live in `data/watches.json` (human-readable, committed back).
+Because creating a watch and answering a live ask now write repo state, the
+commands workflow shares the radar/weekly commit-serialization group.
+
+**No `ANTHROPIC_API_KEY`?** The bot still works — it falls back to the legacy
+slash commands (`/historial`, `/presupuesto`, `/watches`, `/stop`); only the
+free-text understanding is disabled. Only messages from `TELEGRAM_CHAT_ID` are
+ever processed, so no one else's text can reach the parser or spend your budget.
+
+Watch scanning is bounded by `watches.*` in `config.yaml`
+(`max_active`, `max_dates_per_watch`, `max_requests_per_run`) and, like explore,
+pauses entirely once the monthly request budget is exhausted.
 
 ## Request budget
 
@@ -110,6 +145,7 @@ lookups, ~1 each).
 | `settings` | origin, currency, trip length, samples per run, provider, `excluded_providers`, `allow_self_transfer`, `flex_days`, `flex_beat_pct` |
 | `baselines` | window, tier activation gates, percentiles, mistake-fare guard, cooldowns |
 | `budget` | `monthly_request_cap`, `warn_at_pct` |
+| `watches` | standing-watch limits: `max_active`, `max_dates_per_watch`, `max_requests_per_run`, `default_return_length_days`, `llm_model` |
 | `explore` | destination lists (short/long haul), weeks-out triplets, per-run request cap, digest size |
 | `positioning` | hub list, run weekdays, beat ratio |
 | `market_check` | routes per run, beat %, destination→market map |
@@ -167,6 +203,7 @@ limitation — say the word.
 | `IGNAV_API_KEY` | from step 1 |
 | `TRAVELPAYOUTS_TOKEN` | optional — activates the wide net (free token from travelpayouts.com, Profile → API token) |
 | `TELEGRAM_BOT_TOKEN` / `TELEGRAM_CHAT_ID` | free, via @BotFather — no Twilio needed |
+| `ANTHROPIC_API_KEY` | optional — enables the bot's natural-language understanding (console.anthropic.com); without it, slash commands still work |
 | `SMTP_HOST` / `SMTP_PORT` | e.g. `smtp.gmail.com` / `465` (optional) |
 | `SMTP_USER` / `SMTP_PASS` | Gmail address + [App Password](https://myaccount.google.com/apppasswords) |
 | `ALERT_EMAIL_TO` | where alerts go |

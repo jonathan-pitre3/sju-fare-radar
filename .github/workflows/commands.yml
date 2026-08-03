@@ -2,11 +2,18 @@ name: SJU Fare Radar — Telegram commands
 
 on:
   schedule:
-    - cron: "17 */2 * * *"    # every 2 hours; replies are read-only, no commit
+    - cron: "17 */2 * * *"    # every 2 hours
   workflow_dispatch: {}
 
+# Now writes state: watch create/stop (data/watches.json) and any live-ask
+# observations (data/fares.db). Must be serialized with radar/weekly since all
+# three commit data/fares.db (binary, unmergeable) — hence the shared group.
 permissions:
-  contents: read
+  contents: write
+
+concurrency:
+  group: fare-data-commits
+  cancel-in-progress: false
 
 jobs:
   commands:
@@ -25,4 +32,17 @@ jobs:
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}   # natural-language parsing (optional)
+          IGNAV_API_KEY: ${{ secrets.IGNAV_API_KEY }}           # live "check now" price asks
         run: python fare_radar/telegram_commands.py
+
+      - name: Commit watch / observation changes
+        run: |
+          git config user.name "fare-radar-bot"
+          git config user.email "actions@github.com"
+          git add data/watches.json data/fares.db
+          if ! git diff --cached --quiet; then
+            git commit -m "commands: watch/ask updates $(date -u +'%Y-%m-%d %H:%M') [skip ci]"
+            git pull --rebase
+            git push
+          fi

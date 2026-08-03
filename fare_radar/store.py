@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS fare_observations (
   cabin_class TEXT,
   self_transfer INTEGER DEFAULT 0,
   ignav_id TEXT,
-  source_job TEXT NOT NULL            -- 'watch' | 'explore' | 'flex' | 'positioning' | 'market_check'
+  source_job TEXT NOT NULL            -- 'watch' | 'explore' | 'flex' | 'positioning' | 'market_check' | 'war' | 'watch_adhoc' | 'ask'
 );
 CREATE INDEX IF NOT EXISTS idx_route ON fare_observations(origin, destination, trip_type);
 CREATE INDEX IF NOT EXISTS idx_observed ON fare_observations(observed_at);
