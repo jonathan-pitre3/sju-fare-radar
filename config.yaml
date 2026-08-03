@@ -56,6 +56,31 @@ budget:
   monthly_request_cap: 4000   # ≈ $8/month at $2 per 1,000 (first 1,000 free)
   warn_at_pct: 80
 
+# Standing user "watches" — date-bounded deal monitors created via the Telegram
+# bot in plain language ("watch Madrid Nov 19-20 under $600 until I say stop").
+# Stored in data/watches.json; check_fares.py prices each active window with a
+# small batch of live searches per daily run (the rotating rake won't otherwise
+# hit an arbitrary window), runs finds through the same tier engine + the
+# watch's optional price cap, and auto-expires a watch once its window passes.
+# Non-essential like explore: the whole pass pauses when the budget is exhausted.
+# llm_model parses the free-text messages (nl.py) via the Anthropic API; without
+# ANTHROPIC_API_KEY the bot falls back to the legacy slash commands.
+watches:
+  enabled: true
+  max_active: 20                 # cap on simultaneously active watches
+  max_dates_per_watch: 4         # live searches spent across each watch's window/run
+  max_requests_per_run: 24       # global cap on ALL watch searches per daily run
+  default_return_length_days: 7  # RT length when the user didn't say (else settings.trip_length_days)
+  llm_model: claude-haiku-4-5-20251001
+  # "Anywhere cheap" watches (destination: ANY): each run prices a rotating
+  # subset of the scope's destination list (explore.destinations) for the
+  # watch's window, so the whole list is covered over a few days at constant
+  # per-run cost. scope short|long|all selects the list; default short-haul.
+  anywhere:
+    default_scope: short
+    destinations_per_run: 8      # rotating destinations priced per daily run
+    dates_per_destination: 1     # live searches per destination (window is one trip)
+
 # Weekly "price-first" discovery sweep (explore.yml). One-way searches,
 # 3 goldilocks dates per destination snapped to Tue/Wed departures:
 # short-haul at ~5/9/13 weeks out, long-haul at ~9/18/30 weeks out.
