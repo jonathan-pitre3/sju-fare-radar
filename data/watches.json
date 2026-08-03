@@ -1,3 +1,38 @@
 {
- "watches": []
+ "watches": [
+  {
+   "id": "w_260803185806",
+   "created_at": "2026-08-03T18:58:06+00:00",
+   "origin": "SJU",
+   "destination": "ANY",
+   "scope": "short",
+   "trip_type": "round_trip",
+   "depart_from": "2026-11-21",
+   "depart_to": "2026-11-21",
+   "return_length_days": 4,
+   "max_price": null,
+   "note": null,
+   "status": "active",
+   "expires_at": "2026-11-21",
+   "last_scanned": null,
+   "anywhere_floor": null
+  },
+  {
+   "id": "w_260803185808",
+   "created_at": "2026-08-03T18:58:08+00:00",
+   "origin": "SJU",
+   "destination": "ANY",
+   "scope": "short",
+   "trip_type": "round_trip",
+   "depart_from": "2026-11-21",
+   "depart_to": "2026-11-21",
+   "return_length_days": 4,
+   "max_price": null,
+   "note": null,
+   "status": "active",
+   "expires_at": "2026-11-21",
+   "last_scanned": null,
+   "anywhere_floor": null
+  }
+ ]
 }
