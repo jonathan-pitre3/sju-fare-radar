@@ -66,7 +66,12 @@ budget:
 # llm_model parses the free-text messages (nl.py) via the Anthropic API; without
 # ANTHROPIC_API_KEY the bot falls back to the legacy slash commands.
 watches:
-  enabled: true
+  # MASTER SWITCH for the conversational bot + standing watches. false =
+  # dormant: the Telegram bot answers only /historial and /presupuesto, ignores
+  # free-text/watch requests (no LLM calls, no writes), and check_fares does not
+  # scan watches. Flip to true to re-activate the whole feature — the code and
+  # any saved watches (data/watches.json) are preserved either way.
+  enabled: false
   max_active: 20                 # cap on simultaneously active watches
   max_dates_per_watch: 4         # live searches spent across each watch's window/run
   max_requests_per_run: 24       # global cap on ALL watch searches per daily run

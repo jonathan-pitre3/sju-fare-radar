@@ -135,14 +135,27 @@ class FakeProvider:
         return self._offer(origin, dest, depart.isoformat(), None)
 
 
-class ScanWatchesTests(TempWatchStore):
+class ScanMixin(TempWatchStore):
+    """Force the master switch on for tests that exercise the scan mechanism."""
+
     def setUp(self):
         super().setUp()
+        self._we = check_fares.CONFIG["watches"]["enabled"]
+        check_fares.CONFIG["watches"]["enabled"] = True
         self.conn = store.connect(":memory:")
         self.budget = Budget(self.conn, {"monthly_request_cap": 4000})
         self.settings = check_fares.CONFIG["settings"]
         self.now = store.utcnow()
         self.today = date(2026, 8, 3)
+
+    def tearDown(self):
+        check_fares.CONFIG["watches"]["enabled"] = self._we
+        super().tearDown()
+
+
+class ScanWatchesTests(ScanMixin):
+    def setUp(self):
+        super().setUp()
 
     def scan(self, price):
         pending = []
@@ -234,15 +247,7 @@ class AnywhereRotationTests(unittest.TestCase):
         self.assertEqual(seen, set(uniq))   # every destination covered in a cycle
 
 
-class ScanAnywhereTests(TempWatchStore):
-    def setUp(self):
-        super().setUp()
-        self.conn = store.connect(":memory:")
-        self.budget = Budget(self.conn, {"monthly_request_cap": 4000})
-        self.settings = check_fares.CONFIG["settings"]
-        self.now = store.utcnow()
-        self.today = date(2026, 8, 3)
-
+class ScanAnywhereTests(ScanMixin):
     def scan(self, price):
         pending = []
         check_fares.scan_watches(self.conn, FakeProvider(price), self.budget,
@@ -292,6 +297,43 @@ class HandlerTests(TempWatchStore):
         self.assertEqual(watches.list_watches("active")[0]["expires_at"], "2035-10-01")
         self.assertIn("Stopped", tc.do_stop({"watch_ref": "anywhere"}))
         self.assertEqual(watches.list_watches("active"), [])
+
+
+class FeatureFlagTests(TempWatchStore):
+    def setUp(self):
+        super().setUp()
+        import telegram_commands as tc
+        self.tc = tc
+        self.conn = store.connect(":memory:")
+
+    def test_disabled_by_default_gates_free_text_and_watch_cmds(self):
+        self.assertFalse(self.tc.feature_enabled())   # config default: off
+        self.assertIn("turned off",
+                      self.tc.handle(self.conn, "find anywhere cheap Nov 21-25"))
+        self.assertIn("turned off", self.tc.handle(self.conn, "/watches"))
+
+    def test_legacy_commands_work_while_disabled(self):
+        self.assertIn("No observations",
+                      self.tc.handle(self.conn, "/historial MAD"))
+        self.assertIn("/historial", self.tc.handle(self.conn, "/help"))
+
+    def test_enabled_reactivates_watch_commands(self):
+        self.tc.CONFIG["watches"]["enabled"] = True
+        try:
+            self.assertIn("No active watches",
+                          self.tc.handle(self.conn, "/watches"))
+        finally:
+            self.tc.CONFIG["watches"]["enabled"] = False
+
+    def test_scan_watches_skips_when_disabled(self):
+        watches.add_watch("SJU", "MAD", "2026-11-19", "2026-11-20", max_price=600)
+        pending = []
+        check_fares.scan_watches(
+            self.conn, FakeProvider(500), Budget(self.conn, {"monthly_request_cap": 4000}),
+            check_fares.CONFIG["settings"], pending, store.utcnow(),
+            today=date(2026, 8, 3))
+        self.assertEqual(pending, [])
+        self.assertIsNone(watches.list_watches("active")[0]["last_scanned"])
 
 
 class NormalizeTests(unittest.TestCase):

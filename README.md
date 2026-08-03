@@ -95,6 +95,13 @@ fetched only for alert-worthy fares, since those lookups bill). The same
 
 ## Talking to Boti (natural language + watches)
 
+> **Status: off by default.** This whole layer is behind a master switch —
+> `watches.enabled` in `config.yaml` (currently `false`). While off, the bot
+> answers only `/historial` and `/presupuesto`; free-text and watch requests get
+> a short "turned off" notice (no LLM calls, no writes) and `check_fares` skips
+> watch scanning. Flip `watches.enabled: true` to re-activate everything below —
+> the code and any saved `data/watches.json` are preserved either way.
+
 The Telegram bot understands plain text, not just slash commands. Your message
 is parsed by `nl.py` (Anthropic API, Claude Haiku) into a structured intent, so
 you can write the way you'd text a friend:

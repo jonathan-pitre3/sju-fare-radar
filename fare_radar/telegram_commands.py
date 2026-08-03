@@ -66,6 +66,25 @@ HELP = (
     "/stop REF — stop a watch (id, destination, route, or 'all')\n"
     "/presupuesto — API request budget this month")
 
+# When the conversational + watch layer is off (config watches.enabled: false),
+# only these legacy stats commands answer; free text gets OFF_NOTICE.
+HELP_OFF = (
+    "✈️ Boti — SJU Fare Radar\n"
+    "/historial DEST — route stats for SJU → DEST\n"
+    "/historial ORIGIN DEST — any tracked city pair\n"
+    "/presupuesto — API request budget this month")
+
+OFF_NOTICE = (
+    "🤖 The chat/watch features (natural-language requests and standing deal "
+    "watches) are currently turned off.\n"
+    "Working commands: /historial DEST, /presupuesto.\n"
+    "(Re-enable by setting watches.enabled: true in config.yaml.)")
+
+
+def feature_enabled() -> bool:
+    """Master switch for the conversational bot + standing watches."""
+    return bool(CONFIG.get("watches", {}).get("enabled", True))
+
 
 def api(method: str, **params):
     token = os.environ["TELEGRAM_BOT_TOKEN"]
@@ -316,20 +335,26 @@ def nl_context() -> dict:
 
 
 def handle(conn, text: str) -> str:
-    """Route one owner message to a reply. Slash commands first (free, no LLM),
-    then natural language via nl.parse_intent."""
+    """Route one owner message to a reply. Legacy stats commands always work;
+    the conversational + watch layer is gated by feature_enabled()."""
     parts = re.split(r"\s+", text.strip())
     cmd = parts[0].split("@")[0].lower()
+    # Legacy stats commands — always available, no LLM, no writes.
     if cmd == "/historial":
         return historial(conn, parts[1:])
     if cmd == "/presupuesto":
         return presupuesto(conn)
+
+    on = feature_enabled()
+    if cmd in ("/help", "/start"):
+        return HELP if on else HELP_OFF
+    if not on:
+        # Feature shelved: don't call the LLM or touch watches; just say so.
+        return OFF_NOTICE
     if cmd in ("/watches", "/watchlist"):
         return do_list()
     if cmd == "/stop":
         return do_stop({"watch_ref": " ".join(parts[1:]).strip()})
-    if cmd in ("/help", "/start"):
-        return HELP
 
     intent = nl.parse_intent(text, nl_context())
     if not intent:
