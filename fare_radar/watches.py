@@ -25,11 +25,17 @@ ROOT = Path(__file__).resolve().parent.parent
 WATCHES_PATH = ROOT / "data" / "watches.json"
 
 # A watch record's fields (documented for the store; add_watch fills them).
+# destination may be the sentinel "ANY" — a scope-based "anywhere cheap" watch,
+# in which case `scope` ('short'|'long'|'all') selects which destination list is
+# rotated through (see check_fares.scan_watches) and `anywhere_floor` tracks the
+# cheapest fare alerted so far (so a warming-up watch still pings on new lows).
 FIELDS = (
-    "id", "created_at", "origin", "destination", "trip_type",
+    "id", "created_at", "origin", "destination", "scope", "trip_type",
     "depart_from", "depart_to", "return_length_days", "max_price",
-    "note", "status", "expires_at", "last_scanned",
+    "note", "status", "expires_at", "last_scanned", "anywhere_floor",
 )
+
+ANY = "ANY"
 
 
 def _utcnow() -> str:
@@ -76,20 +82,23 @@ def _new_id(existing: list[dict]) -> str:
 def add_watch(origin: str, destination: str, depart_from: str, depart_to: str,
               *, trip_type: str = "round_trip", return_length_days: int | None = None,
               max_price: float | None = None, note: str | None = None,
-              expires_at: str | None = None, max_active: int = 20,
-              path: Path | str | None = None) -> dict:
+              expires_at: str | None = None, scope: str | None = None,
+              max_active: int = 20, path: Path | str | None = None) -> dict:
     """Create and persist a watch. `expires_at` defaults to depart_to (once the
-    window has passed, the watch is done). Raises ValueError past `max_active`."""
+    window has passed, the watch is done). Pass destination="ANY" with a `scope`
+    for an "anywhere cheap" watch. Raises ValueError past `max_active`."""
     data = load(path)
     active = [w for w in data["watches"] if w.get("status") == "active"]
     if len(active) >= max_active:
         raise ValueError(f"already at the {max_active}-active-watch limit; "
                          f"stop one first")
+    is_any = destination.upper() in (ANY, "ANYWHERE", "EVERYWHERE")
     watch = {
         "id": _new_id(data["watches"]),
         "created_at": _utcnow(),
         "origin": origin.upper(),
-        "destination": destination.upper(),
+        "destination": ANY if is_any else destination.upper(),
+        "scope": (scope or "short") if is_any else None,
         "trip_type": "one_way" if trip_type == "one_way" else "round_trip",
         "depart_from": depart_from,
         "depart_to": depart_to,
@@ -99,10 +108,29 @@ def add_watch(origin: str, destination: str, depart_from: str, depart_to: str,
         "status": "active",
         "expires_at": expires_at or depart_to,
         "last_scanned": None,
+        "anywhere_floor": None,
     }
     data["watches"].append(watch)
     save(data, path)
     return watch
+
+
+def set_expiry(ref: str, new_expiry: str, path: Path | str | None = None) -> list[dict]:
+    """Change the stop-searching date of matching active watches. `ref` matches
+    like stop_watch ('all', id, destination, or route key). Returns updated."""
+    data = load(path)
+    ref_u = (ref or "").strip().upper()
+    updated = []
+    for w in data["watches"]:
+        if w.get("status") != "active":
+            continue
+        if (ref_u == "ALL" or w["id"].upper() == ref_u
+                or w["destination"] == ref_u or route_key(w).upper() == ref_u):
+            w["expires_at"] = new_expiry
+            updated.append(w)
+    if updated:
+        save(data, path)
+    return updated
 
 
 def list_watches(status: str | None = "active",

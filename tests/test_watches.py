@@ -201,6 +201,99 @@ class ScanWatchesTests(TempWatchStore):
         self.assertIsNone(watches.list_watches("active")[0]["last_scanned"])
 
 
+class SetExpiryTests(TempWatchStore):
+    def test_set_expiry_by_dest_and_all(self):
+        watches.add_watch("SJU", "MAD", "2035-11-19", "2035-11-25")
+        watches.add_watch("SJU", "ANY", "2035-11-19", "2035-11-25", scope="short")
+        self.assertEqual(len(watches.set_expiry("MAD", "2035-10-01")), 1)
+        self.assertEqual(watches.list_watches("active")[0]["expires_at"], "2035-10-01")
+        self.assertEqual(len(watches.set_expiry("all", "2035-09-01")), 2)
+        self.assertTrue(all(w["expires_at"] == "2035-09-01"
+                            for w in watches.list_watches("active")))
+
+    def test_anywhere_watch_shape(self):
+        w = watches.add_watch("SJU", "anywhere", "2035-11-21", "2035-11-21",
+                              return_length_days=4, scope="short")
+        self.assertEqual(w["destination"], watches.ANY)
+        self.assertEqual(w["scope"], "short")
+        self.assertIsNone(w["anywhere_floor"])
+
+
+class AnywhereRotationTests(unittest.TestCase):
+    def test_subset_size_and_full_coverage(self):
+        pool = check_fares.CONFIG["explore"]["destinations"]["short"]
+        per = check_fares.CONFIG["watches"]["anywhere"]["destinations_per_run"]
+        uniq = [d for i, d in enumerate(pool) if d != "SJU" and d not in pool[:i]]
+        n_chunks = (len(uniq) + per - 1) // per
+        seen = set()
+        for k in range(n_chunks):
+            day = date(2026, 8, 3) + timedelta(days=k)
+            chunk = check_fares._anywhere_destinations("short", "SJU", day, per)
+            self.assertLessEqual(len(chunk), per)
+            seen |= set(chunk)
+        self.assertEqual(seen, set(uniq))   # every destination covered in a cycle
+
+
+class ScanAnywhereTests(TempWatchStore):
+    def setUp(self):
+        super().setUp()
+        self.conn = store.connect(":memory:")
+        self.budget = Budget(self.conn, {"monthly_request_cap": 4000})
+        self.settings = check_fares.CONFIG["settings"]
+        self.now = store.utcnow()
+        self.today = date(2026, 8, 3)
+
+    def scan(self, price):
+        pending = []
+        check_fares.scan_watches(self.conn, FakeProvider(price), self.budget,
+                                 self.settings, pending, self.now, today=self.today)
+        return pending
+
+    def test_new_low_digest_fires_then_holds(self):
+        watches.add_watch("SJU", "ANY", "2026-11-21", "2026-11-21",
+                          return_length_days=4, scope="short")
+        first = self.scan(250)   # no baselines, no cap -> new-low ping
+        self.assertEqual(len(first), 1)
+        self.assertEqual(first[0]["tier"], "legacy")
+        self.assertIn("cheapest", first[0]["reason"])
+        self.assertEqual(watches.list_watches("active")[0]["anywhere_floor"], 250)
+        self.assertEqual(self.scan(250), [])   # same floor, no repeat
+
+    def test_price_cap_alerts_per_destination(self):
+        watches.add_watch("SJU", "ANY", "2026-11-21", "2026-11-21",
+                          return_length_days=4, scope="short", max_price=300)
+        pending = self.scan(250)
+        per = check_fares.CONFIG["watches"]["anywhere"]["destinations_per_run"]
+        self.assertEqual(len(pending), per)   # one per rotated destination
+        self.assertTrue(all(a["tier"] == "legacy" for a in pending))
+        self.assertTrue(all("cap" in a["reason"] for a in pending))
+
+
+class HandlerTests(TempWatchStore):
+    def test_do_watch_anywhere_reply_and_store(self):
+        import telegram_commands as tc
+        reply = tc.do_watch({"action": "watch", "anywhere": True, "origin": "SJU",
+                             "destination": None, "trip_type": "round_trip",
+                             "depart_from": "2035-11-21", "depart_to": "2035-11-21",
+                             "return_length_days": 4})
+        self.assertIn("anywhere", reply.lower())
+        self.assertIn("short-haul", reply)
+        self.assertIn("2035-11-21 → 2035-11-25", reply)   # block read as one trip
+        self.assertIn("until 2035-11-21", reply)          # default stop = window end
+        w = watches.list_watches("active")[0]
+        self.assertEqual(w["destination"], watches.ANY)
+        self.assertEqual(w["scope"], "short")
+
+    def test_stop_anywhere_and_update(self):
+        import telegram_commands as tc
+        watches.add_watch("SJU", "ANY", "2035-11-21", "2035-11-25", scope="short")
+        self.assertIn("Updated", tc.do_update({"until": "2035-10-01",
+                                               "watch_ref": "anywhere"}))
+        self.assertEqual(watches.list_watches("active")[0]["expires_at"], "2035-10-01")
+        self.assertIn("Stopped", tc.do_stop({"watch_ref": "anywhere"}))
+        self.assertEqual(watches.list_watches("active"), [])
+
+
 class NormalizeTests(unittest.TestCase):
     def test_defaults_and_uppercasing(self):
         out = nl._normalize({"action": "ask", "destination": "mad"},

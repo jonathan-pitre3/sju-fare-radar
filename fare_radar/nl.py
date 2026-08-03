@@ -33,12 +33,14 @@ INTENT_TOOL = {
         "properties": {
             "action": {
                 "type": "string",
-                "enum": ["ask", "watch", "stop", "list", "help"],
+                "enum": ["ask", "watch", "stop", "list", "update", "help"],
                 "description": (
                     "ask = a question answerable from price history or a live "
                     "check; watch = create a standing deal monitor for a travel "
-                    "window; stop = cancel a watch; list = show active watches; "
-                    "help = unclear / greeting / anything else."),
+                    "window (a specific destination OR anywhere cheap); stop = "
+                    "cancel a watch; list = show active watches; update = change "
+                    "an existing watch's stop-searching date; help = unclear / "
+                    "greeting / anything else."),
             },
             "origin": {
                 "type": "string",
@@ -49,6 +51,28 @@ INTENT_TOOL = {
                 "description": ("Destination IATA code (3 letters). Resolve city "
                                 "names to their main airport, e.g. Madrid->MAD, "
                                 "Tokyo->NRT, Rome->FCO. Null if none named."),
+            },
+            "anywhere": {
+                "type": "boolean",
+                "description": ("True when the user wants cheap options ANYWHERE / "
+                                "no specific destination ('anywhere cheap', 'any "
+                                "travel', 'surprise me', 'somewhere warm'). Then "
+                                "leave destination null."),
+            },
+            "scope": {
+                "type": "string",
+                "enum": ["short", "long", "all"],
+                "description": ("For anywhere searches: short = Caribbean/US/Central "
+                                "& northern South America (cheap short-haul, the "
+                                "default); long = Europe + long-haul; all = both. "
+                                "Map 'Europe'->long, 'beach'/'weekend'/'nearby'-> "
+                                "short."),
+            },
+            "until": {
+                "type": "string",
+                "description": ("ISO YYYY-MM-DD stop-searching date, if the user "
+                                "states one ('keep looking until Nov 10', 'search "
+                                "through Oct 31'). Null if unstated."),
             },
             "trip_type": {
                 "type": "string",
@@ -110,8 +134,20 @@ def _system_prompt(ctx: dict) -> str:
         "the same month. Resolve city/country names to IATA codes. Prices are USD.\n"
         f"Routes this bot already tracks (code — label): {routes}\n"
         "If the user is clearly setting up an ongoing watch ('keep looking', 'until "
-        "I tell you to stop', 'let me know if it drops'), use action=watch. If they "
-        "ask what a route costs or how cheap it gets, use action=ask."
+        "I tell you to stop', 'let me know if it drops', 'search for'), use "
+        "action=watch. If they ask what a route costs or how cheap it gets, use "
+        "action=ask.\n"
+        "Interpreting a contiguous availability block like 'free from the 21st to "
+        "the 25th' or 'available Nov 21-25': that describes the WHOLE trip, so set "
+        "trip_type=round_trip, depart_from AND depart_to to the FIRST day (the 21st), "
+        "and return_length_days to the number of nights (25 minus 21 = 4). Only treat "
+        "a date range as a range of possible DEPARTURE days when the user says so "
+        "('depart sometime between', 'flexible on dates').\n"
+        "No destination named + wants options generally ('any travel', 'anywhere "
+        "cheap', 'somewhere for those days') => action=watch with anywhere=true and "
+        "destination null. Pick scope from any hint, else short.\n"
+        "'keep searching until <date>' / 'stop looking on <date>' about an existing "
+        "watch => action=update with the until date (and watch_ref if they name one)."
     )
 
 
@@ -160,7 +196,7 @@ def _normalize(intent: dict, ctx: dict) -> dict:
     """Tidy the model output: uppercase codes, default origin, sane action."""
     out = dict(intent)
     action = (out.get("action") or "help").lower()
-    if action not in ("ask", "watch", "stop", "list", "help"):
+    if action not in ("ask", "watch", "stop", "list", "update", "help"):
         action = "help"
     out["action"] = action
     out["origin"] = (out.get("origin") or ctx.get("origin", "SJU")).upper()

@@ -55,7 +55,9 @@ HELP = (
     "Just type what you want, for example:\n"
     "• how cheap does Rome usually get?\n"
     "• watch Madrid Nov 19-20 under $600 until I say stop\n"
+    "• find anywhere cheap Nov 21-25\n"
     "• check Lisbon prices right now\n"
+    "• keep searching until Nov 10\n"
     "• stop the Madrid watch\n\n"
     "Slash commands still work:\n"
     "/historial DEST — route stats for SJU → DEST\n"
@@ -188,50 +190,101 @@ def live_price(conn, intent: dict) -> str:
 
 # --- Standing watches ------------------------------------------------------
 
+SCOPE_LABEL = {"short": "short-haul (Caribbean/US/Central & northern S. America)",
+               "long": "Europe + long-haul", "all": "anywhere tracked"}
+
+
+def _target_label(w: dict) -> str:
+    if w["destination"] == watches.ANY:
+        return f"anywhere · {SCOPE_LABEL.get(w.get('scope', 'short'), w.get('scope'))}"
+    return f"{w['origin']}→{w['destination']}"
+
+
 def _fmt_watch(w: dict) -> str:
     cap = f" under ${w['max_price']:.0f}" if w.get("max_price") else ""
     window = (w["depart_from"] if w["depart_from"] == w["depart_to"]
               else f"{w['depart_from']}…{w['depart_to']}")
     tt = "OW" if w.get("trip_type") == "one_way" else "RT"
-    return (f"[{w['id']}] {w['origin']}→{w['destination']} {tt} · "
-            f"depart {window}{cap} · {w['status']}")
+    trip = ""
+    if w.get("return_length_days") and w.get("trip_type") != "one_way":
+        trip = f" ({w['return_length_days']}-night)"
+    return (f"[{w['id']}] {_target_label(w)} {tt}{trip} · "
+            f"depart {window}{cap} · until {w['expires_at']} · {w['status']}")
 
 
 def do_watch(intent: dict) -> str:
     s = CONFIG["settings"]
     wcfg = CONFIG.get("watches", {})
     dest = intent.get("destination")
-    if not dest:
-        return ("Which destination should I watch? Try: "
-                "'watch Madrid Nov 19-20 under $600 until I say stop'.")
+    anywhere = bool(intent.get("anywhere")) or dest in (None, "", watches.ANY)
+    if not anywhere and not dest:
+        return ("Which destination should I watch? Or say 'anywhere' — e.g. "
+                "'watch Madrid Nov 19-20 under $600 until I stop', or "
+                "'find anywhere cheap Nov 21-25'.")
     depart_from = intent.get("depart_from")
     depart_to = intent.get("depart_to") or depart_from
     if not depart_from:
         return ("When are you free to travel? Give me a date or a range, e.g. "
-                f"'watch {dest} Nov 19-20 until I say stop'.")
+                "'find anywhere cheap Nov 21-25'.")
     depart_from, depart_to = sorted([depart_from, depart_to])
     trip_len = (intent.get("return_length_days")
                 or wcfg.get("default_return_length_days")
                 or s["trip_length_days"])
+    scope = (intent.get("scope")
+             or wcfg.get("anywhere", {}).get("default_scope", "short"))
     try:
         w = watches.add_watch(
-            intent.get("origin", s["origin"]), dest, depart_from, depart_to,
+            intent.get("origin", s["origin"]),
+            watches.ANY if anywhere else dest, depart_from, depart_to,
             trip_type=intent.get("trip_type", "round_trip"),
             return_length_days=trip_len, max_price=intent.get("max_price"),
-            note=intent.get("question"),
-            max_active=wcfg.get("max_active", 20))
+            note=intent.get("question"), expires_at=intent.get("until"),
+            scope=scope, max_active=wcfg.get("max_active", 20))
     except ValueError as exc:
         return f"Couldn't add that watch: {exc}"
-    cap = (f" I'll flag anything under ${w['max_price']:.0f}"
-           if w.get("max_price") else " I'll flag anything that clears the deal tiers")
-    return ("👀 Watching " + _fmt_watch(w) + ".\n"
-            f"{cap}, checking your window on each daily radar run until "
-            f"{w['expires_at']} or you say stop. Say 'stop " + dest +
-            "' to cancel.")
+
+    cap = (f"anything under ${w['max_price']:.0f}" if w.get("max_price")
+           else "the cheapest finds and anything that clears the deal tiers")
+    one_way = w.get("trip_type") == "one_way"
+    if one_way:
+        trip = f"one-way departing {w['depart_from']}"
+    else:
+        ret = (date.fromisoformat(w["depart_from"])
+               + timedelta(days=w["return_length_days"])).isoformat()
+        trip = f"round trip {w['depart_from']} → {ret}"
+    stop_ref = "anywhere" if anywhere else w["destination"]
+    return (
+        "👀 " + _fmt_watch(w) + "\n"
+        f"I'll flag {cap}, pricing this window on each daily radar run — "
+        f"reading it as a {trip}.\n"
+        f"🗓️ I'll keep searching until {w['expires_at']}, then stop automatically "
+        "(your travel dates will have passed by then). Want a different cutoff? "
+        f"Reply 'search until <date>'. Longer/shorter trip or a price cap? Just "
+        f"tell me. Stop anytime with 'stop {stop_ref}'.")
+
+
+def _norm_ref(ref: str) -> str:
+    """Map friendly words to the store's matching tokens."""
+    r = (ref or "").strip()
+    if r.upper() in ("ANYWHERE", "ANY", "EVERYWHERE"):
+        return watches.ANY
+    return r
+
+
+def do_update(intent: dict) -> str:
+    until = intent.get("until")
+    if not until:
+        return ("Tell me the new stop date, e.g. 'keep searching until Nov 10'.")
+    ref = _norm_ref(intent.get("watch_ref") or intent.get("destination") or "all")
+    updated = watches.set_expiry(ref, until)
+    if not updated:
+        return f"No active watch matched '{ref}'. See them with /watches."
+    return (f"🗓️ Updated — now searching until {until}:\n"
+            + "\n".join(_fmt_watch(w) for w in updated))
 
 
 def do_stop(intent: dict) -> str:
-    ref = intent.get("watch_ref") or intent.get("destination") or ""
+    ref = _norm_ref(intent.get("watch_ref") or intent.get("destination") or "")
     if not ref:
         return ("Which watch should I stop? Give an id, a destination, or 'all'. "
                 "See them with /watches.")
@@ -285,6 +338,8 @@ def handle(conn, text: str) -> str:
     action = intent["action"]
     if action == "watch":
         return do_watch(intent)
+    if action == "update":
+        return do_update(intent)
     if action == "stop":
         return do_stop(intent)
     if action == "list":

@@ -108,8 +108,20 @@ you can write the way you'd text a friend:
   travel window is priced with a small batch of live searches (the rotating rake
   won't otherwise hit an arbitrary window); a find that clears the route's deal
   tiers **or** your stated price cap alerts through the normal channels. The
-  watch runs until its window passes (auto-expiry) or you stop it.
-- **Manage** — *"stop the Madrid watch"* / `/stop MAD` / `/stop all`, and
+  watch runs until its window passes (auto-expiry) or you stop it. A contiguous
+  availability block like *"free from the 21st to the 25th"* is read as the whole
+  **trip** (round trip departing the 21st, returning the 25th) — the confirmation
+  states the interpretation so you can correct it.
+- **Watch anywhere** — *"find anywhere cheap Nov 21–25"* (no destination) creates
+  an **anywhere watch**. Each daily run prices a **rotating subset** of a scoped
+  destination list — `short` (Caribbean / US / Central & northern South America,
+  the default), `long` (Europe + long-haul), or `all` — so the whole list is
+  covered over a few days at constant per-run cost. It alerts tier/cap-worthy
+  finds per destination and pings you whenever the cheapest fare seen for the
+  window hits a **new low**, so you get signal even before per-route baselines
+  mature. Scope follows hints in your message (*"anywhere in Europe"* → long).
+- **Manage** — *"stop the Madrid watch"* / *"stop anywhere"* / `/stop MAD` /
+  `/stop all`; change a stop date with *"keep searching until Nov 10"*; and
   `/watches` (or *"what are you watching?"*) to list active watches with their ids.
 
 Standing watches live in `data/watches.json` (human-readable, committed back).
@@ -122,7 +134,8 @@ free-text understanding is disabled. Only messages from `TELEGRAM_CHAT_ID` are
 ever processed, so no one else's text can reach the parser or spend your budget.
 
 Watch scanning is bounded by `watches.*` in `config.yaml`
-(`max_active`, `max_dates_per_watch`, `max_requests_per_run`) and, like explore,
+(`max_active`, `max_dates_per_watch`, `max_requests_per_run`, and
+`watches.anywhere.destinations_per_run` for anywhere watches) and, like explore,
 pauses entirely once the monthly request budget is exhausted.
 
 ## Request budget

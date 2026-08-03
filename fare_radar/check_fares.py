@@ -106,15 +106,188 @@ def should_alert(entry: dict, price: float, threshold: float) -> str | None:
     return None
 
 
+def _watch_budget_ok(budget, spent_before: int, per_run_cap: int) -> bool:
+    return not budget.exhausted and budget.spent - spent_before < per_run_cap
+
+
+def _price_window(conn, provider, budget, s, origin: str, dest: str, w: dict,
+                  max_dates: int, today, spent_before: int,
+                  per_run_cap: int) -> list[dict]:
+    """Search one destination across a watch's date window; return the best
+    offer per sampled date (each dict tagged with its depart/return ISO)."""
+    one_way = w.get("trip_type") == "one_way"
+    trip_len = timedelta(days=w.get("return_length_days") or s["trip_length_days"])
+    results = []
+    for depart in watches.sample_dates(w, max_dates, today):
+        if not _watch_budget_ok(budget, spent_before, per_run_cap):
+            break
+        ret = None if one_way else depart + trip_len
+        offers = (provider.search_one_way(origin, dest, depart, s) if one_way
+                  else provider.search(origin, dest, depart, ret, s))
+        if not offers:
+            continue
+        persist_offers(conn, origin, dest, offers, depart, ret, "watch_adhoc")
+        best_of_date = dict(offers[0])
+        best_of_date.update({"depart": depart.isoformat(),
+                             "return": ret.isoformat() if ret else None})
+        results.append(best_of_date)
+    return results
+
+
+def _emit_watch_alert(conn, provider, budget, now, pending, *, origin, dest,
+                      best, key, tier, reason, typical, one_way,
+                      context_note) -> bool:
+    """Resolve a booking link (honoring the seller blocklist), record the
+    alert, and append it to the run's pending digest. False if suppressed."""
+    link = best["link"]
+    if best.get("ignav_id") and not budget.exhausted \
+            and hasattr(provider, "resolve_booking"):
+        resolved = provider.resolve_booking(best["ignav_id"])
+        if resolved and resolved.get("excluded_only"):
+            print(f"  {key}: only an excluded seller, suppressed")
+            return False
+        if resolved and resolved.get("link"):
+            link = resolved["link"]
+    store.record_alert(conn, key, tier, best["price"], now)
+    pending.append({
+        "at": now, "route": f"{origin}→{dest}",
+        "label": f"{dest} (your watch)", "origin": origin,
+        "price": best["price"], "tier": tier,
+        "reason": f"{reason} · {context_note}",
+        "typical": typical, "one_way": one_way,
+        "self_transfer": bool(best.get("self_transfer")),
+        "confirmed": bool(best.get("confirmed")),
+        "depart": best["depart"], "return": best.get("return"),
+        "stops": best.get("stops"),
+        "carriers": best.get("carriers") or [], "link": link})
+    print(f"  {key}: ALERT [{tier}] ${best['price']:.0f} — {reason}")
+    return True
+
+
+def _anywhere_destinations(scope: str, origin: str, today, per_run: int) -> list[str]:
+    """A rotating subset of the scope's destination list — a different chunk
+    each day so the whole list is covered every ceil(len/per_run) runs at
+    constant per-run cost (the same rake philosophy as the daily watch)."""
+    lists = CONFIG.get("explore", {}).get("destinations", {})
+    if scope == "long":
+        pool = list(lists.get("long", []))
+    elif scope == "all":
+        pool = list(lists.get("short", [])) + list(lists.get("long", []))
+    else:
+        pool = list(lists.get("short", []))
+    pool = [d for i, d in enumerate(pool) if d != origin and d not in pool[:i]]
+    if not pool:
+        return []
+    per_run = max(1, per_run)
+    n_chunks = (len(pool) + per_run - 1) // per_run
+    idx = today.toordinal() % n_chunks
+    return pool[idx * per_run:(idx + 1) * per_run]
+
+
+def _scan_route_watch(conn, provider, budget, s, w, bl_cfg, now, today,
+                      pending, spent_before, per_run_cap, max_dates) -> None:
+    origin, dest = w["origin"], w["destination"]
+    one_way = w.get("trip_type") == "one_way"
+    results = _price_window(conn, provider, budget, s, origin, dest, w,
+                            max_dates, today, spent_before, per_run_cap)
+    if not results:
+        return
+    best = min(results, key=lambda r: r["price"])
+    price = best["price"]
+    trip_type = "one_way" if one_way else "round_trip"
+    stats = baselines.route_stats(conn, origin, dest, trip_type, bl_cfg)
+    key = f"watch:{w['id']}"
+    candidate = None
+    if stats["ready"]:
+        t = baselines.classify(price, stats, bl_cfg)
+        if t:
+            candidate = (t, tier_reason(price, stats))
+    if candidate is None and w.get("max_price") and price <= w["max_price"]:
+        candidate = ("legacy", f"under your ${w['max_price']:.0f} cap")
+    if not (candidate and baselines.should_send(conn, key, candidate[0], price, bl_cfg)):
+        print(f"  watch {key} {origin}→{dest}: best ${price:.0f}, no alert")
+        return
+    window = (w["depart_from"] if w["depart_from"] == w["depart_to"]
+              else f"{w['depart_from']}…{w['depart_to']}")
+    _emit_watch_alert(conn, provider, budget, now, pending, origin=origin,
+                      dest=dest, best=best, key=key, tier=candidate[0],
+                      reason=candidate[1],
+                      typical=stats["median"] if stats["ready"] else None,
+                      one_way=one_way, context_note=f"your {window} watch")
+
+
+def _scan_anywhere_watch(conn, provider, budget, s, w, bl_cfg, now, today,
+                         pending, spent_before, per_run_cap) -> None:
+    """Price a rotating subset of the scope's destinations for the watch window,
+    alert tier/cap-worthy finds per destination, and ping when the cheapest fare
+    seen for the watch hits a new low (so a warming-up watch still gives signal
+    before per-route baselines mature)."""
+    acfg = CONFIG.get("watches", {}).get("anywhere", {})
+    origin = w["origin"]
+    one_way = w.get("trip_type") == "one_way"
+    trip_type = "one_way" if one_way else "round_trip"
+    dests = _anywhere_destinations(w.get("scope", "short"), origin, today,
+                                   acfg.get("destinations_per_run", 8))
+    dates_per_dest = acfg.get("dates_per_destination", 1)
+    window = (w["depart_from"] if w["depart_from"] == w["depart_to"]
+              else f"{w['depart_from']}…{w['depart_to']}")
+    note = f"your anywhere ({w.get('scope', 'short')}) {window} watch"
+    run_results = []          # (dest, best_offer)
+    alerted = set()
+    for dest in dests:
+        if not _watch_budget_ok(budget, spent_before, per_run_cap):
+            break
+        results = _price_window(conn, provider, budget, s, origin, dest, w,
+                                dates_per_dest, today, spent_before, per_run_cap)
+        if not results:
+            continue
+        best = min(results, key=lambda r: r["price"])
+        run_results.append((dest, best))
+        stats = baselines.route_stats(conn, origin, dest, trip_type, bl_cfg)
+        key = f"watch:{w['id']}:{dest}"
+        candidate = None
+        if stats["ready"]:
+            t = baselines.classify(best["price"], stats, bl_cfg)
+            if t:
+                candidate = (t, tier_reason(best["price"], stats))
+        if candidate is None and w.get("max_price") and best["price"] <= w["max_price"]:
+            candidate = ("legacy", f"under your ${w['max_price']:.0f} cap")
+        if candidate and baselines.should_send(conn, key, candidate[0],
+                                               best["price"], bl_cfg):
+            if _emit_watch_alert(conn, provider, budget, now, pending,
+                                 origin=origin, dest=dest, best=best, key=key,
+                                 tier=candidate[0], reason=candidate[1],
+                                 typical=stats["median"] if stats["ready"] else None,
+                                 one_way=one_way, context_note=note):
+                alerted.add(dest)
+    if not run_results:
+        print(f"  watch {w['id']} anywhere: no fares this run")
+        return
+    # New-low digest: ping the cheapest of the run if it beats the watch's
+    # running floor (by the baseline re-alert drop), unless already alerted.
+    cdest, cbest = min(run_results, key=lambda dr: dr[1]["price"])
+    floor = w.get("anywhere_floor")
+    drop = bl_cfg.get("realert_drop_pct", 8) / 100
+    if floor is None or cbest["price"] <= floor * (1 - drop):
+        w["anywhere_floor"] = cbest["price"]
+        if cdest not in alerted:
+            _emit_watch_alert(
+                conn, provider, budget, now, pending, origin=origin, dest=cdest,
+                best=cbest, key=f"watch:{w['id']}:floor", tier="legacy",
+                reason=f"cheapest for your window so far — ${cbest['price']:.0f} to {cdest}",
+                typical=None, one_way=one_way, context_note=note)
+
+
 def scan_watches(conn, provider, budget, s, pending: list, now: str,
                  today: date | None = None) -> None:
     """Price each active standing watch's travel window and alert on deals.
 
-    Watches pin an explicit departure window the rotating rake won't otherwise
-    hit, so each gets a small, budget-capped batch of live searches per run.
-    Finds run through the same tier engine as routes (and the watch's optional
-    max_price cap), and ride the same alert dispatch. Non-essential like
-    explore: the whole pass is skipped once the monthly budget is exhausted.
+    A watch pins an explicit window (a specific destination, or "anywhere" over a
+    scoped destination list) that the rotating rake won't otherwise hit, so each
+    gets a small, budget-capped batch of live searches per run. Finds run through
+    the same tier engine as routes (plus the watch's optional max_price cap) and
+    ride the same alert dispatch. Non-essential like explore: the whole pass is
+    skipped once the monthly budget is exhausted.
     """
     wcfg = CONFIG.get("watches", {})
     if not wcfg.get("enabled", True) or budget.exhausted:
@@ -131,76 +304,18 @@ def scan_watches(conn, provider, budget, s, pending: list, now: str,
     provider.job = "watch_adhoc"
     changed = False
     for w in active:
-        if budget.exhausted or budget.spent - spent_before >= per_run_cap:
+        if not _watch_budget_ok(budget, spent_before, per_run_cap):
             break
-        origin, dest = w["origin"], w["destination"]
-        one_way = w.get("trip_type") == "one_way"
-        trip_len = timedelta(days=w.get("return_length_days")
-                             or s["trip_length_days"])
-        results = []
-        for depart in watches.sample_dates(w, max_dates, today):
-            if budget.exhausted or budget.spent - spent_before >= per_run_cap:
-                break
-            ret = None if one_way else depart + trip_len
-            offers = (provider.search_one_way(origin, dest, depart, s) if one_way
-                      else provider.search(origin, dest, depart, ret, s))
-            if not offers:
-                continue
-            persist_offers(conn, origin, dest, offers, depart, ret, "watch_adhoc")
-            best_of_date = dict(offers[0])
-            best_of_date.update({"depart": depart.isoformat(),
-                                 "return": ret.isoformat() if ret else None})
-            results.append(best_of_date)
+        if w["destination"] == watches.ANY:
+            _scan_anywhere_watch(conn, provider, budget, s, w, bl_cfg, now,
+                                 today, pending, spent_before, per_run_cap)
+        else:
+            _scan_route_watch(conn, provider, budget, s, w, bl_cfg, now, today,
+                              pending, spent_before, per_run_cap, max_dates)
         w["last_scanned"] = now
         changed = True
-        if not results:
-            continue
-        best = min(results, key=lambda r: r["price"])
-        price = best["price"]
-        trip_type = "one_way" if one_way else "round_trip"
-        stats = baselines.route_stats(conn, origin, dest, trip_type, bl_cfg)
-        key = f"watch:{w['id']}"
-        # Tier first; the explicit price cap is an independent fallback trigger.
-        candidate = None
-        if stats["ready"]:
-            t = baselines.classify(price, stats, bl_cfg)
-            if t:
-                candidate = (t, tier_reason(price, stats))
-        if candidate is None and w.get("max_price") and price <= w["max_price"]:
-            candidate = ("legacy", f"under your ${w['max_price']:.0f} cap")
-        tier = reason = None
-        if candidate and baselines.should_send(conn, key, candidate[0], price, bl_cfg):
-            tier, reason = candidate
-        if not tier:
-            print(f"  watch {key} {origin}→{dest}: best ${price:.0f}, no alert")
-            continue
-        link = best["link"]
-        if best.get("ignav_id") and not budget.exhausted \
-                and hasattr(provider, "resolve_booking"):
-            resolved = provider.resolve_booking(best["ignav_id"])
-            if resolved and resolved.get("excluded_only"):
-                print(f"  watch {key}: only an excluded seller, suppressed")
-                continue
-            if resolved and resolved.get("link"):
-                link = resolved["link"]
-        window = (w["depart_from"] if w["depart_from"] == w["depart_to"]
-                  else f"{w['depart_from']}…{w['depart_to']}")
-        store.record_alert(conn, key, tier, price, now)
-        pending.append({
-            "at": now, "route": f"{origin}→{dest}",
-            "label": f"{dest} (your watch)", "origin": origin,
-            "price": price, "tier": tier,
-            "reason": f"{reason} · your {window} watch",
-            "typical": stats["median"] if stats["ready"] else None,
-            "one_way": one_way,
-            "self_transfer": bool(best.get("self_transfer")),
-            "confirmed": bool(best.get("confirmed")),
-            "depart": best["depart"], "return": best.get("return"),
-            "stops": best.get("stops"),
-            "carriers": best.get("carriers") or [], "link": link})
-        print(f"  watch {key}: ALERT [{tier}] ${price:.0f} — {reason}")
     provider.job = "watch"
-    # Persist last_scanned + auto-expire windows that have now passed.
+    # Auto-expire windows that have now passed.
     for w in data["watches"]:
         if w.get("status") == "active" and w.get("expires_at") \
                 and today > date.fromisoformat(w["expires_at"]):
