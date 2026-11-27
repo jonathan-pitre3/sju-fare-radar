@@ -1738,12 +1738,12 @@
    "kind": "destination",
    "region": "europe",
    "stats": {
-    "median": 679.5,
-    "p25": 637.0,
+    "median": 676.0,
+    "p25": 635.0,
     "p10": 552.0,
-    "n": 1652,
+    "n": 1628,
     "ready": true,
-    "delta_pct": -19
+    "delta_pct": -18
    },
    "spark60": [
     552.0,
@@ -3586,10 +3586,10 @@
    "kind": "destination",
    "region": "europe",
    "stats": {
-    "median": 839.0,
+    "median": 836.5,
     "p25": 756.0,
     "p10": 711.0,
-    "n": 928,
+    "n": 922,
     "ready": true,
     "delta_pct": 22
    },
@@ -5436,10 +5436,10 @@
    "kind": "destination",
    "region": "asia",
    "stats": {
-    "median": 1707.0,
+    "median": 1706.0,
     "p25": 1413.0,
     "p10": 1275.0,
-    "n": 816,
+    "n": 810,
     "ready": true,
     "delta_pct": -9
    },
@@ -7250,9 +7250,9 @@
    "region": "latam",
    "stats": {
     "median": 526.0,
-    "p25": 433.0,
-    "p10": 340.5,
-    "n": 876,
+    "p25": 430.75,
+    "p10": 333.40000000000003,
+    "n": 870,
     "ready": true,
     "delta_pct": -3
    },
@@ -9027,10 +9027,10 @@
    "kind": "destination",
    "region": "north_america",
    "stats": {
-    "median": 331.5,
-    "p25": 278.5,
-    "p10": 238.10000000000002,
-    "n": 812,
+    "median": 331.0,
+    "p25": 277.0,
+    "p10": 238.0,
+    "n": 806,
     "ready": true,
     "delta_pct": 9
    },
@@ -10826,10 +10826,10 @@
    "kind": "destination",
    "region": "latam",
    "stats": {
-    "median": 455.5,
+    "median": 456.0,
     "p25": 404.0,
     "p10": 368.0,
-    "n": 788,
+    "n": 782,
     "ready": true,
     "delta_pct": 1
    },
@@ -12466,9 +12466,9 @@
    "region": "europe",
    "stats": {
     "median": 820.5,
-    "p25": 748.0,
+    "p25": 747.0,
     "p10": 699.0,
-    "n": 834,
+    "n": 828,
     "ready": true,
     "delta_pct": 25
    },
@@ -14028,9 +14028,9 @@
    "region": "latam",
    "stats": {
     "median": 313.0,
-    "p25": 280.0,
-    "p10": 257.0,
-    "n": 695,
+    "p25": 281.0,
+    "p10": 259.20000000000005,
+    "n": 677,
     "ready": true,
     "delta_pct": -2
    },
@@ -15601,10 +15601,10 @@
    "kind": "destination",
    "region": "latam",
    "stats": {
-    "median": 379.0,
+    "median": 377.0,
     "p25": 357.0,
     "p10": 337.0,
-    "n": 747,
+    "n": 741,
     "ready": true,
     "delta_pct": -21
    },
@@ -17198,9 +17198,9 @@
    "region": "north_america",
    "stats": {
     "median": 404.0,
-    "p25": 359.5,
+    "p25": 360.25,
     "p10": 336.0,
-    "n": 636,
+    "n": 630,
     "ready": true,
     "delta_pct": -8
    },
@@ -18844,9 +18844,9 @@
    "region": "asia",
    "stats": {
     "median": 1599.5,
-    "p25": 1394.75,
+    "p25": 1388.0,
     "p10": 1283.0,
-    "n": 768,
+    "n": 762,
     "ready": true,
     "delta_pct": -25
    },
@@ -20476,7 +20476,7 @@
     "median": 1851.0,
     "p25": 1404.0,
     "p10": 1292.0,
-    "n": 713,
+    "n": 707,
     "ready": true,
     "delta_pct": -3
    },
@@ -22102,9 +22102,9 @@
    "region": "asia",
    "stats": {
     "median": 1373.0,
-    "p25": 1259.0,
+    "p25": 1249.75,
     "p10": 887.0,
-    "n": 774,
+    "n": 768,
     "ready": true,
     "delta_pct": -42
    },
@@ -23776,10 +23776,10 @@
    "kind": "destination",
    "region": "asia",
    "stats": {
-    "median": 1900.0,
-    "p25": 1394.0,
-    "p10": 1156.0,
-    "n": 601,
+    "median": 1903.0,
+    "p25": 1394.5,
+    "p10": 1163.8,
+    "n": 595,
     "ready": true,
     "delta_pct": 4
    },
@@ -25476,7 +25476,7 @@
     "median": 1361.0,
     "p25": 1238.0,
     "p10": 1118.0,
-    "n": 629,
+    "n": 623,
     "ready": true,
     "delta_pct": -8
    },
@@ -27008,10 +27008,10 @@
    "kind": "destination",
    "region": "asia",
    "stats": {
-    "median": 1826.5,
-    "p25": 1451.25,
-    "p10": 1148.8000000000002,
-    "n": 598,
+    "median": 1826.0,
+    "p25": 1449.0,
+    "p10": 1140.3999999999999,
+    "n": 592,
     "ready": true,
     "delta_pct": -34
    },
@@ -28575,9 +28575,9 @@
    "region": "asia",
    "stats": {
     "median": 1725.0,
-    "p25": 1374.0,
+    "p25": 1371.0,
     "p10": 1289.0,
-    "n": 675,
+    "n": 669,
     "ready": true,
     "delta_pct": 2
    },
@@ -30250,8 +30250,8 @@
    "stats": {
     "median": 968.0,
     "p25": 815.0,
-    "p10": 644.8000000000002,
-    "n": 687,
+    "p10": 637.0,
+    "n": 681,
     "ready": true,
     "delta_pct": -18
    },
@@ -31856,9 +31856,9 @@
    "region": "europe",
    "stats": {
     "median": 865.0,
-    "p25": 826.0,
+    "p25": 825.0,
     "p10": 787.0,
-    "n": 671,
+    "n": 665,
     "ready": true,
     "delta_pct": -9
    },
@@ -33497,7 +33497,7 @@
     "median": 888.0,
     "p25": 820.0,
     "p10": 773.0,
-    "n": 587,
+    "n": 581,
     "ready": true,
     "delta_pct": -3
    },
@@ -35121,10 +35121,10 @@
    "kind": "destination",
    "region": "europe",
    "stats": {
-    "median": 729.5,
+    "median": 729.0,
     "p25": 666.0,
-    "p10": 648.0,
-    "n": 656,
+    "p10": 647.7,
+    "n": 650,
     "ready": true,
     "delta_pct": -8
    },
@@ -36730,9 +36730,9 @@
    "region": "europe",
    "stats": {
     "median": 830.0,
-    "p25": 751.0,
+    "p25": 750.0,
     "p10": 734.0,
-    "n": 733,
+    "n": 727,
     "ready": true,
     "delta_pct": 1
    },
@@ -38335,10 +38335,10 @@
    "kind": "destination",
    "region": "europe",
    "stats": {
-    "median": 838.0,
-    "p25": 741.0,
-    "p10": 676.2,
-    "n": 585,
+    "median": 841.0,
+    "p25": 740.0,
+    "p10": 674.8,
+    "n": 579,
     "ready": true,
     "delta_pct": 5
    },
@@ -39880,8 +39880,8 @@
    "stats": {
     "median": 990.0,
     "p25": 930.0,
-    "p10": 843.4,
-    "n": 625,
+    "p10": 843.8,
+    "n": 619,
     "ready": true,
     "delta_pct": -2
    },
@@ -41397,8 +41397,8 @@
    "stats": {
     "median": 217.0,
     "p25": 188.0,
-    "p10": 153.0,
-    "n": 663,
+    "p10": 152.60000000000002,
+    "n": 657,
     "ready": true,
     "delta_pct": -10
    },
@@ -42926,7 +42926,7 @@
     "median": 171.0,
     "p25": 137.0,
     "p10": 111.0,
-    "n": 642,
+    "n": 636,
     "ready": true,
     "delta_pct": -12
    },
@@ -44421,7 +44421,7 @@
     "median": 235.0,
     "p25": 185.0,
     "p10": 135.0,
-    "n": 653,
+    "n": 647,
     "ready": true,
     "delta_pct": -20
    },
@@ -45906,10 +45906,10 @@
    "kind": "positioning",
    "region": "north_america",
    "stats": {
-    "median": 419.0,
-    "p25": 361.0,
+    "median": 420.0,
+    "p25": 365.0,
     "p10": 317.0,
-    "n": 613,
+    "n": 607,
     "ready": true,
     "delta_pct": 2
    },
@@ -47442,10 +47442,10 @@
    "kind": "connector",
    "region": "asia",
    "stats": {
-    "median": 1091.0,
-    "p25": 1019.0,
+    "median": 1090.0,
+    "p25": 1018.75,
     "p10": 898.0,
-    "n": 642,
+    "n": 636,
     "ready": true,
     "delta_pct": -6
    },
@@ -48985,12 +48985,12 @@
    "kind": "positioning",
    "region": "europe",
    "stats": {
-    "median": 679.5,
-    "p25": 637.0,
+    "median": 676.0,
+    "p25": 635.0,
     "p10": 552.0,
-    "n": 1652,
+    "n": 1628,
     "ready": true,
-    "delta_pct": -19
+    "delta_pct": -18
    },
    "spark60": [
     552.0,
@@ -50482,9 +50482,9 @@
    "region": "latam",
    "stats": {
     "median": 362.0,
-    "p25": 307.0,
+    "p25": 306.5,
     "p10": 254.0,
-    "n": 1085,
+    "n": 1079,
     "ready": true,
     "delta_pct": 3
    },
@@ -52015,8 +52015,8 @@
    "stats": {
     "median": 382.0,
     "p25": 304.0,
-    "p10": 288.0,
-    "n": 921,
+    "p10": 287.0,
+    "n": 903,
     "ready": true,
     "delta_pct": -25
    },
@@ -54237,7 +54237,7 @@
   "MAD\u2192BUD": 120,
   "MAD\u2192WAW": 120
  },
- "updated_at": "2026-11-26T20:49:24+00:00",
+ "updated_at": "2026-11-27T20:33:49+00:00",
  "builds": {
   "Tokyo via LAX (Zipair)": {
    "floor": 976.0,
